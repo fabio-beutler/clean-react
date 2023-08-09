@@ -1,12 +1,9 @@
 import {
   HttpPostClient,
   HttpPostParams,
-} from "@/data/protocols/http/httpPostClient";
-import {
   HttpResponse,
   HttpStatusCode,
-} from "@/data/protocols/http/httpResponse";
-import { mockAccountModel } from "@/domain/test/mockAccount";
+} from "@/data/protocols/http";
 
 export class HttpPostClientSpy<BodyParams, BodyResponse>
   implements HttpPostClient<BodyParams, BodyResponse>
