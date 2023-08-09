@@ -6,6 +6,7 @@ import {
   HttpResponse,
   HttpStatusCode,
 } from "@/data/protocols/http/httpResponse";
+import { mockAccountModel } from "@/domain/test/mockAccount";
 
 export class HttpPostClientSpy<BodyParams, BodyResponse>
   implements HttpPostClient<BodyParams, BodyResponse>
