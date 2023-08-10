@@ -10,7 +10,7 @@ type InputProps = ComponentProps<"input"> & {
 };
 
 const Input: FC<InputProps> = ({ children, tooltip, ...props }) => {
-  const { errors, inputs, onInputChange } = useFormContext();
+  const { errors, onInputChange } = useFormContext();
   const error = errors[tooltip];
   const getStatus = () => {
     return "🔴";

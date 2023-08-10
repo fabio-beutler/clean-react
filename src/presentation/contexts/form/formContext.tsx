@@ -54,9 +54,7 @@ const FormContextProvider: FC<FormContextProviderProps> = ({
   children,
   validation,
 }) => {
-  const [state, setState] = useState<ContextProps["state"]>(
-    initialState["state"],
-  );
+  const [state] = useState<ContextProps["state"]>(initialState["state"]);
   const [errors] = useState<ContextProps["errors"]>(initialState["errors"]);
   const [inputs, setInputs] = useState<ContextProps["inputs"]>(
     initialState["inputs"],
