@@ -25,15 +25,3 @@
 .form .link:hover {
   @apply underline underline-offset-2;
 }
-
-.form .errorWrap {
-  @apply flex flex-col items-center;
-}
-
-.form .errorWrap .spinner {
-  @apply mt-10;
-}
-
-.form .errorWrap .error {
-  @apply mt-10 text-rose-800;
-}

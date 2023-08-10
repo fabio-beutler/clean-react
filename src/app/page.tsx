@@ -1,4 +1,4 @@
-import Login from "@/presentation/pages/login/Login";
+import { Login } from "@/presentation/pages";
 
 export default function Home() {
   return <Login />;

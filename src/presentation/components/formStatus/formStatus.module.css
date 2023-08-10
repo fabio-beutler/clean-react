@@ -1,0 +1,11 @@
+.errorWrap {
+  @apply flex flex-col items-center;
+}
+
+.errorWrap .spinner {
+  @apply mt-10;
+}
+
+.errorWrap .error {
+  @apply mt-10 text-rose-800;
+}
