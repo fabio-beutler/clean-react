@@ -10,33 +10,12 @@
   @apply text-rose-950 text-center uppercase text-xl font-bold;
 }
 
-.form input,
 .form button {
-  @apply border-rose-800 leading-10 rounded;
-}
-
-.form input {
-  @apply pl-2 pr-9 w-full;
-}
-
-.form input:focus {
-  @apply outline-rose-800;
-}
-
-.form button {
-  @apply bg-rose-900 rounded-lg text-white py-2;
+  @apply bg-rose-900 rounded-lg text-white py-2 border-rose-800 leading-10;
 }
 
 .form button:hover {
   @apply opacity-90;
-}
-
-.form .inputWrap {
-  @apply relative;
-}
-
-.form .inputWrap .status {
-  @apply absolute top-1/2 right-2 -translate-y-1/2 text-sm cursor-help;
 }
 
 .form .link {

@@ -1,0 +1,15 @@
+.inputWrap {
+  @apply relative;
+}
+
+.inputWrap input {
+  @apply border-rose-800 leading-10 rounded pl-2 pr-9 w-full;
+}
+
+.inputWrap input:focus {
+  @apply outline-rose-800;
+}
+
+.inputWrap .status {
+  @apply absolute top-1/2 right-2 -translate-y-1/2 text-sm cursor-help;
+}
