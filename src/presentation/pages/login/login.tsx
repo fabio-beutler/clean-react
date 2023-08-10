@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { FC } from "react";
 
+import Logo from "@/presentation/components/logo/logo";
 import Spinner from "@/presentation/components/spinner/spinner";
 
 import styles from "./login.module.css";
@@ -8,7 +9,7 @@ const Login: FC = () => {
   return (
     <div className={styles.login}>
       <header className={styles.header}>
-        <Image src={"/logo.svg"} alt={"4dev"} width={120} height={87} />
+        <Logo />
         <h1>4Dev - Enquetes para Programadores</h1>
       </header>
       <form className={styles.form}>
