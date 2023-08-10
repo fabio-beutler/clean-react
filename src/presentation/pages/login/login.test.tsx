@@ -1,19 +1,30 @@
-import { render } from "@testing-library/react";
+import { render, RenderResult } from "@testing-library/react";
 import { describe, expect, test } from "vitest";
 
 import Login from "./Login";
 
+type SutTypes = {
+  sut: RenderResult;
+};
+
+const makeSut = (): SutTypes => {
+  const sut = render(<Login />);
+  return { sut };
+};
+
 describe("Login Component", () => {
   test("Should start with initial state", () => {
-    const { getByTestId } = render(<Login />);
-    const errorWrap = getByTestId("error-wrap") as HTMLDivElement;
+    const { sut } = makeSut();
+    const errorWrap = sut.getByTestId("error-wrap") as HTMLDivElement;
     expect(errorWrap.childElementCount).toBe(0);
-    const submitButton = getByTestId("submit") as HTMLButtonElement;
+    const submitButton = sut.getByTestId("submit") as HTMLButtonElement;
     expect(submitButton.disabled).toBe(true);
-    const emailStatus = getByTestId("email-status") as HTMLSpanElement;
+    const emailStatus = sut.getByTestId("email-status") as HTMLSpanElement;
     expect(emailStatus.title).toBe("Campo obrigatório");
     expect(emailStatus.textContent).toBe("🔴");
-    const passwordStatus = getByTestId("password-status") as HTMLSpanElement;
+    const passwordStatus = sut.getByTestId(
+      "password-status",
+    ) as HTMLSpanElement;
     expect(passwordStatus.title).toBe("Campo obrigatório");
     expect(passwordStatus.textContent).toBe("🔴");
   });
