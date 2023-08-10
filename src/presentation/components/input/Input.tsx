@@ -1,5 +1,5 @@
 "use client";
-import { ComponentProps, FC } from "react";
+import { ChangeEvent, ComponentProps, FC } from "react";
 
 import { useFormContext } from "@/presentation/contexts";
 
@@ -10,17 +10,20 @@ type InputProps = ComponentProps<"input"> & {
 };
 
 const Input: FC<InputProps> = ({ children, tooltip, ...props }) => {
-  const { errorState } = useFormContext();
-  const error = errorState[tooltip];
+  const { errors, inputs, onInputChange } = useFormContext();
+  const error = errors[tooltip];
   const getStatus = () => {
     return "🔴";
   };
   const getTitle = () => {
     return error;
   };
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (onInputChange) onInputChange(event);
+  };
   return (
     <div className={styles.inputWrap}>
-      <input {...props} />
+      <input data-testid={props.name} {...props} onChange={handleInputChange} />
       <span
         data-testid={`${tooltip}-status`}
         title={getTitle()}

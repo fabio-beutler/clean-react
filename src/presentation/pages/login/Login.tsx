@@ -7,14 +7,18 @@ import {
   LoginHeader as Header,
 } from "@/presentation/components";
 import { FormContextProvider } from "@/presentation/contexts";
+import { Validation } from "@/presentation/protocols/validation";
 
 import styles from "./login.module.css";
 
-const Login: FC = () => {
+type Props = {
+  validation: Validation;
+};
+const Login: FC<Props> = ({ validation }) => {
   return (
     <div className={styles.login}>
       <Header />
-      <FormContextProvider>
+      <FormContextProvider validation={validation}>
         <form className={styles.form}>
           <h2>Login</h2>
           <Input
