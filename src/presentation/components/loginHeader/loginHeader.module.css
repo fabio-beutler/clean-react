@@ -1,0 +1,11 @@
+.header {
+  @apply bg-rose-900 flex flex-col items-center border-t-40 border-t-rose-950;
+}
+
+.header img {
+  @apply mt-10;
+}
+
+.header h1 {
+  @apply text-white mt-4 mb-10;
+}

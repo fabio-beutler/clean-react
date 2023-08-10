@@ -2,18 +2,6 @@
   @apply flex flex-col justify-between h-screen bg-rose-50;
 }
 
-.header {
-  @apply bg-rose-900 flex flex-col items-center border-t-40 border-t-rose-950;
-}
-
-.header img {
-  @apply mt-10;
-}
-
-.header h1 {
-  @apply text-white mt-4 mb-10;
-}
-
 .form {
   @apply flex flex-col gap-1 w-96 p-10 rounded-lg bg-white self-center drop-shadow;
 }
@@ -69,8 +57,4 @@
 
 .form .errorWrap .error {
   @apply mt-10 text-rose-800;
-}
-
-.footer {
-  @apply bg-rose-900 h-12;
 }

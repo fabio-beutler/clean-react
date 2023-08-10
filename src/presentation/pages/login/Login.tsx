@@ -1,17 +1,14 @@
-import Image from "next/image";
 import { FC } from "react";
 
-import Logo from "@/presentation/components/logo/Logo";
+import Footer from "@/presentation/components/footer/Footer";
+import Header from "@/presentation/components/loginHeader/LoginHeader";
 import Spinner from "@/presentation/components/spinner/Spinner";
 
 import styles from "./login.module.css";
 const Login: FC = () => {
   return (
     <div className={styles.login}>
-      <header className={styles.header}>
-        <Logo />
-        <h1>4Dev - Enquetes para Programadores</h1>
-      </header>
+      <Header />
       <form className={styles.form}>
         <h2>Login</h2>
         <div className={styles.inputWrap}>
@@ -33,7 +30,7 @@ const Login: FC = () => {
           <span className={styles.error}>Erro</span>
         </div>
       </form>
-      <footer className={styles.footer}>asdf</footer>
+      <Footer />
     </div>
   );
 };
