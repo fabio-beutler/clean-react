@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { FC } from "react";
 
-import Logo from "@/presentation/components/logo/logo";
-import Spinner from "@/presentation/components/spinner/spinner";
+import Logo from "@/presentation/components/logo/Logo";
+import Spinner from "@/presentation/components/spinner/Spinner";
 
 import styles from "./login.module.css";
 const Login: FC = () => {
