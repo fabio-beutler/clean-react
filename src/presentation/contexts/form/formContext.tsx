@@ -66,10 +66,10 @@ const FormContextProvider: FC<FormContextProviderProps> = ({
   };
 
   useEffect(() => {
-    validation.validate({ email: inputs.email });
+    validation.validate("email", inputs.email);
   }, [validation, inputs.email]);
   useEffect(() => {
-    validation.validate({ password: inputs.password });
+    validation.validate("password", inputs.password);
   }, [validation, inputs.password]);
 
   return (
