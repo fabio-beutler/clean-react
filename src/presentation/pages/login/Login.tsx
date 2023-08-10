@@ -24,7 +24,9 @@ const Login: FC = () => {
             name="password"
             placeholder="Digite sua senha"
           />
-          <button type="submit">Entrar</button>
+          <button data-testid="submit" type="submit" disabled>
+            Entrar
+          </button>
           <span className={styles.link}>Criar conta</span>
           <FormStatus />
         </form>
