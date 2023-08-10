@@ -1,0 +1,76 @@
+.login {
+  @apply flex flex-col justify-between h-screen bg-rose-50;
+}
+
+.header {
+  @apply bg-rose-900 flex flex-col items-center border-t-40 border-t-rose-950;
+}
+
+.header img {
+  @apply mt-10;
+}
+
+.header h1 {
+  @apply text-white mt-4 mb-10;
+}
+
+.form {
+  @apply flex flex-col gap-1 w-96 p-10 rounded-lg bg-white self-center drop-shadow;
+}
+
+.form h2 {
+  @apply text-rose-950 text-center uppercase text-xl font-bold;
+}
+
+.form input,
+.form button {
+  @apply border-rose-800 leading-10 rounded;
+}
+
+.form input {
+  @apply pl-2 pr-9 w-full;
+}
+
+.form input:focus {
+  @apply outline-rose-800;
+}
+
+.form button {
+  @apply bg-rose-900 rounded-lg text-white py-2;
+}
+
+.form button:hover {
+  @apply opacity-90;
+}
+
+.form .inputWrap {
+  @apply relative;
+}
+
+.form .inputWrap .status {
+  @apply absolute top-1/2 right-2 -translate-y-1/2 text-sm cursor-help;
+}
+
+.form .link {
+  @apply text-center text-rose-900 lowercase mt-4 cursor-pointer;
+}
+
+.form .link:hover {
+  @apply underline underline-offset-2;
+}
+
+.form .errorWrap {
+  @apply flex flex-col items-center;
+}
+
+.form .errorWrap .spinner {
+  @apply mt-10;
+}
+
+.form .errorWrap .error {
+  @apply mt-10 text-rose-800;
+}
+
+.footer {
+  @apply bg-rose-900 h-12;
+}
