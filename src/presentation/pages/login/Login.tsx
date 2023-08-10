@@ -17,11 +17,17 @@ const Login: FC = () => {
       <FormContextProvider>
         <form className={styles.form}>
           <h2>Login</h2>
-          <Input type="email" name="email" placeholder="Digite seu e-mail" />
+          <Input
+            type="email"
+            name="email"
+            placeholder="Digite seu e-mail"
+            tooltip="email"
+          />
           <Input
             type="password"
             name="password"
             placeholder="Digite sua senha"
+            tooltip="password"
           />
           <button data-testid="submit" type="submit" disabled>
             Entrar

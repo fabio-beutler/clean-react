@@ -7,11 +7,13 @@ import { useFormContext } from "@/presentation/contexts";
 import styles from "./formStatus.module.css";
 
 const FormStatus: FC = () => {
-  const { isLoading, errorMessage } = useFormContext();
+  const { state, errorState } = useFormContext();
   return (
     <div data-testid="error-wrap" className={styles.errorWrap}>
-      {isLoading && <Spinner className={styles.spinner} />}
-      {errorMessage && <span className={styles.error}>{errorMessage}</span>}
+      {state.isLoading && <Spinner className={styles.spinner} />}
+      {errorState.main && (
+        <span className={styles.error}>{errorState.main}</span>
+      )}
     </div>
   );
 };
