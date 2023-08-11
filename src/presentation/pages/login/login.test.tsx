@@ -6,6 +6,8 @@ import {
   RenderResult,
   waitFor,
 } from "@testing-library/react";
+import mockRouter from "next-router-mock";
+import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import { InvalidCredentialsError } from "@/domain/errors";
 import { AuthenticationSpy, ValidationStub } from "@/presentation/test";
@@ -27,6 +29,7 @@ const makeSut = (params?: SutParams): SutTypes => {
   validationStub.errorMessage = params?.validationError || "";
   const sut = render(
     <Login validation={validationStub} authentication={authenticationSpy} />,
+    { wrapper: MemoryRouterProvider },
   );
   return { sut, authenticationSpy };
 };
@@ -112,7 +115,7 @@ describe("Login Component", () => {
     simulateStatusForField(sut, "password");
   });
 
-  test("Should enable submit formButton if form is valid", () => {
+  test("Should enable submit formButton if login is valid", () => {
     const { sut } = makeSut();
     populateEmailField(sut);
     populatePasswordField(sut);
@@ -142,7 +145,7 @@ describe("Login Component", () => {
     expect(authenticationSpy.callsCount).toBe(1);
   });
 
-  test("Should not call if form is invalid", () => {
+  test("Should not call if login is invalid", () => {
     const validationError = faker.word.sample();
     const { sut, authenticationSpy } = makeSut({ validationError });
     populateEmailField(sut);
@@ -172,5 +175,12 @@ describe("Login Component", () => {
       "accessToken",
       authenticationSpy.account.accessToken,
     );
+  });
+
+  test("Should go to signup page", async () => {
+    const { sut } = makeSut();
+    const register = sut.getByTestId("signUp");
+    fireEvent.click(register);
+    expect(mockRouter.asPath).toEqual("/signUp");
   });
 });
