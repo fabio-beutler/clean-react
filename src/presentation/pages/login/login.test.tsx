@@ -55,7 +55,7 @@ describe("Login Component", () => {
     const { sut, validationStub } = makeSut();
     const passwordInput = sut.getByTestId("password");
     fireEvent.input(passwordInput, {
-      target: { value: faker.internet.email() },
+      target: { value: faker.internet.password() },
     });
     const passwordStatus = sut.getByTestId("password-status");
     expect(passwordStatus.title).toBe(validationStub.errorMessage);
@@ -79,10 +79,25 @@ describe("Login Component", () => {
     validationStub.errorMessage = "";
     const passwordInput = sut.getByTestId("password");
     fireEvent.input(passwordInput, {
-      target: { value: faker.internet.email() },
+      target: { value: faker.internet.password() },
     });
     const passwordStatus = sut.getByTestId("password-status");
     expect(passwordStatus.title).toBe("Tudo certo!");
     expect(passwordStatus.textContent).toBe("🟢");
+  });
+
+  test("Should enable submit formButton if form is valid", () => {
+    const { sut, validationStub } = makeSut();
+    validationStub.errorMessage = "";
+    const emailInput = sut.getByTestId("email");
+    const passwordInput = sut.getByTestId("password");
+    fireEvent.input(emailInput, {
+      target: { value: faker.internet.email() },
+    });
+    fireEvent.input(passwordInput, {
+      target: { value: faker.internet.password() },
+    });
+    const submitButton = sut.getByTestId("submit") as HTMLButtonElement;
+    expect(submitButton.disabled).toBe(false);
   });
 });
