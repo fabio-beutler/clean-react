@@ -74,6 +74,7 @@ const FormContextProvider: FC<FormContextProviderProps> = ({
   };
 
   const onSubmit = async (): Promise<void> => {
+    if (state.isLoading) return;
     setState({ isLoading: true });
     await authentication.auth({
       email: inputs.email,
