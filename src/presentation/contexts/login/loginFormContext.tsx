@@ -1,5 +1,5 @@
 "use client";
-
+import { useRouter } from "next/router";
 import {
   ChangeEvent,
   createContext,
@@ -58,6 +58,7 @@ const LoginFormContextProvider: FC<FormContextProviderProps> = ({
   validation,
   authentication,
 }) => {
+  const router = useRouter();
   const [state, setState] = useState<ContextProps["state"]>(
     initialState["state"],
   );
@@ -82,6 +83,7 @@ const LoginFormContextProvider: FC<FormContextProviderProps> = ({
         password: inputs.password,
       });
       localStorage.setItem("accessToken", account.accessToken);
+      await router.replace("/");
     } catch (error: any) {
       setState({ isLoading: false });
       setErrors((prevState) => ({ ...prevState, main: error.message }));
