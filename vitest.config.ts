@@ -10,7 +10,7 @@ export default defineConfig({
     globals: true,
     setupFiles: ["vitest-localstorage-mock"],
     mockReset: false,
-    include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
+    include: ["src/**/*.{test,spec}.{ts,tsx}"],
   },
   resolve: {
     alias: {
