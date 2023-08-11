@@ -1,5 +1,5 @@
 import axios from "axios";
-import { describe, expect, Mocked, test, vi } from "vitest";
+import type { Mocked } from "vitest";
 
 import { mockPostRequest } from "@/data/test";
 import { AxiosHttpClient } from "@/infra/http/axiosHttpClient";

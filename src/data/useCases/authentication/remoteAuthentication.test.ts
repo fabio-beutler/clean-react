@@ -1,5 +1,4 @@
 import { faker } from "@faker-js/faker";
-import { describe, expect, test } from "vitest";
 
 import { HttpStatusCode } from "@/data/protocols/http";
 import { HttpPostClientSpy } from "@/data/test";

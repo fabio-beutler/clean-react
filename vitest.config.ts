@@ -7,6 +7,10 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: "jsdom",
+    globals: true,
+    setupFiles: ["vitest-localstorage-mock"],
+    mockReset: false,
+    include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
   },
   resolve: {
     alias: {

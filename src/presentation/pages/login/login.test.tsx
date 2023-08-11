@@ -6,7 +6,6 @@ import {
   RenderResult,
   waitFor,
 } from "@testing-library/react";
-import { afterEach, describe, expect, test, vi } from "vitest";
 
 import { InvalidCredentialsError } from "@/domain/errors";
 import { AuthenticationSpy, ValidationStub } from "@/presentation/test";
@@ -71,6 +70,9 @@ const simulateStatusForField = (
 };
 
 describe("Login Component", () => {
+  beforeEach(() => {
+    localStorage.clear();
+  });
   afterEach(cleanup);
 
   test("Should start with initial state", () => {
