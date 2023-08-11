@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FC } from "react";
 
 import { Authentication } from "@/domain/useCases";
@@ -9,7 +10,7 @@ import {
   Input,
   LoginHeader as Header,
 } from "@/presentation/components";
-import { FormContextProvider } from "@/presentation/contexts";
+import { LoginFormContextProvider } from "@/presentation/contexts";
 import { Validation } from "@/presentation/protocols/validation";
 
 import styles from "./login.module.css";
@@ -22,7 +23,7 @@ const Login: FC<Props> = ({ validation, authentication }) => {
   return (
     <div className={styles.login}>
       <Header />
-      <FormContextProvider
+      <LoginFormContextProvider
         validation={validation}
         authentication={authentication}
       >
@@ -41,10 +42,12 @@ const Login: FC<Props> = ({ validation, authentication }) => {
             tooltip="password"
           />
           <FormButton type="submit">Entrar</FormButton>
-          <span className={styles.link}>Criar conta</span>
+          <Link href="/signUp" data-testid="signUp" className={styles.link}>
+            Criar conta
+          </Link>
           <FormStatus />
         </Form>
-      </FormContextProvider>
+      </LoginFormContextProvider>
       <Footer />
     </div>
   );
