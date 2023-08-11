@@ -70,6 +70,9 @@ devDependencies:
   vitest:
     specifier: ^0.34.1
     version: 0.34.1(jsdom@22.1.0)
+  vitest-localstorage-mock:
+    specifier: ^0.0.1
+    version: 0.0.1(vitest@0.34.1)
 
 packages:
 
@@ -3686,6 +3689,14 @@ packages:
       rollup: 3.28.0
     optionalDependencies:
       fsevents: 2.3.2
+    dev: true
+
+  /vitest-localstorage-mock@0.0.1(vitest@0.34.1):
+    resolution: {integrity: sha512-jt8/URLM+aJWObVPWxDZwt/ZSl/JOKafYuITozDVoFHlgl99jjZ7Wdvsu8ryalFChlgsg1lOBicTQsHXJCpXuw==}
+    peerDependencies:
+      vitest: '*'
+    dependencies:
+      vitest: 0.34.1(jsdom@22.1.0)
     dev: true
 
   /vitest@0.34.1(jsdom@22.1.0):
