@@ -163,4 +163,14 @@ describe("Login Component", () => {
     const errorWrap = sut.getByTestId("error-wrap");
     expect(errorWrap.childElementCount).toBe(1);
   });
+
+  test("Should add accessToken to localstorage on success", async () => {
+    const { sut, authenticationSpy } = makeSut();
+    simulateValidSubmit(sut);
+    await waitFor(() => sut.getByTestId("form"));
+    expect(localStorage.setItem).toHaveBeenCalledWith(
+      "accessToken",
+      authenticationSpy.account.accessToken,
+    );
+  });
 });
