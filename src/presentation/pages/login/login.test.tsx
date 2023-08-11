@@ -7,10 +7,7 @@ import {
 } from "@testing-library/react";
 import { afterEach, describe, expect, test } from "vitest";
 
-import { AccountModel } from "@/domain/models";
-import { mockAccountModel } from "@/domain/test";
-import { Authentication, AuthenticationParams } from "@/domain/useCases";
-import { ValidationStub } from "@/presentation/test";
+import { AuthenticationSpy, ValidationStub } from "@/presentation/test";
 
 import Login from "./Login";
 
@@ -22,15 +19,6 @@ type SutTypes = {
 type SutParams = {
   validationError: string;
 };
-
-class AuthenticationSpy implements Authentication {
-  account = mockAccountModel();
-  params: AuthenticationParams = {} as AuthenticationParams;
-  async auth(params: AuthenticationParams): Promise<AccountModel> {
-    this.params = params;
-    return Promise.resolve(this.account);
-  }
-}
 
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
