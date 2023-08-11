@@ -13,10 +13,10 @@ const Input: FC<InputProps> = ({ children, tooltip, ...props }) => {
   const { errors, onInputChange } = useFormContext();
   const error = errors[tooltip];
   const getStatus = () => {
-    return "🔴";
+    return error ? "🔴" : "🟢";
   };
   const getTitle = () => {
-    return error;
+    return error || "Tudo certo!";
   };
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (onInputChange) onInputChange(event);
