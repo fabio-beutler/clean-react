@@ -77,10 +77,11 @@ const FormContextProvider: FC<FormContextProviderProps> = ({
     if (state.isLoading || errors.email || errors.password) return;
     try {
       setState({ isLoading: true });
-      await authentication.auth({
+      const account = await authentication.auth({
         email: inputs.email,
         password: inputs.password,
       });
+      localStorage.setItem("accessToken", account.accessToken);
     } catch (error: any) {
       setState({ isLoading: false });
       setErrors((prevState) => ({ ...prevState, main: error.message }));
