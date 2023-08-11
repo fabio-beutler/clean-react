@@ -7,23 +7,39 @@ import {
 } from "@testing-library/react";
 import { afterEach, describe, expect, test } from "vitest";
 
+import { AccountModel } from "@/domain/models";
+import { mockAccountModel } from "@/domain/test";
+import { Authentication, AuthenticationParams } from "@/domain/useCases";
 import { ValidationStub } from "@/presentation/test";
 
 import Login from "./Login";
 
 type SutTypes = {
   sut: RenderResult;
+  authenticationSpy: AuthenticationSpy;
 };
 
 type SutParams = {
   validationError: string;
 };
 
+class AuthenticationSpy implements Authentication {
+  account = mockAccountModel();
+  params: AuthenticationParams = {} as AuthenticationParams;
+  async auth(params: AuthenticationParams): Promise<AccountModel> {
+    this.params = params;
+    return Promise.resolve(this.account);
+  }
+}
+
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
+  const authenticationSpy = new AuthenticationSpy();
   validationStub.errorMessage = params?.validationError || "";
-  const sut = render(<Login validation={validationStub} />);
-  return { sut };
+  const sut = render(
+    <Login validation={validationStub} authentication={authenticationSpy} />,
+  );
+  return { sut, authenticationSpy };
 };
 
 describe("Login Component", () => {
@@ -118,5 +134,22 @@ describe("Login Component", () => {
     fireEvent.submit(submitForm);
     const spinner = sut.getByTestId("spinner");
     expect(spinner).toBeTruthy();
+  });
+
+  test("Should call Authentication with correct values", () => {
+    const { sut, authenticationSpy } = makeSut();
+    const emailInput = sut.getByTestId("email");
+    const passwordInput = sut.getByTestId("password");
+    const email = faker.internet.email();
+    const password = faker.internet.password();
+    fireEvent.input(emailInput, {
+      target: { value: email },
+    });
+    fireEvent.input(passwordInput, {
+      target: { value: password },
+    });
+    const submitForm = sut.getByTestId("form");
+    fireEvent.submit(submitForm);
+    expect(authenticationSpy.params).toEqual({ email, password });
   });
 });
