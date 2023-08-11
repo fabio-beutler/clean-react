@@ -10,6 +10,7 @@ import {
   useState,
 } from "react";
 
+import { Authentication } from "@/domain/useCases";
 import { Validation } from "@/presentation/protocols/validation";
 
 type ContextProps = {
@@ -32,6 +33,7 @@ type ContextProps = {
 type FormContextProviderProps = {
   children: ReactNode;
   validation: Validation;
+  authentication: Authentication;
 };
 
 const initialState: ContextProps = {
@@ -54,6 +56,7 @@ const FormContext = createContext<ContextProps>(initialState);
 const FormContextProvider: FC<FormContextProviderProps> = ({
   children,
   validation,
+  authentication,
 }) => {
   const [state, setState] = useState<ContextProps["state"]>(
     initialState["state"],
@@ -70,8 +73,12 @@ const FormContextProvider: FC<FormContextProviderProps> = ({
     setInputs((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const onSubmit = () => {
+  const onSubmit = async (): Promise<void> => {
     setState({ isLoading: true });
+    await authentication.auth({
+      email: inputs.email,
+      password: inputs.password,
+    });
   };
 
   useEffect(() => {

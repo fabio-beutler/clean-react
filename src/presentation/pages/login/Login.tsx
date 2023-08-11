@@ -1,5 +1,6 @@
 import { FC } from "react";
 
+import { Authentication } from "@/domain/useCases";
 import {
   Footer,
   Form,
@@ -15,12 +16,16 @@ import styles from "./login.module.css";
 
 type Props = {
   validation: Validation;
+  authentication: Authentication;
 };
-const Login: FC<Props> = ({ validation }) => {
+const Login: FC<Props> = ({ validation, authentication }) => {
   return (
     <div className={styles.login}>
       <Header />
-      <FormContextProvider validation={validation}>
+      <FormContextProvider
+        validation={validation}
+        authentication={authentication}
+      >
         <Form className={styles.form}>
           <h2>Login</h2>
           <Input
