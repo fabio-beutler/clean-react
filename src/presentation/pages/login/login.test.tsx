@@ -175,6 +175,7 @@ describe("Login Component", () => {
       "accessToken",
       authenticationSpy.account.accessToken,
     );
+    expect(mockRouter.asPath).toEqual("/");
   });
 
   test("Should go to signup page", async () => {
