@@ -1,10 +1,10 @@
 "use client";
 import { ComponentProps, FC } from "react";
 
-import { useFormContext } from "@/presentation/contexts";
+import { useLoginFormContext } from "@/presentation/contexts";
 
 const FormButton: FC<ComponentProps<"button">> = (props) => {
-  const { errors } = useFormContext();
+  const { errors } = useLoginFormContext();
   return (
     <button
       {...props}

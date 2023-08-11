@@ -1,7 +1,7 @@
 "use client";
 import { ChangeEvent, ComponentProps, FC } from "react";
 
-import { useFormContext } from "@/presentation/contexts";
+import { useLoginFormContext } from "@/presentation/contexts";
 
 import styles from "./input.module.css";
 
@@ -10,7 +10,7 @@ type InputProps = ComponentProps<"input"> & {
 };
 
 const Input: FC<InputProps> = ({ children, tooltip, ...props }) => {
-  const { errors, onInputChange } = useFormContext();
+  const { errors, onInputChange } = useLoginFormContext();
   const error = errors[tooltip];
   const getStatus = () => {
     return error ? "🔴" : "🟢";

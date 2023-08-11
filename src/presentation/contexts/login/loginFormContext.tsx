@@ -51,9 +51,9 @@ const initialState: ContextProps = {
   },
 };
 
-const FormContext = createContext<ContextProps>(initialState);
+const LoginFormContext = createContext<ContextProps>(initialState);
 
-const FormContextProvider: FC<FormContextProviderProps> = ({
+const LoginFormContextProvider: FC<FormContextProviderProps> = ({
   children,
   validation,
   authentication,
@@ -97,14 +97,15 @@ const FormContextProvider: FC<FormContextProviderProps> = ({
   }, [inputs.email, inputs.password, validation]);
 
   return (
-    <FormContext.Provider
+    <LoginFormContext.Provider
       value={{ state, errors, inputs, onInputChange, onSubmit }}
     >
       {children}
-    </FormContext.Provider>
+    </LoginFormContext.Provider>
   );
 };
 
-export default FormContextProvider;
+export default LoginFormContextProvider;
 
-export const useFormContext = (): ContextProps => useContext(FormContext);
+export const useLoginFormContext = (): ContextProps =>
+  useContext(LoginFormContext);

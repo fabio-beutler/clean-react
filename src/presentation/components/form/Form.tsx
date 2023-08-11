@@ -1,10 +1,10 @@
 "use client";
 import { ComponentProps, FC, FormEvent } from "react";
 
-import { useFormContext } from "@/presentation/contexts";
+import { useLoginFormContext } from "@/presentation/contexts";
 
 const Form: FC<ComponentProps<"form">> = (props) => {
-  const { onSubmit } = useFormContext();
+  const { onSubmit } = useLoginFormContext();
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (onSubmit) onSubmit();
