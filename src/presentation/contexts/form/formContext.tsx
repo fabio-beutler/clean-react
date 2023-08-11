@@ -4,6 +4,7 @@ import {
   ChangeEvent,
   createContext,
   FC,
+  FormEvent,
   ReactNode,
   useContext,
   useEffect,
@@ -26,6 +27,7 @@ type ContextProps = {
     password: string;
   };
   onInputChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSubmit?: () => void;
 };
 
 type FormContextProviderProps = {
@@ -54,7 +56,9 @@ const FormContextProvider: FC<FormContextProviderProps> = ({
   children,
   validation,
 }) => {
-  const [state] = useState<ContextProps["state"]>(initialState["state"]);
+  const [state, setState] = useState<ContextProps["state"]>(
+    initialState["state"],
+  );
   const [errors, setErrors] = useState<ContextProps["errors"]>(
     initialState["errors"],
   );
@@ -67,6 +71,10 @@ const FormContextProvider: FC<FormContextProviderProps> = ({
     setInputs((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const onSubmit = () => {
+    setState({ isLoading: true });
+  };
+
   useEffect(() => {
     setErrors((prevState) => ({
       ...prevState,
@@ -76,7 +84,9 @@ const FormContextProvider: FC<FormContextProviderProps> = ({
   }, [inputs.email, inputs.password, validation]);
 
   return (
-    <FormContext.Provider value={{ state, errors, inputs, onInputChange }}>
+    <FormContext.Provider
+      value={{ state, errors, inputs, onInputChange, onSubmit }}
+    >
       {children}
     </FormContext.Provider>
   );

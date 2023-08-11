@@ -1,3 +1,4 @@
+"use client";
 import { ComponentProps, FC } from "react";
 
 import { useFormContext } from "@/presentation/contexts";

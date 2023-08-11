@@ -2,6 +2,7 @@ import { FC } from "react";
 
 import {
   Footer,
+  Form,
   FormButton,
   FormStatus,
   Input,
@@ -20,7 +21,7 @@ const Login: FC<Props> = ({ validation }) => {
     <div className={styles.login}>
       <Header />
       <FormContextProvider validation={validation}>
-        <form className={styles.form}>
+        <Form className={styles.form}>
           <h2>Login</h2>
           <Input
             type="email"
@@ -37,7 +38,7 @@ const Login: FC<Props> = ({ validation }) => {
           <FormButton type="submit">Entrar</FormButton>
           <span className={styles.link}>Criar conta</span>
           <FormStatus />
-        </form>
+        </Form>
       </FormContextProvider>
       <Footer />
     </div>

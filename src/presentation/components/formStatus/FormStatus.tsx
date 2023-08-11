@@ -10,7 +10,9 @@ const FormStatus: FC = () => {
   const { state, errors } = useFormContext();
   return (
     <div data-testid="error-wrap" className={styles.errorWrap}>
-      {state.isLoading && <Spinner className={styles.spinner} />}
+      {state.isLoading && (
+        <Spinner data-testid="spinner" className={styles.spinner} />
+      )}
       {errors.main && <span className={styles.error}>{errors.main}</span>}
     </div>
   );
