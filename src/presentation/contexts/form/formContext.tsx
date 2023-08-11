@@ -38,7 +38,7 @@ const initialState: ContextProps = {
     isLoading: false,
   },
   errors: {
-    email: "Campo obrigatório",
+    email: "",
     password: "Campo obrigatório",
     main: "",
   },
@@ -55,7 +55,9 @@ const FormContextProvider: FC<FormContextProviderProps> = ({
   validation,
 }) => {
   const [state] = useState<ContextProps["state"]>(initialState["state"]);
-  const [errors] = useState<ContextProps["errors"]>(initialState["errors"]);
+  const [errors, setErrors] = useState<ContextProps["errors"]>(
+    initialState["errors"],
+  );
   const [inputs, setInputs] = useState<ContextProps["inputs"]>(
     initialState["inputs"],
   );
@@ -66,6 +68,10 @@ const FormContextProvider: FC<FormContextProviderProps> = ({
   };
 
   useEffect(() => {
+    setErrors((prevState) => ({
+      ...prevState,
+      email: validation.validate("email", inputs.email),
+    }));
     validation.validate("email", inputs.email);
   }, [validation, inputs.email]);
   useEffect(() => {
