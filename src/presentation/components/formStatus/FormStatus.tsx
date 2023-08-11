@@ -13,7 +13,11 @@ const FormStatus: FC = () => {
       {state.isLoading && (
         <Spinner data-testid="spinner" className={styles.spinner} />
       )}
-      {errors.main && <span className={styles.error}>{errors.main}</span>}
+      {errors.main && (
+        <span data-testid="main-error" className={styles.error}>
+          {errors.main}
+        </span>
+      )}
     </div>
   );
 };

@@ -75,11 +75,16 @@ const FormContextProvider: FC<FormContextProviderProps> = ({
 
   const onSubmit = async (): Promise<void> => {
     if (state.isLoading || errors.email || errors.password) return;
-    setState({ isLoading: true });
-    await authentication.auth({
-      email: inputs.email,
-      password: inputs.password,
-    });
+    try {
+      setState({ isLoading: true });
+      await authentication.auth({
+        email: inputs.email,
+        password: inputs.password,
+      });
+    } catch (error: any) {
+      setState({ isLoading: false });
+      setErrors((prevState) => ({ ...prevState, main: error.message }));
+    }
   };
 
   useEffect(() => {
