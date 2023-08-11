@@ -71,12 +71,9 @@ const FormContextProvider: FC<FormContextProviderProps> = ({
     setErrors((prevState) => ({
       ...prevState,
       email: validation.validate("email", inputs.email),
+      password: validation.validate("password", inputs.password),
     }));
-    validation.validate("email", inputs.email);
-  }, [validation, inputs.email]);
-  useEffect(() => {
-    validation.validate("password", inputs.password);
-  }, [validation, inputs.password]);
+  }, [inputs.email, inputs.password, validation]);
 
   return (
     <FormContext.Provider value={{ state, errors, inputs, onInputChange }}>
