@@ -2,6 +2,7 @@ import { FC } from "react";
 
 import {
   Footer,
+  FormButton,
   FormStatus,
   Input,
   LoginHeader as Header,
@@ -33,9 +34,7 @@ const Login: FC<Props> = ({ validation }) => {
             placeholder="Digite sua senha"
             tooltip="password"
           />
-          <button data-testid="submit" type="submit" disabled>
-            Entrar
-          </button>
+          <FormButton type="submit">Entrar</FormButton>
           <span className={styles.link}>Criar conta</span>
           <FormStatus />
         </form>

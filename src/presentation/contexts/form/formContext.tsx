@@ -39,7 +39,7 @@ const initialState: ContextProps = {
   },
   errors: {
     email: "",
-    password: "Campo obrigatório",
+    password: "",
     main: "",
   },
   inputs: {
