@@ -1,7 +1,10 @@
+"use client";
 import { NextPage } from "next";
 
+import { MakeLogin } from "@/main/factories/pages/login/loginFactory";
+
 const Login: NextPage = () => {
-  return <h1>hello</h1>;
+  return <MakeLogin />;
 };
 
 export default Login;
