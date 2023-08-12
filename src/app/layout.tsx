@@ -1,6 +1,6 @@
 import "@/presentation/styles/global.css";
 
-import type { Metadata } from "next";
+import type { Metadata, NextPage } from "next";
 import { Roboto } from "next/font/google";
 import { ReactNode } from "react";
 
@@ -11,10 +11,12 @@ export const metadata: Metadata = {
   description: "Enquetes para programadores",
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+const RootLayout: NextPage<{ children: ReactNode }> = ({ children }) => {
   return (
     <html lang="pt-br">
       <body className={roboto.className}>{children}</body>
     </html>
   );
-}
+};
+
+export default RootLayout;
