@@ -3,8 +3,14 @@ import { createRouter } from "next-connect";
 
 const router = createRouter<NextApiRequest, NextApiResponse>();
 
+function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 router
-  .post((req, res) => {
+  .post(async (req, res) => {
+    await sleep(3000);
+
     const { email, password } = req.body;
     if (!email || !password) {
       return res.status(400).json({ message: "Missing email or password" });
