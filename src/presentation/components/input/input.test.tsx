@@ -1,15 +1,23 @@
 import { faker } from "@faker-js/faker";
-import { render } from "@testing-library/react";
+import { render, RenderResult } from "@testing-library/react";
 
 import Input from "./Input";
 
+type SutTypes = {
+  sut: RenderResult;
+  inputFieldName: string;
+};
+
+const makeSut = (): SutTypes => {
+  const inputFieldName = faker.word.sample();
+  const sut = render(<Input name={inputFieldName} tooltip={"email"} />);
+  return { sut, inputFieldName };
+};
+
 describe("Input Component", () => {
   test("Should begin render correctly", () => {
-    const inputFieldName = faker.word.sample();
-    const { getByTestId } = render(
-      <Input name={inputFieldName} tooltip={"email"} />,
-    );
-    const input = getByTestId(inputFieldName) as HTMLInputElement;
+    const { sut, inputFieldName } = makeSut();
+    const input = sut.getByTestId(inputFieldName) as HTMLInputElement;
     expect(input).toBeTruthy();
   });
 });
