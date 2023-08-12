@@ -95,4 +95,13 @@ describe("RemoteAuthentication", () => {
     const account = await sut.auth(mockAuthentication());
     expect(account).toEqual(httpResult);
   });
+
+  test("Should return throw an UnexpectedError if HttpPostClient returns 200 with no body", async () => {
+    const { sut, httpPostClientSpy } = makeSut();
+    httpPostClientSpy.response = {
+      statusCode: HttpStatusCode.ok,
+    };
+    const promise = sut.auth(mockAuthentication());
+    expect(promise).rejects.toThrow(new UnexpectedError());
+  });
 });
