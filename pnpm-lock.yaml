@@ -11,6 +11,9 @@ dependencies:
   next:
     specifier: 13.4.13
     version: 13.4.13(@babel/core@7.22.10)(react-dom@18.2.0)(react@18.2.0)
+  next-connect:
+    specifier: ^1.0.0
+    version: 1.0.0
   react:
     specifier: 18.2.0
     version: 18.2.0
@@ -749,6 +752,10 @@ packages:
     resolution: {integrity: sha512-XCuKFP5PS55gnMVu3dty8KPatLqUoy/ZYzDzAGCQ8JNFCkLXzmI7vNHCR+XpbZaMWQK/vQubr7PkYq8g470J/A==}
     engines: {node: '>= 10'}
     dev: true
+
+  /@tsconfig/node16@1.0.4:
+    resolution: {integrity: sha512-vxhUy4J8lyeyinH7Azl1pdd43GJhZH/tP2weN8TntQblOY+A0XbT8DJk1/oCPuOOyg/Ja757rG0CgHcWC8OfMA==}
+    dev: false
 
   /@types/aria-query@5.0.1:
     resolution: {integrity: sha512-XTIieEY+gvJ39ChLcB4If5zHtPxt3Syj5rgZR+e1ctpmK8NjPf0zFqsz4JpLJT0xla9GFDKjy8Cpu331nrmE1Q==}
@@ -2704,6 +2711,14 @@ packages:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
     dev: true
 
+  /next-connect@1.0.0:
+    resolution: {integrity: sha512-FeLURm9MdvzY1SDUGE74tk66mukSqL6MAzxajW7Gqh6DZKBZLrXmXnGWtHJZXkfvoi+V/DUe9Hhtfkl4+nTlYA==}
+    engines: {node: '>=16'}
+    dependencies:
+      '@tsconfig/node16': 1.0.4
+      regexparam: 2.0.1
+    dev: false
+
   /next-router-mock@0.9.8(next@13.4.13)(react@18.2.0):
     resolution: {integrity: sha512-u9yzuLTYuBzarv1wfN2z+aC3iSr5nmvMIRnMXNq4c+Alyf4iXKOTnKG3dW1w6h3JW+qNRhTJV37weMsARALZpw==}
     peerDependencies:
@@ -3208,6 +3223,11 @@ packages:
       define-properties: 1.2.0
       functions-have-names: 1.2.3
     dev: true
+
+  /regexparam@2.0.1:
+    resolution: {integrity: sha512-zRgSaYemnNYxUv+/5SeoHI0eJIgTL/A2pUtXUPLHQxUldagouJ9p+K6IbIZ/JiQuCEv2E2B1O11SjVQy3aMCkw==}
+    engines: {node: '>=8'}
+    dev: false
 
   /requires-port@1.0.0:
     resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
