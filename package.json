@@ -1,6 +1,6 @@
 {
   "name": "clean-react",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Fabio Beutler",
   "description": "A clean React project with Next.js, TailwindCSS, TypeScript, ESLint, Prettier, Vitest, Testing Library and more.",
   "license": "MIT",
