@@ -1,34 +1,151 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+[![Build Status](https://app.travis-ci.com/fabio-beutler/clean-react.svg?branch=main)](https://app.travis-ci.com/github/fabio-beutler/clean-react)
+![react-version](https://img.shields.io/npm/v/react.svg?logo=react)
+![GitHub](https://img.shields.io/github/license/fabio-beutler/clean-react)
+![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)
 
-## Getting Started
+# 4Dev React - Enquetes para Programadores
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+> Esse sistema faz parte do treinamento do
+> professor Rodrigo Manguinho (Mango) na Udemy.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+O objetivo do treinamento é mostrar como criar um
+sistema em ReactJs utilizando os novos Hooks,
+Recoil, com uma arquitetura bem definida e
+desacoplada, utilizando TDD (programação orientada
+a testes) como metodologia de trabalho, Clean
+Architecture para fazer a distribuição de
+responsabilidades em camadas, sempre seguindo os
+princípios do SOLID, DRY, YAGNI, KISS e aplicando
+Design Patterns para resolver alguns problemas
+comuns.
 
-You can start editing the page by modifying `app/index.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Princípios
 
-## Learn More
+* Single Responsibility Principle (SRP)
+* Open Closed Principle (OCP)
+* Liskov Substitution Principle (LSP)
+* Interface Segregation Principle (ISP)
+* Dependency Inversion Principle (DIP)
+* Separation of Concerns (SOC)
+* Don't Repeat Yourself (DRY)
+* You Aren't Gonna Need It (YAGNI)
+* Keep It Simple, Silly (KISS)
+* Composition Over Inheritance
+* Small Commits
 
-To learn more about Next.js, take a look at the following resources:
+### Design Patterns
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* Factory
+* Adapter
+* Composite
+* Decorator
+* Dependency Injection
+* Composition Root
+* Builder
+* Proxy
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Metodologias e Designs
 
-## Deploy on Vercel
+* TDD
+* Clean Architecture
+* DDD
+* Reactive Programming
+* Responsive Layout
+* Conventional Commits
+* GitFlow
+* Modular Design
+* Dependency Diagrams
+* Use Cases
+* Continuous Integration
+* Continuous Delivery
+* Continuous Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Bibliotecas e Ferramentas
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+* Typescript
+* React
+* Recoil
+* React Testing Library
+* React Router DOM
+* Cypress
+* Jest
+* Axios
+* Git
+* Webpack
+* SASS + Animations
+* NPM
+* Travis CI
+* Faker
+* Coveralls
+* Husky
+* Lint Staged
+* Eslint
+* Standard Javascript Style
+* React Flip Move
+
+### Features do React
+
+* Functional Components
+* UseState
+* UseContext
+* UseEffect
+* UseHistory
+* UseRef
+* UseParams
+* Custom Hooks
+* UseRecoilState
+* UseResetRecoilState
+* UseRecoilValue
+* UseRecoilSetState
+* Atom
+* Router
+* Memo
+
+### Features do Git
+
+* Alias
+* Log Personalizado
+* Branch
+* Reset
+* Amend
+* Tag
+* Tag Anotada
+* Stash
+* Rebase
+* Merge
+* Add
+* Commit
+* Push
+* Pull
+* Shortlog
+* Status
+
+### Features do Typescript
+
+* POO Avançado
+* Interface
+* Type Alias
+* Namespace
+* Module
+* Utility Types
+* Modularização de Paths
+* Build
+* Deploy
+* Generics
+
+### Features de Testes
+
+* Testes Unitários
+* Testes de Integração
+* Testes e2e
+* Cobertura de Testes
+* Test Doubles
+* Mocks
+* Stubs
+* Spies
+* Fakes
+* Dummies
