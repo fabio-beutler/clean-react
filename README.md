@@ -1,4 +1,5 @@
 [![Build Status](https://app.travis-ci.com/fabio-beutler/clean-react.svg?branch=main)](https://app.travis-ci.com/github/fabio-beutler/clean-react)
+[![Coverage Status](https://coveralls.io/repos/github/fabio-beutler/clean-react/badge.svg?branch=main)](https://coveralls.io/github/fabio-beutler/clean-react?branch=main)
 ![react-version](https://img.shields.io/npm/v/react.svg?logo=react)
 ![GitHub](https://img.shields.io/github/license/fabio-beutler/clean-react)
 ![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)
