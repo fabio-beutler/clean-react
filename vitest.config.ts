@@ -11,6 +11,9 @@ export default defineConfig({
     setupFiles: ["vitest-localstorage-mock"],
     mockReset: false,
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
+    coverage: {
+      reporter: ["lcov"],
+    },
   },
   resolve: {
     alias: {
