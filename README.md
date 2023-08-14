@@ -5,6 +5,8 @@
 
 # 4Dev React - Enquetes para Programadores
 
+![4Dev React](./public/project.png)
+
 ---
 
 > Esse sistema faz parte do treinamento do
