@@ -42,9 +42,9 @@ describe("RemoteAddAccount", () => {
       statusCode: HttpStatusCode.ok,
       body: mockAccountModel(),
     };
-    const authenticationParams = mockAddAccount();
-    await sut.add(authenticationParams);
-    expect(httpPostClientSpy.body).toEqual(authenticationParams);
+    const addAccountParams = mockAddAccount();
+    await sut.add(addAccountParams);
+    expect(httpPostClientSpy.body).toEqual(addAccountParams);
   });
 
   test("Should throw EmailInUserError if HttpPostClient returns 403", async () => {
@@ -52,8 +52,7 @@ describe("RemoteAddAccount", () => {
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.forbidden,
     };
-    const addAccountParams = mockAddAccount();
-    const promise = sut.add(addAccountParams);
+    const promise = sut.add(mockAddAccount());
     await expect(promise).rejects.toThrow(new EmailInUseError());
   });
 
@@ -62,8 +61,7 @@ describe("RemoteAddAccount", () => {
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.badRequest,
     };
-    const addAccountParams = mockAddAccount();
-    const promise = sut.add(addAccountParams);
+    const promise = sut.add(mockAddAccount());
     await expect(promise).rejects.toThrow(new UnexpectedError());
   });
 

@@ -71,8 +71,7 @@ describe("RemoteAuthentication", () => {
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.serverError,
     };
-    const authenticationParams = mockAuthentication();
-    const promise = sut.auth(authenticationParams);
+    const promise = sut.auth(mockAuthentication());
     await expect(promise).rejects.toThrow(new UnexpectedError());
   });
 
@@ -81,8 +80,7 @@ describe("RemoteAuthentication", () => {
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.notFound,
     };
-    const authenticationParams = mockAuthentication();
-    const promise = sut.auth(authenticationParams);
+    const promise = sut.auth(mockAuthentication());
     await expect(promise).rejects.toThrow(new UnexpectedError());
   });
 
