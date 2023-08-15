@@ -1,3 +1,2 @@
-export * from "./mockHttpClient";
-export * from "./mockHttpPost";
-export * from "./mockStorage";
+export * from "./mockCache";
+export * from "./mockHttp";
