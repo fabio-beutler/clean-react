@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FC } from "react";
 
-import { Authentication } from "@/domain/useCases";
+import { Authentication, SaveAccessToken } from "@/domain/useCases";
 import {
   Footer,
   Form,
@@ -18,14 +18,16 @@ import styles from "./login.module.css";
 type Props = {
   validation: Validation;
   authentication: Authentication;
+  saveAccessToken: SaveAccessToken;
 };
-const Login: FC<Props> = ({ validation, authentication }) => {
+const Login: FC<Props> = ({ validation, authentication, saveAccessToken }) => {
   return (
     <div className={styles.login}>
       <Header />
       <LoginFormContextProvider
         validation={validation}
         authentication={authentication}
+        saveAccessToken={saveAccessToken}
       >
         <Form className={styles.form}>
           <h2>Login</h2>
@@ -42,7 +44,7 @@ const Login: FC<Props> = ({ validation, authentication }) => {
             tooltip="password"
           />
           <FormButton type="submit">Entrar</FormButton>
-          <Link href="/signUp" data-testid="signUp" className={styles.link}>
+          <Link href="/signup" data-testid="signup" className={styles.link}>
             Criar conta
           </Link>
           <FormStatus />
