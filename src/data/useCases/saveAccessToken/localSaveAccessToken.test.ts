@@ -23,4 +23,11 @@ describe("LocalSaveAccessToken", () => {
     expect(setStorageMock.key).toBe("@4Devs:accessToken");
     expect(setStorageMock.value).toBe(accessToken);
   });
+
+  test("Should throw if SetStorage throws", async () => {
+    const { sut, setStorageMock } = makeSut();
+    vi.spyOn(setStorageMock, "set").mockRejectedValueOnce(new Error());
+    const promise = sut.save(faker.string.uuid());
+    expect(promise).rejects.toThrow(new Error());
+  });
 });
