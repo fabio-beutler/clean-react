@@ -10,13 +10,18 @@ import mockRouter from "next-router-mock";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import { InvalidCredentialsError } from "@/domain/errors";
-import { AuthenticationSpy, ValidationStub } from "@/presentation/test";
+import {
+  AuthenticationSpy,
+  SaveAccessTokenMock,
+  ValidationStub,
+} from "@/presentation/test";
 
 import Login from "./Login";
 
 type SutTypes = {
   sut: RenderResult;
   authenticationSpy: AuthenticationSpy;
+  saveAccessTokenMock: SaveAccessTokenMock;
 };
 
 type SutParams = {
@@ -26,12 +31,17 @@ type SutParams = {
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
   const authenticationSpy = new AuthenticationSpy();
+  const saveAccessTokenMock = new SaveAccessTokenMock();
   validationStub.errorMessage = params?.validationError || "";
   const sut = render(
-    <Login validation={validationStub} authentication={authenticationSpy} />,
+    <Login
+      validation={validationStub}
+      authentication={authenticationSpy}
+      saveAccessToken={saveAccessTokenMock}
+    />,
     { wrapper: MemoryRouterProvider },
   );
-  return { sut, authenticationSpy };
+  return { sut, authenticationSpy, saveAccessTokenMock };
 };
 
 const simulateValidSubmit = async (
@@ -184,20 +194,30 @@ describe("Login Component", () => {
     testErrorWrapperChildCount(sut, 1);
   });
 
-  test("Should add accessToken to localstorage on success", async () => {
-    const { sut, authenticationSpy } = makeSut();
+  test("Should call SaveAccessToken on success", async () => {
+    const { sut, authenticationSpy, saveAccessTokenMock } = makeSut();
     await simulateValidSubmit(sut);
-    expect(localStorage.setItem).toHaveBeenCalledWith(
-      "accessToken",
+    expect(saveAccessTokenMock.accessToken).toBe(
       authenticationSpy.account.accessToken,
     );
     expect(mockRouter.asPath).toEqual("/");
   });
 
+  test("Should present error if SaveAccessToken fails", async () => {
+    const { sut, saveAccessTokenMock } = makeSut();
+    const error = new InvalidCredentialsError();
+    vi.spyOn(saveAccessTokenMock, "save").mockReturnValueOnce(
+      Promise.reject(error),
+    );
+    await simulateValidSubmit(sut);
+    testElementText(sut, "main-error", error.message);
+    testErrorWrapperChildCount(sut, 1);
+  });
+
   test("Should go to signup page", async () => {
     const { sut } = makeSut();
-    const register = sut.getByTestId("signUp");
+    const register = sut.getByTestId("signup");
     fireEvent.click(register);
-    expect(mockRouter.asPath).toEqual("/signUp");
+    expect(mockRouter.asPath).toEqual("/signup");
   });
 });
