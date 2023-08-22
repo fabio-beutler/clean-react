@@ -188,4 +188,13 @@ describe("Signup Component", () => {
     );
     expect(mockRouter.asPath).toEqual("/");
   });
+
+  test("Should present error if SaveAccessToken fails", async () => {
+    const { sut, saveAccessTokenMock } = makeSut();
+    const error = new EmailInUseError();
+    vi.spyOn(saveAccessTokenMock, "save").mockRejectedValueOnce(error);
+    await simulateValidSubmit(sut);
+    Helper.testElementText(sut, "main-error", error.message);
+    Helper.testChildCount(sut, "error-wrap", 1);
+  });
 });
