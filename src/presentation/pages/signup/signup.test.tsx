@@ -8,7 +8,7 @@ import {
 } from "@testing-library/react";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
-import { EmailInUseError, InvalidCredentialsError } from "@/domain/errors";
+import { EmailInUseError } from "@/domain/errors";
 import { AddAccountSpy, Helper, ValidationStub } from "@/presentation/test";
 
 import Signup from "./Signup";
@@ -48,15 +48,6 @@ const simulateValidSubmit = async (
   const form = sut.getByTestId("form");
   fireEvent.submit(form);
   await waitFor(() => form);
-};
-
-const testElementText = (
-  sut: RenderResult,
-  fieldName: string,
-  text: string,
-): void => {
-  const element = sut.getByTestId(fieldName);
-  expect(element.textContent).toBe(text);
 };
 
 describe("Signup Component", () => {
@@ -173,7 +164,7 @@ describe("Signup Component", () => {
     const error = new EmailInUseError();
     vi.spyOn(addAccountSpy, "add").mockRejectedValueOnce(error);
     await simulateValidSubmit(sut);
-    testElementText(sut, "main-error", error.message);
+    Helper.testElementText(sut, "main-error", error.message);
     Helper.testChildCount(sut, "error-wrap", 1);
   });
 });
