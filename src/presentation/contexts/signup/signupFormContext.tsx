@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/router";
 import {
   ChangeEvent,
   createContext,
@@ -9,7 +10,7 @@ import {
   useState,
 } from "react";
 
-import { AddAccount } from "@/domain/useCases";
+import { AddAccount, SaveAccessToken } from "@/domain/useCases";
 import { Validation } from "@/presentation/protocols";
 
 type ContextProps = {
@@ -37,6 +38,7 @@ type FormContextProviderProps = {
   children: ReactElement;
   validation: Validation;
   addAccount: AddAccount;
+  saveAccessToken: SaveAccessToken;
 };
 
 const initialState: ContextProps = {
@@ -64,7 +66,9 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
   children,
   validation,
   addAccount,
+  saveAccessToken,
 }) => {
+  const router = useRouter();
   const [state, setState] = useState<ContextProps["state"]>(
     initialState["state"],
   );
@@ -91,12 +95,14 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
       return;
     try {
       setState({ isLoading: true });
-      await addAccount.add({
+      const account = await addAccount.add({
         name: inputs.name,
         email: inputs.email,
         password: inputs.password,
         passwordConfirmation: inputs.passwordConfirmation,
       });
+      await saveAccessToken.save(account.accessToken);
+      await router.replace("/");
     } catch (error: any) {
       setState({ isLoading: false });
       setErrors((prevState) => ({ ...prevState, main: error.message }));
