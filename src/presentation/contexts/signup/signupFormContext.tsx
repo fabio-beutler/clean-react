@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 
+import { AddAccount } from "@/domain/useCases";
 import { Validation } from "@/presentation/protocols";
 
 type ContextProps = {
@@ -35,6 +36,7 @@ type ContextProps = {
 type FormContextProviderProps = {
   children: ReactElement;
   validation: Validation;
+  addAccount: AddAccount;
 };
 
 const initialState: ContextProps = {
@@ -61,6 +63,7 @@ const SignupFormContext = createContext<ContextProps>(initialState);
 const SignupFormContextProvider: FC<FormContextProviderProps> = ({
   children,
   validation,
+  addAccount,
 }) => {
   const [state, setState] = useState<ContextProps["state"]>(
     initialState["state"],
@@ -68,10 +71,23 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
   const [errors, setErrors] = useState<ContextProps["errors"]>(
     initialState["errors"],
   );
-  const [inputs] = useState<ContextProps["inputs"]>(initialState["inputs"]);
+  const [inputs, setInputs] = useState<ContextProps["inputs"]>(
+    initialState["inputs"],
+  );
+
+  const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setInputs((prevState) => ({ ...prevState, [name]: value }));
+  };
 
   const onSubmit = async (): Promise<void> => {
     setState({ isLoading: true });
+    await addAccount.add({
+      name: inputs.name,
+      email: inputs.email,
+      password: inputs.password,
+      passwordConfirmation: inputs.passwordConfirmation,
+    });
   };
 
   useEffect(() => {
@@ -94,7 +110,9 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
   ]);
 
   return (
-    <SignupFormContext.Provider value={{ state, errors, inputs, onSubmit }}>
+    <SignupFormContext.Provider
+      value={{ state, errors, inputs, onInputChange, onSubmit }}
+    >
       {children}
     </SignupFormContext.Provider>
   );
