@@ -1,7 +1,13 @@
-import { render, RenderResult } from "@testing-library/react";
+import { faker } from "@faker-js/faker";
+import {
+  cleanup,
+  fireEvent,
+  render,
+  RenderResult,
+} from "@testing-library/react";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
-import { Helper } from "@/presentation/test";
+import { Helper, ValidationStub } from "@/presentation/test";
 
 import Signup from "./Signup";
 
@@ -14,19 +20,43 @@ type SutParams = {
 };
 
 const makeSut = (params?: SutParams): SutTypes => {
-  const sut = render(<Signup />, { wrapper: MemoryRouterProvider });
+  const validationStub = new ValidationStub();
+  validationStub.errorMessage = params?.validationError || "";
+  const sut = render(<Signup validation={validationStub} />, {
+    wrapper: MemoryRouterProvider,
+  });
   return { sut };
 };
 
+const populateField = (
+  sut: RenderResult,
+  fieldName: string,
+  value = faker.word.sample(),
+): void => {
+  const inputElement = sut.getByTestId(fieldName) as HTMLInputElement;
+  fireEvent.input(inputElement, {
+    target: { value },
+  });
+};
+
 describe("Signup Component", () => {
+  afterEach(cleanup);
+
   test("Should start with initial state", () => {
-    const validationError = "Campo obrigatório";
-    const { sut } = makeSut();
+    const validationError = faker.word.sample();
+    const { sut } = makeSut({ validationError });
     Helper.testChildCount(sut, "error-wrap", 0);
     Helper.testButtonIsDisabled(sut, "submit", true);
     Helper.testStatusForField(sut, "name", validationError);
-    Helper.testStatusForField(sut, "email", validationError);
-    Helper.testStatusForField(sut, "password", validationError);
-    Helper.testStatusForField(sut, "passwordConfirmation", validationError);
+    Helper.testStatusForField(sut, "email", "Campo obrigatório");
+    Helper.testStatusForField(sut, "password", "Campo obrigatório");
+    Helper.testStatusForField(sut, "passwordConfirmation", "Campo obrigatório");
+  });
+
+  test("Should show name error if Validation fails", () => {
+    const validationError = faker.word.sample();
+    const { sut } = makeSut({ validationError });
+    populateField(sut, "name");
+    Helper.testStatusForField(sut, "name", validationError);
   });
 });
