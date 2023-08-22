@@ -51,7 +51,12 @@ const Login: FC<Props> = ({ validation, authentication, saveAccessToken }) => {
           <FormButton formContext={useLoginFormContext} type="submit">
             Entrar
           </FormButton>
-          <Link href="/signup" data-testid="signup" className={styles.link}>
+          <Link
+            data-testid="signup-link"
+            href="/signup"
+            replace
+            className={styles.link}
+          >
             Criar conta
           </Link>
           <FormStatus formContext={useLoginFormContext} />

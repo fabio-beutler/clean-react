@@ -162,8 +162,8 @@ describe("Login Component", () => {
 
   test("Should go to signup page", async () => {
     const { sut } = makeSut();
-    const register = sut.getByTestId("signup");
-    fireEvent.click(register);
+    const signupLink = sut.getByTestId("signup-link");
+    fireEvent.click(signupLink);
     expect(mockRouter.asPath).toEqual("/signup");
   });
 });
