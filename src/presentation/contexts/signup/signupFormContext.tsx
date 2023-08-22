@@ -81,7 +81,14 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
   };
 
   const onSubmit = async (): Promise<void> => {
-    if (state.isLoading || errors.email || errors.password) return;
+    if (
+      state.isLoading ||
+      errors.name ||
+      errors.email ||
+      errors.password ||
+      errors.passwordConfirmation
+    )
+      return;
     setState({ isLoading: true });
     await addAccount.add({
       name: inputs.name,
