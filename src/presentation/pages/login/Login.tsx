@@ -10,7 +10,10 @@ import {
   Input,
   LoginHeader as Header,
 } from "@/presentation/components";
-import { LoginFormContextProvider } from "@/presentation/contexts";
+import {
+  LoginFormContextProvider,
+  useLoginFormContext,
+} from "@/presentation/contexts";
 import { Validation } from "@/presentation/protocols/validation";
 
 import styles from "./login.module.css";
@@ -29,25 +32,29 @@ const Login: FC<Props> = ({ validation, authentication, saveAccessToken }) => {
         authentication={authentication}
         saveAccessToken={saveAccessToken}
       >
-        <Form className={styles.form}>
+        <Form formContext={useLoginFormContext} className={styles.form}>
           <h2>Login</h2>
           <Input
+            formContext={useLoginFormContext}
             type="email"
             name="email"
             placeholder="Digite seu e-mail"
             tooltip="email"
           />
           <Input
+            formContext={useLoginFormContext}
             type="password"
             name="password"
             placeholder="Digite sua senha"
             tooltip="password"
           />
-          <FormButton type="submit">Entrar</FormButton>
+          <FormButton formContext={useLoginFormContext} type="submit">
+            Entrar
+          </FormButton>
           <Link href="/signup" data-testid="signup" className={styles.link}>
             Criar conta
           </Link>
-          <FormStatus />
+          <FormStatus formContext={useLoginFormContext} />
         </Form>
       </LoginFormContextProvider>
       <Footer />

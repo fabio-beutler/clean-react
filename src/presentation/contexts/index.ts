@@ -1,4 +1,8 @@
 export {
   default as LoginFormContextProvider,
   useLoginFormContext,
-} from "@/presentation/contexts/login/loginFormContext";
+} from "./login/loginFormContext";
+export {
+  default as SignupFormContextProvider,
+  useSignupFormContext,
+} from "./signup/signupFormContext";

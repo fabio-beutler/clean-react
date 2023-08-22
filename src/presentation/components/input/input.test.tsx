@@ -1,6 +1,8 @@
 import { faker } from "@faker-js/faker";
 import { render, RenderResult } from "@testing-library/react";
 
+import { useLoginFormContext } from "@/presentation/contexts";
+
 import Input from "./Input";
 
 type SutTypes = {
@@ -10,7 +12,13 @@ type SutTypes = {
 
 const makeSut = (): SutTypes => {
   const inputFieldName = faker.word.sample();
-  const sut = render(<Input name={inputFieldName} tooltip={"email"} />);
+  const sut = render(
+    <Input
+      name={inputFieldName}
+      tooltip={"email"}
+      formContext={useLoginFormContext}
+    />,
+  );
   return { sut, inputFieldName };
 };
 

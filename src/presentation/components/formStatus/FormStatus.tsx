@@ -2,12 +2,18 @@
 import { FC } from "react";
 
 import { Spinner } from "@/presentation/components";
-import { useLoginFormContext } from "@/presentation/contexts";
+import {
+  useLoginFormContext,
+  useSignupFormContext,
+} from "@/presentation/contexts";
 
 import styles from "./formStatus.module.css";
 
-const FormStatus: FC = () => {
-  const { state, errors } = useLoginFormContext();
+type FormStatusProps = {
+  formContext: typeof useLoginFormContext | typeof useSignupFormContext;
+};
+const FormStatus: FC<FormStatusProps> = ({ formContext }) => {
+  const { state, errors } = formContext();
   return (
     <div data-testid="error-wrap" className={styles.errorWrap}>
       {state.isLoading && (
