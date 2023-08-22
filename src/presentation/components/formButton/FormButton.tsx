@@ -14,7 +14,14 @@ const FormButton: FC<FormButtonProps> = ({ formContext, ...props }) => {
   return (
     <button
       {...props}
-      disabled={!!errors.email || !!errors.password}
+      disabled={
+        !!errors.email ||
+        !!errors.password ||
+        // @ts-ignore
+        !!errors.name ||
+        // @ts-ignore
+        !!errors.passwordConfirmation
+      }
       data-testid={props.type}
     >
       {props.children}

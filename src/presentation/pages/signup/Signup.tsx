@@ -4,6 +4,7 @@ import { FC } from "react";
 import {
   Footer,
   Form,
+  FormButton,
   FormStatus,
   Input,
   LoginHeader as Header,
@@ -55,9 +56,9 @@ const Signup: FC<Props> = ({ validation }) => {
             placeholder="Repita sua senha"
             tooltip="passwordConfirmation"
           />
-          <button data-testid={"submit"} disabled={true} type="submit">
+          <FormButton formContext={useSignupFormContext} type="submit">
             Entrar
-          </button>
+          </FormButton>
           <Link href="/login" className={styles.link}>
             Voltar para Login
           </Link>
