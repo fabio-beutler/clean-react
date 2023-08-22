@@ -8,12 +8,13 @@ import {
 } from "@testing-library/react";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
-import { Helper, ValidationStub } from "@/presentation/test";
+import { AddAccountSpy, Helper, ValidationStub } from "@/presentation/test";
 
 import Signup from "./Signup";
 
 type SutTypes = {
   sut: RenderResult;
+  addAccountSpy: AddAccountSpy;
 };
 
 type SutParams = {
@@ -22,11 +23,15 @@ type SutParams = {
 
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
+  const addAccountSpy = new AddAccountSpy();
   validationStub.errorMessage = params?.validationError || "";
-  const sut = render(<Signup validation={validationStub} />, {
-    wrapper: MemoryRouterProvider,
-  });
-  return { sut };
+  const sut = render(
+    <Signup validation={validationStub} addAccount={addAccountSpy} />,
+    {
+      wrapper: MemoryRouterProvider,
+    },
+  );
+  return { sut, addAccountSpy };
 };
 
 const simulateValidSubmit = async (
@@ -123,5 +128,19 @@ describe("Signup Component", () => {
     const { sut } = makeSut();
     await simulateValidSubmit(sut);
     Helper.testElementExists(sut, "spinner");
+  });
+
+  test("Should call AddAccount with correct values", async () => {
+    const { sut, addAccountSpy } = makeSut();
+    const name = faker.internet.email();
+    const email = faker.internet.email();
+    const password = faker.internet.password();
+    await simulateValidSubmit(sut, name, email, password);
+    expect(addAccountSpy.params).toEqual({
+      name,
+      email,
+      password,
+      passwordConfirmation: password,
+    });
   });
 });
