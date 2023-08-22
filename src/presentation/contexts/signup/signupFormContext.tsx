@@ -42,7 +42,7 @@ const initialState: ContextProps = {
   },
   errors: {
     name: "",
-    email: "Campo obrigatório",
+    email: "",
     password: "Campo obrigatório",
     passwordConfirmation: "Campo obrigatório",
     main: "",
@@ -71,6 +71,7 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
     setErrors((prevState) => ({
       ...prevState,
       name: validation.validate("name", inputs.name),
+      email: validation.validate("email", inputs.email),
     }));
   }, [inputs.name, validation]);
 
