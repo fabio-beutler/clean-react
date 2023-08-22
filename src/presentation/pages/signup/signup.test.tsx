@@ -40,9 +40,7 @@ const makeSut = (params?: SutParams): SutTypes => {
       addAccount={addAccountSpy}
       saveAccessToken={saveAccessTokenMock}
     />,
-    {
-      wrapper: MemoryRouterProvider,
-    },
+    { wrapper: MemoryRouterProvider },
   );
   return { sut, addAccountSpy, saveAccessTokenMock };
 };
@@ -196,5 +194,12 @@ describe("Signup Component", () => {
     await simulateValidSubmit(sut);
     Helper.testElementText(sut, "main-error", error.message);
     Helper.testChildCount(sut, "error-wrap", 1);
+  });
+
+  test("Should go to login page", async () => {
+    const { sut } = makeSut();
+    const loginLink = sut.getByTestId("login-link");
+    fireEvent.click(loginLink);
+    expect(mockRouter.asPath).toEqual("/login");
   });
 });
