@@ -89,13 +89,18 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
       errors.passwordConfirmation
     )
       return;
-    setState({ isLoading: true });
-    await addAccount.add({
-      name: inputs.name,
-      email: inputs.email,
-      password: inputs.password,
-      passwordConfirmation: inputs.passwordConfirmation,
-    });
+    try {
+      setState({ isLoading: true });
+      await addAccount.add({
+        name: inputs.name,
+        email: inputs.email,
+        password: inputs.password,
+        passwordConfirmation: inputs.passwordConfirmation,
+      });
+    } catch (error: any) {
+      setState({ isLoading: false });
+      setErrors((prevState) => ({ ...prevState, main: error.message }));
+    }
   };
 
   useEffect(() => {
