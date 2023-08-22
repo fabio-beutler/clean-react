@@ -8,6 +8,7 @@ import {
 } from "@testing-library/react";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
+import { EmailInUseError, InvalidCredentialsError } from "@/domain/errors";
 import { AddAccountSpy, Helper, ValidationStub } from "@/presentation/test";
 
 import Signup from "./Signup";
@@ -47,6 +48,15 @@ const simulateValidSubmit = async (
   const form = sut.getByTestId("form");
   fireEvent.submit(form);
   await waitFor(() => form);
+};
+
+const testElementText = (
+  sut: RenderResult,
+  fieldName: string,
+  text: string,
+): void => {
+  const element = sut.getByTestId(fieldName);
+  expect(element.textContent).toBe(text);
 };
 
 describe("Signup Component", () => {
@@ -144,17 +154,26 @@ describe("Signup Component", () => {
     });
   });
 
-  test("Should call Authentication only once", async () => {
+  test("Should call AddAccount only once", async () => {
     const { sut, addAccountSpy } = makeSut();
     await simulateValidSubmit(sut);
     await simulateValidSubmit(sut);
     expect(addAccountSpy.callsCount).toBe(1);
   });
 
-  test("Should not call Authentication if form is invalid", async () => {
+  test("Should not call AddAccount if form is invalid", async () => {
     const validationError = faker.word.sample();
     const { sut, addAccountSpy } = makeSut({ validationError });
     await simulateValidSubmit(sut);
     expect(addAccountSpy.callsCount).toBe(0);
+  });
+
+  test("Should present error if AddAccount fails", async () => {
+    const { sut, addAccountSpy } = makeSut();
+    const error = new EmailInUseError();
+    vi.spyOn(addAccountSpy, "add").mockRejectedValueOnce(error);
+    await simulateValidSubmit(sut);
+    testElementText(sut, "main-error", error.message);
+    Helper.testChildCount(sut, "error-wrap", 1);
   });
 });

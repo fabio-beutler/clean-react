@@ -145,9 +145,7 @@ describe("Login Component", () => {
   test("Should present error if Authentication fails", async () => {
     const { sut, authenticationSpy } = makeSut();
     const error = new InvalidCredentialsError();
-    vi.spyOn(authenticationSpy, "auth").mockReturnValueOnce(
-      Promise.reject(error),
-    );
+    vi.spyOn(authenticationSpy, "auth").mockRejectedValueOnce(error);
     await simulateValidSubmit(sut);
     testElementText(sut, "main-error", error.message);
     Helper.testChildCount(sut, "error-wrap", 1);
