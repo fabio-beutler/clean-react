@@ -53,7 +53,7 @@ const Signup: FC<Props> = ({ validation }) => {
             type="password"
             name="passwordConfirmation"
             placeholder="Repita sua senha"
-            tooltip="password"
+            tooltip="passwordConfirmation"
           />
           <button data-testid={"submit"} disabled={true} type="submit">
             Entrar
