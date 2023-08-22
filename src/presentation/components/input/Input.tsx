@@ -9,7 +9,7 @@ import {
 import styles from "./input.module.css";
 
 type InputProps = ComponentProps<"input"> & {
-  tooltip: "email" | "password";
+  tooltip: "name" | "email" | "password" | "passwordConfirmation";
   formContext: typeof useLoginFormContext | typeof useSignupFormContext;
 };
 
@@ -20,6 +20,7 @@ const Input: FC<InputProps> = ({
   ...props
 }) => {
   const { errors, onInputChange } = formContext();
+  // @ts-ignore
   const error = errors[tooltip];
   const getStatus = () => {
     return error ? "🔴" : "🟢";

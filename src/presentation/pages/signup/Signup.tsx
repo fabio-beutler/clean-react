@@ -12,14 +12,19 @@ import {
   SignupFormContextProvider,
   useSignupFormContext,
 } from "@/presentation/contexts";
+import { Validation } from "@/presentation/protocols";
 
 import styles from "./signup.module.css";
 
-const Signup: FC = () => {
+type Props = {
+  validation: Validation;
+};
+
+const Signup: FC<Props> = ({ validation }) => {
   return (
     <div className={styles.signup}>
       <Header />
-      <SignupFormContextProvider>
+      <SignupFormContextProvider validation={validation}>
         <Form formContext={useSignupFormContext} className={styles.form}>
           <h2>Criar conta</h2>
           <Input
@@ -27,7 +32,7 @@ const Signup: FC = () => {
             type="text"
             name="name"
             placeholder="Digite seu nome"
-            tooltip="email"
+            tooltip="name"
           />
           <Input
             formContext={useSignupFormContext}
