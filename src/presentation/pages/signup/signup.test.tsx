@@ -1,10 +1,5 @@
 import { faker } from "@faker-js/faker";
-import {
-  cleanup,
-  fireEvent,
-  render,
-  RenderResult,
-} from "@testing-library/react";
+import { cleanup, render, RenderResult } from "@testing-library/react";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import { Helper, ValidationStub } from "@/presentation/test";
@@ -39,7 +34,7 @@ describe("Signup Component", () => {
     Helper.testStatusForField(sut, "name", validationError);
     Helper.testStatusForField(sut, "email", validationError);
     Helper.testStatusForField(sut, "password", validationError);
-    Helper.testStatusForField(sut, "passwordConfirmation", "Campo obrigatório");
+    Helper.testStatusForField(sut, "passwordConfirmation", validationError);
   });
 
   test("Should show name error if Validation fails", () => {
@@ -61,5 +56,12 @@ describe("Signup Component", () => {
     const { sut } = makeSut({ validationError });
     Helper.populateField(sut, "password");
     Helper.testStatusForField(sut, "password", validationError);
+  });
+
+  test("Should show passwordConfirmation error if Validation fails", () => {
+    const validationError = faker.word.sample();
+    const { sut } = makeSut({ validationError });
+    Helper.populateField(sut, "passwordConfirmation");
+    Helper.testStatusForField(sut, "passwordConfirmation", validationError);
   });
 });
