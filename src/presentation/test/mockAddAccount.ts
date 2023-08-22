@@ -4,8 +4,10 @@ import { AddAccount, AddAccountParams } from "@/domain/useCases";
 
 export class AddAccountSpy implements AddAccount {
   params: AddAccountParams = {} as AddAccountParams;
+  callsCount: number = 0;
   async add(params: AddAccountParams): Promise<AccountModel> {
     this.params = params;
+    this.callsCount++;
     return Promise.resolve(mockAccountModel());
   }
 }
