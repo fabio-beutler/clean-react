@@ -1,0 +1,15 @@
+.formButton {
+  @apply bg-rose-900 rounded-lg text-white py-2 border-rose-800 leading-10;
+}
+
+.formButton:hover {
+  @apply opacity-90;
+}
+
+.formButton:disabled {
+  @apply bg-gray-300 cursor-not-allowed text-gray-800;
+}
+
+.formButton:disabled:hover {
+  @apply opacity-100;
+}

@@ -6,22 +6,22 @@ import {
   useSignupFormContext,
 } from "@/presentation/contexts";
 
+import styles from "./formButton.module.css";
+
 type FormButtonProps = ComponentProps<"button"> & {
   formContext: typeof useLoginFormContext | typeof useSignupFormContext;
 };
-const FormButton: FC<FormButtonProps> = ({ formContext, ...props }) => {
-  const { errors } = formContext();
+const FormButton: FC<FormButtonProps> = ({
+  formContext,
+  className,
+  ...props
+}) => {
+  const { state } = formContext();
   return (
     <button
+      className={`${styles.formButton} ${className}`}
       {...props}
-      disabled={
-        !!errors.email ||
-        !!errors.password ||
-        // @ts-ignore
-        !!errors.name ||
-        // @ts-ignore
-        !!errors.passwordConfirmation
-      }
+      disabled={state.isFormInvalid}
       data-testid={props.type}
     >
       {props.children}

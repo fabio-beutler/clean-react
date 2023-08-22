@@ -16,6 +16,7 @@ import { Validation } from "@/presentation/protocols";
 type ContextProps = {
   state: {
     isLoading: boolean;
+    isFormInvalid: boolean;
   };
   errors: {
     name: string;
@@ -44,6 +45,7 @@ type FormContextProviderProps = {
 const initialState: ContextProps = {
   state: {
     isLoading: false,
+    isFormInvalid: true,
   },
   errors: {
     name: "",
@@ -85,16 +87,9 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
   };
 
   const onSubmit = async (): Promise<void> => {
-    if (
-      state.isLoading ||
-      errors.name ||
-      errors.email ||
-      errors.password ||
-      errors.passwordConfirmation
-    )
-      return;
+    if (state.isLoading || state.isFormInvalid) return;
     try {
-      setState({ isLoading: true });
+      setState((prevState) => ({ ...prevState, isLoading: true }));
       const account = await addAccount.add({
         name: inputs.name,
         email: inputs.email,
@@ -104,21 +99,29 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
       await saveAccessToken.save(account.accessToken);
       await router.replace("/");
     } catch (error: any) {
-      setState({ isLoading: false });
+      setState((prevState) => ({ ...prevState, isLoading: false }));
       setErrors((prevState) => ({ ...prevState, main: error.message }));
     }
   };
 
   useEffect(() => {
+    const name = validation.validate("name", inputs.name);
+    const email = validation.validate("email", inputs.email);
+    const password = validation.validate("password", inputs.password);
+    const passwordConfirmation = validation.validate(
+      "passwordConfirmation",
+      inputs.passwordConfirmation,
+    );
     setErrors((prevState) => ({
       ...prevState,
-      name: validation.validate("name", inputs.name),
-      email: validation.validate("email", inputs.email),
-      password: validation.validate("password", inputs.password),
-      passwordConfirmation: validation.validate(
-        "passwordConfirmation",
-        inputs.passwordConfirmation,
-      ),
+      name,
+      email,
+      password,
+      passwordConfirmation,
+    }));
+    setState((prevState) => ({
+      ...prevState,
+      isFormInvalid: !!name || !!email || !!password || !!passwordConfirmation,
     }));
   }, [
     inputs.name,

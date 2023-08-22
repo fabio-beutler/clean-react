@@ -64,7 +64,7 @@ const Signup: FC<Props> = ({ validation, addAccount, saveAccessToken }) => {
             tooltip="passwordConfirmation"
           />
           <FormButton formContext={useSignupFormContext} type="submit">
-            Entrar
+            Cadastrar
           </FormButton>
           <Link
             data-testid="login-link"

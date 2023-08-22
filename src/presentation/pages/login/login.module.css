@@ -10,22 +10,6 @@
   @apply text-rose-950 text-center uppercase text-xl font-bold;
 }
 
-.form button {
-  @apply bg-rose-900 rounded-lg text-white py-2 border-rose-800 leading-10;
-}
-
-.form button:hover {
-  @apply opacity-90;
-}
-
-.form button:disabled {
-  @apply bg-gray-300 cursor-not-allowed text-gray-800;
-}
-
-.form button:disabled:hover {
-  @apply opacity-100;
-}
-
 .form .link {
   @apply text-center text-rose-900 lowercase mt-4 cursor-pointer;
 }
