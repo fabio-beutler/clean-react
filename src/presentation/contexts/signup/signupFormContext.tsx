@@ -29,6 +29,7 @@ type ContextProps = {
     passwordConfirmation: string;
   };
   onInputChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+  onSubmit?: () => void;
 };
 
 type FormContextProviderProps = {
@@ -61,11 +62,17 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
   children,
   validation,
 }) => {
-  const [state] = useState<ContextProps["state"]>(initialState["state"]);
+  const [state, setState] = useState<ContextProps["state"]>(
+    initialState["state"],
+  );
   const [errors, setErrors] = useState<ContextProps["errors"]>(
     initialState["errors"],
   );
   const [inputs] = useState<ContextProps["inputs"]>(initialState["inputs"]);
+
+  const onSubmit = async (): Promise<void> => {
+    setState({ isLoading: true });
+  };
 
   useEffect(() => {
     setErrors((prevState) => ({
@@ -87,7 +94,7 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
   ]);
 
   return (
-    <SignupFormContext.Provider value={{ state, errors, inputs }}>
+    <SignupFormContext.Provider value={{ state, errors, inputs, onSubmit }}>
       {children}
     </SignupFormContext.Provider>
   );
