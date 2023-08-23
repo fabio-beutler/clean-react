@@ -1,4 +1,4 @@
-.login {
+.signup {
   @apply flex flex-col justify-between h-screen bg-rose-50;
 }
 

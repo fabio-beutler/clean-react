@@ -4,14 +4,14 @@ import {
   ChangeEvent,
   createContext,
   FC,
-  ReactNode,
+  ReactElement,
   useContext,
   useEffect,
   useState,
 } from "react";
 
-import { Authentication, SaveAccessToken } from "@/domain/useCases";
-import { Validation } from "@/presentation/protocols/validation";
+import { AddAccount, SaveAccessToken } from "@/domain/useCases";
+import { Validation } from "@/presentation/protocols";
 
 type ContextProps = {
   state: {
@@ -19,22 +19,26 @@ type ContextProps = {
     isFormInvalid: boolean;
   };
   errors: {
+    name: string;
     email: string;
     password: string;
+    passwordConfirmation: string;
     main: string;
   };
   inputs: {
+    name: string;
     email: string;
     password: string;
+    passwordConfirmation: string;
   };
   onInputChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onSubmit?: () => void;
 };
 
 type FormContextProviderProps = {
-  children: ReactNode;
+  children: ReactElement;
   validation: Validation;
-  authentication: Authentication;
+  addAccount: AddAccount;
   saveAccessToken: SaveAccessToken;
 };
 
@@ -44,22 +48,26 @@ const initialState: ContextProps = {
     isFormInvalid: true,
   },
   errors: {
+    name: "",
     email: "",
     password: "",
+    passwordConfirmation: "",
     main: "",
   },
   inputs: {
+    name: "",
     email: "",
     password: "",
+    passwordConfirmation: "",
   },
 };
 
-const LoginFormContext = createContext<ContextProps>(initialState);
+const SignupFormContext = createContext<ContextProps>(initialState);
 
-const LoginFormContextProvider: FC<FormContextProviderProps> = ({
+const SignupFormContextProvider: FC<FormContextProviderProps> = ({
   children,
   validation,
-  authentication,
+  addAccount,
   saveAccessToken,
 }) => {
   const router = useRouter();
@@ -82,44 +90,51 @@ const LoginFormContextProvider: FC<FormContextProviderProps> = ({
     if (state.isLoading || state.isFormInvalid) return;
     try {
       setState((prevState) => ({ ...prevState, isLoading: true }));
-
-      const account = await authentication.auth({
+      const account = await addAccount.add({
+        name: inputs.name,
         email: inputs.email,
         password: inputs.password,
+        passwordConfirmation: inputs.passwordConfirmation,
       });
       await saveAccessToken.save(account.accessToken);
       await router.replace("/");
     } catch (error: any) {
       setState((prevState) => ({ ...prevState, isLoading: false }));
-
       setErrors((prevState) => ({ ...prevState, main: error.message }));
     }
   };
 
   useEffect(() => {
+    const name = validation.validate("name", inputs);
     const email = validation.validate("email", inputs);
     const password = validation.validate("password", inputs);
+    const passwordConfirmation = validation.validate(
+      "passwordConfirmation",
+      inputs,
+    );
     setErrors((prevState) => ({
       ...prevState,
+      name,
       email,
       password,
+      passwordConfirmation,
     }));
     setState((prevState) => ({
       ...prevState,
-      isFormInvalid: !!email || !!password,
+      isFormInvalid: !!name || !!email || !!password || !!passwordConfirmation,
     }));
   }, [inputs, validation]);
 
   return (
-    <LoginFormContext.Provider
+    <SignupFormContext.Provider
       value={{ state, errors, inputs, onInputChange, onSubmit }}
     >
       {children}
-    </LoginFormContext.Provider>
+    </SignupFormContext.Provider>
   );
 };
 
-export default LoginFormContextProvider;
+export default SignupFormContextProvider;
 
-export const useLoginFormContext = (): ContextProps =>
-  useContext(LoginFormContext);
+export const useSignupFormContext = (): ContextProps =>
+  useContext(SignupFormContext);

@@ -1,16 +1,26 @@
 "use client";
 import { ChangeEvent, ComponentProps, FC } from "react";
 
-import { useLoginFormContext } from "@/presentation/contexts";
+import {
+  useLoginFormContext,
+  useSignupFormContext,
+} from "@/presentation/contexts";
 
 import styles from "./input.module.css";
 
 type InputProps = ComponentProps<"input"> & {
-  tooltip: "email" | "password";
+  tooltip: "name" | "email" | "password" | "passwordConfirmation";
+  formContext: typeof useLoginFormContext | typeof useSignupFormContext;
 };
 
-const Input: FC<InputProps> = ({ children, tooltip, ...props }) => {
-  const { errors, onInputChange } = useLoginFormContext();
+const Input: FC<InputProps> = ({
+  children,
+  tooltip,
+  formContext,
+  ...props
+}) => {
+  const { errors, onInputChange } = formContext();
+  // @ts-ignore
   const error = errors[tooltip];
   const getStatus = () => {
     return error ? "🔴" : "🟢";
@@ -25,7 +35,7 @@ const Input: FC<InputProps> = ({ children, tooltip, ...props }) => {
     <div className={styles.inputWrap}>
       <input data-testid={props.name} {...props} onChange={handleInputChange} />
       <span
-        data-testid={`${tooltip}-status`}
+        data-testid={`${props.name}-status`}
         title={getTitle()}
         className={styles.status}
       >

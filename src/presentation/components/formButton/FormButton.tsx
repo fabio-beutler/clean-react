@@ -1,14 +1,27 @@
 "use client";
 import { ComponentProps, FC } from "react";
 
-import { useLoginFormContext } from "@/presentation/contexts";
+import {
+  useLoginFormContext,
+  useSignupFormContext,
+} from "@/presentation/contexts";
 
-const FormButton: FC<ComponentProps<"button">> = (props) => {
-  const { errors } = useLoginFormContext();
+import styles from "./formButton.module.css";
+
+type FormButtonProps = ComponentProps<"button"> & {
+  formContext: typeof useLoginFormContext | typeof useSignupFormContext;
+};
+const FormButton: FC<FormButtonProps> = ({
+  formContext,
+  className,
+  ...props
+}) => {
+  const { state } = formContext();
   return (
     <button
+      className={`${styles.formButton} ${className}`}
       {...props}
-      disabled={!!errors.email || !!errors.password}
+      disabled={state.isFormInvalid}
       data-testid={props.type}
     >
       {props.children}

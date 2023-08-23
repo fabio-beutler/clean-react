@@ -9,13 +9,13 @@ const makeSut = (): RequiredFieldValidation =>
 describe("RequiredFieldValidation", () => {
   test("Should return error if field is empty", () => {
     const sut = makeSut();
-    const error = sut.validate("");
+    const error = sut.validate({ [sut.field]: "" });
     expect(error).toEqual(new RequiredFieldError());
   });
 
   test("Should return falsy if field is not empty", () => {
     const sut = makeSut();
-    const error = sut.validate(faker.word.sample());
+    const error = sut.validate({ [sut.field]: faker.word.sample() });
     expect(error).toBeFalsy();
   });
 });
