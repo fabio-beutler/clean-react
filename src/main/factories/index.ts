@@ -3,5 +3,7 @@ export { default as makeLocalStorageAdapter } from "./cache/localStorageAdapterF
 export { default as makeApiUrl } from "./http/apiUrlFactory";
 export { default as makeAxiosHttpClient } from "./http/axiosHttpClientFactory";
 export { default as makeLoginValidation } from "./pages/login/loginValidationFactory";
+export { default as makeSignupValidation } from "./pages/signup/signupValidationFactory";
+export { default as makeRemoteAddAccount } from "./useCases/addAccount/remoteAddAccountFactory";
 export { default as makeRemoteAuthentication } from "./useCases/authentication/remoteAuthenticationFactory";
 export { default as makeLocalSaveAccessToken } from "./useCases/saveAccessToken/localSaveAccessTokenFactory";
