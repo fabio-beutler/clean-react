@@ -105,12 +105,12 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
   };
 
   useEffect(() => {
-    const name = validation.validate("name", inputs.name);
-    const email = validation.validate("email", inputs.email);
-    const password = validation.validate("password", inputs.password);
+    const name = validation.validate("name", inputs);
+    const email = validation.validate("email", inputs);
+    const password = validation.validate("password", inputs);
     const passwordConfirmation = validation.validate(
       "passwordConfirmation",
-      inputs.passwordConfirmation,
+      inputs,
     );
     setErrors((prevState) => ({
       ...prevState,
@@ -123,13 +123,7 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
       ...prevState,
       isFormInvalid: !!name || !!email || !!password || !!passwordConfirmation,
     }));
-  }, [
-    inputs.name,
-    inputs.email,
-    inputs.password,
-    inputs.passwordConfirmation,
-    validation,
-  ]);
+  }, [inputs, validation]);
 
   return (
     <SignupFormContext.Provider

@@ -4,19 +4,27 @@ import { InvalidFieldError } from "@/validation/errors";
 
 import { CompareFieldsValidation } from "./compareFieldsValidation";
 
-const makeSut = (valueToCompare: string): CompareFieldsValidation =>
-  new CompareFieldsValidation(faker.database.column(), valueToCompare);
+const makeSut = (fieldToCompare: string): CompareFieldsValidation =>
+  new CompareFieldsValidation(faker.database.column(), fieldToCompare);
 describe("CompareFieldsValidation", () => {
   test("Should return error if compare is invalid", () => {
-    const sut = makeSut(faker.word.sample());
-    const error = sut.validate(faker.word.sample());
+    const fieldToCompare = faker.database.column();
+    const sut = makeSut(fieldToCompare);
+    const error = sut.validate({
+      [sut.field]: faker.word.sample(),
+      [fieldToCompare]: faker.word.sample(),
+    });
     expect(error).toEqual(new InvalidFieldError());
   });
 
   test("Should return falsy if compare is valid", () => {
-    const valueToCompare = faker.word.sample();
-    const sut = makeSut(valueToCompare);
-    const error = sut.validate(valueToCompare);
+    const fieldToCompare = faker.word.sample();
+    const value = faker.word.sample();
+    const sut = makeSut(fieldToCompare);
+    const error = sut.validate({
+      [sut.field]: value,
+      [fieldToCompare]: value,
+    });
     expect(error).toBeFalsy();
   });
 });

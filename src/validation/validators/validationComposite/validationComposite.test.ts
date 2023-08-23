@@ -28,14 +28,14 @@ describe("ValidationComposite", () => {
     const errorMessage = faker.word.sample();
     fieldValidationSpyList[0].error = new Error(errorMessage);
     fieldValidationSpyList[1].error = new Error(faker.word.sample());
-    const error = sut.validate(fieldName, faker.word.sample());
+    const error = sut.validate(fieldName, { [fieldName]: faker.word.sample() });
     expect(error).toBe(errorMessage);
   });
 
   test("Should return falsy if no error was found", () => {
     const fieldName = faker.database.column();
     const { sut } = makeSut(fieldName);
-    const error = sut.validate(fieldName, faker.word.sample());
+    const error = sut.validate(fieldName, { [fieldName]: faker.word.sample() });
     expect(error).toBeFalsy();
   });
 });

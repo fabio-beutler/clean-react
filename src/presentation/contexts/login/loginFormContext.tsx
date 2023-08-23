@@ -97,8 +97,8 @@ const LoginFormContextProvider: FC<FormContextProviderProps> = ({
   };
 
   useEffect(() => {
-    const email = validation.validate("email", inputs.email);
-    const password = validation.validate("password", inputs.password);
+    const email = validation.validate("email", inputs);
+    const password = validation.validate("password", inputs);
     setErrors((prevState) => ({
       ...prevState,
       email,
@@ -108,7 +108,7 @@ const LoginFormContextProvider: FC<FormContextProviderProps> = ({
       ...prevState,
       isFormInvalid: !!email || !!password,
     }));
-  }, [inputs.email, inputs.password, validation]);
+  }, [inputs, validation]);
 
   return (
     <LoginFormContext.Provider
