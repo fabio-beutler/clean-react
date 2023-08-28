@@ -54,7 +54,7 @@ describe("Login", () => {
       body: {
         error: faker.word.sample(),
       },
-      delay: 100,
+      delay: 50,
     }).as("InvalidCredentials");
     cy.getByTestId("submit").click();
     cy.getByTestId("spinner").should("exist");
@@ -73,7 +73,7 @@ describe("Login", () => {
     cy.intercept("POST", "**/login", {
       statusCode: 500,
       body: null,
-      delay: 100,
+      delay: 50,
     }).as("NetworkError");
     cy.getByTestId("submit").click();
     cy.getByTestId("spinner").should("exist");
@@ -94,7 +94,7 @@ describe("Login", () => {
       body: {
         accessToken: faker.string.uuid(),
       },
-      delay: 100,
+      delay: 50,
     }).as("ValidCredentials");
     cy.getByTestId("submit").click();
     cy.getByTestId("spinner").should("exist");
@@ -103,6 +103,27 @@ describe("Login", () => {
     cy.url().should("equal", `${baseUrl}/`);
     cy.window().then((window) => {
       assert.isOk(window.localStorage.getItem("@4Devs:accessToken"));
+    });
+  });
+
+  it("Should prevent multiple submits", () => {
+    cy.getByTestId("email").type(faker.internet.email());
+    cy.getByTestId("password").type(faker.internet.password({ length: 5 }));
+    let requestsCount = 0;
+    cy.intercept("POST", "**/login", (req) => {
+      requestsCount += 1;
+      req.reply({
+        statusCode: 200,
+        body: {
+          accessToken: faker.string.uuid(),
+        },
+        delay: 50,
+      });
+    }).as("request");
+    cy.getByTestId("submit").click();
+    cy.getByTestId("submit").click();
+    cy.wait("@request").then(() => {
+      expect(requestsCount).to.eq(1);
     });
   });
 });
