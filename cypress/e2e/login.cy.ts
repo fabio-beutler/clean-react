@@ -49,7 +49,7 @@ describe("Login", () => {
   it("Should present error if invalid credentials are provided", () => {
     cy.getByTestId("email").type(faker.internet.email());
     cy.getByTestId("password").type(faker.internet.password({ length: 5 }));
-    cy.intercept("POST", "http://localhost:5050/api/login", {
+    cy.intercept("POST", "**/login", {
       statusCode: 401,
       body: {
         error: faker.word.sample(),
@@ -72,7 +72,7 @@ describe("Login", () => {
   it("Should present error if network fails", () => {
     cy.getByTestId("email").type(faker.internet.email());
     cy.getByTestId("password").type(faker.internet.password({ length: 5 }));
-    cy.intercept("POST", "http://localhost:5050/api/login", {
+    cy.intercept("POST", "**/login", {
       statusCode: 500,
       body: null,
       delay: 500,
@@ -98,7 +98,7 @@ describe("Login", () => {
     cy.getByTestId("password")
       .focus()
       .type(faker.internet.password({ length: 5 }));
-    cy.intercept("POST", "http://localhost:5050/api/login", {
+    cy.intercept("POST", "**/login", {
       statusCode: 200,
       body: {
         accessToken: faker.string.uuid(),
