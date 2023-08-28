@@ -21,13 +21,11 @@ describe("Login", () => {
   });
 
   it("Should present error state if form is invalid", () => {
-    cy.getByTestId("email").focus().type(faker.word.sample());
+    cy.getByTestId("email").type(faker.word.sample());
     cy.getByTestId("email-status")
       .should("have.attr", "title", "Campo inválido")
       .and("contain.text", "🔴");
-    cy.getByTestId("password")
-      .focus()
-      .type(faker.word.sample({ length: 3 }));
+    cy.getByTestId("password").type(faker.word.sample({ length: 3 }));
     cy.getByTestId("password-status")
       .should("have.attr", "title", "Campo inválido")
       .and("contain.text", "🔴");
@@ -36,13 +34,11 @@ describe("Login", () => {
   });
 
   it("Should present valid state if form is valid", () => {
-    cy.getByTestId("email").focus().type(faker.internet.email());
+    cy.getByTestId("email").type(faker.internet.email());
     cy.getByTestId("email-status")
       .should("have.attr", "title", "Tudo certo!")
       .and("contain.text", "🟢");
-    cy.getByTestId("password")
-      .focus()
-      .type(faker.internet.password({ length: 5 }));
+    cy.getByTestId("password").type(faker.internet.password({ length: 5 }));
     cy.getByTestId("password-status")
       .should("have.attr", "title", "Tudo certo!")
       .and("contain.text", "🟢");
@@ -51,23 +47,51 @@ describe("Login", () => {
   });
 
   it("Should present error if invalid credentials are provided", () => {
+    cy.getByTestId("email").type(faker.internet.email());
+    cy.getByTestId("password").type(faker.internet.password({ length: 5 }));
+    cy.intercept("POST", "http://localhost:5050/api/login", {
+      statusCode: 401,
+      body: {
+        error: faker.word.sample(),
+      },
+      delay: 500,
+    }).as("InvalidCredentials");
+    cy.getByTestId("submit").click();
+    cy.getByTestId("error-wrap")
+      .getByTestId("spinner")
+      .should("exist")
+      .getByTestId("main-error")
+      .should("not.exist")
+      .getByTestId("spinner")
+      .should("not.exist")
+      .getByTestId("main-error")
+      .should("contain.text", "Credenciais inválidas");
+    cy.url().should("equal", `${baseUrl}/login`);
+  });
+
+  it("Should present save accessToken if valid credentials are provided", () => {
     cy.getByTestId("email").focus().type(faker.internet.email());
     cy.getByTestId("password")
       .focus()
       .type(faker.internet.password({ length: 5 }));
-    cy.getByTestId("submit")
-      .click()
-      .then(() => {
-        cy.getByTestId("error-wrap")
-          .getByTestId("spinner")
-          .should("exist")
-          .getByTestId("main-error")
-          .should("not.exist")
-          .getByTestId("spinner")
-          .should("not.exist")
-          .getByTestId("main-error")
-          .should("contain.text", "Credenciais inválidas");
-      });
-    cy.url().should("equal", `${baseUrl}/login`);
+    cy.intercept("POST", "http://localhost:5050/api/login", {
+      statusCode: 200,
+      body: {
+        accessToken: faker.string.uuid(),
+      },
+      delay: 500,
+    }).as("ValidCredentials");
+    cy.getByTestId("submit").click();
+    cy.getByTestId("error-wrap")
+      .getByTestId("spinner")
+      .should("exist")
+      .getByTestId("main-error")
+      .should("not.exist")
+      .getByTestId("spinner")
+      .should("not.exist");
+    cy.url().should("equal", `${baseUrl}/`);
+    cy.window().then((window) => {
+      assert.isOk(window.localStorage.getItem("@4Devs:accessToken"));
+    });
   });
 });
