@@ -32,4 +32,19 @@ describe("Login", () => {
     cy.getByTestId("submit").should("be.disabled");
     cy.getByTestId("error-wrap").should("be.empty");
   });
+
+  it("Should present valid state if form is valid", () => {
+    cy.getByTestId("email").focus().type(faker.internet.email());
+    cy.getByTestId("email-status")
+      .should("have.attr", "title", "Tudo certo!")
+      .and("contain.text", "🟢");
+    cy.getByTestId("password")
+      .focus()
+      .type(faker.internet.password({ length: 5 }));
+    cy.getByTestId("password-status")
+      .should("have.attr", "title", "Tudo certo!")
+      .and("contain.text", "🟢");
+    cy.getByTestId("submit").should("be.enabled");
+    cy.getByTestId("error-wrap").should("be.empty");
+  });
 });
