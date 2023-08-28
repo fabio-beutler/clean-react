@@ -69,6 +69,30 @@ describe("Login", () => {
     cy.url().should("equal", `${baseUrl}/login`);
   });
 
+  it("Should present error if network fails", () => {
+    cy.getByTestId("email").type(faker.internet.email());
+    cy.getByTestId("password").type(faker.internet.password({ length: 5 }));
+    cy.intercept("POST", "http://localhost:5050/api/login", {
+      statusCode: 500,
+      body: null,
+      delay: 500,
+    }).as("NetworkError");
+    cy.getByTestId("submit").click();
+    cy.getByTestId("error-wrap")
+      .getByTestId("spinner")
+      .should("exist")
+      .getByTestId("main-error")
+      .should("not.exist")
+      .getByTestId("spinner")
+      .should("not.exist")
+      .getByTestId("main-error")
+      .should(
+        "contain.text",
+        "Algo de errado aconteceu. Tente novamente em breve.",
+      );
+    cy.url().should("equal", `${baseUrl}/login`);
+  });
+
   it("Should present save accessToken if valid credentials are provided", () => {
     cy.getByTestId("email").focus().type(faker.internet.email());
     cy.getByTestId("password")
