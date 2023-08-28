@@ -7,5 +7,5 @@
 }
 
 .errorWrap .error {
-  @apply mt-10 text-rose-800;
+  @apply mt-10 text-rose-800 text-center;
 }
