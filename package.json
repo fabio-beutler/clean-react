@@ -13,7 +13,8 @@
     "test:watch": "vitest --passWithNoTests --watch",
     "test:staged": "vitest --passWithNoTests --findRelatedTests",
     "test:ci": "vitest --passWithNoTests --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "test:cypress": "cypress open"
   },
   "dependencies": {
     "axios": "^1.4.0",
@@ -32,6 +33,7 @@
     "@vitest/coverage-v8": "^0.34.1",
     "@vitest/ui": "^0.34.1",
     "autoprefixer": "10.4.14",
+    "cypress": "^12.17.4",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.13",
     "eslint-plugin-simple-import-sort": "^10.0.0",
