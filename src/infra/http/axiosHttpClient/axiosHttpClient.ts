@@ -4,6 +4,7 @@ import {
   HttpPostClient,
   HttpPostParams,
   HttpResponse,
+  HttpStatusCode,
 } from "@/data/protocols/http";
 
 export class AxiosHttpClient implements HttpPostClient<any, any> {
@@ -18,7 +19,7 @@ export class AxiosHttpClient implements HttpPostClient<any, any> {
     } catch (error: any) {
       if (!error.response)
         return {
-          statusCode: 500,
+          statusCode: HttpStatusCode.serverError,
           body: null,
         };
       httpResponse = error.response;
