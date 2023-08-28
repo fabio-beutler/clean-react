@@ -106,6 +106,27 @@ describe("Login", () => {
     });
   });
 
+  it("Should submit form when press enter", () => {
+    cy.intercept("POST", "**/login", {
+      statusCode: 200,
+      body: {
+        accessToken: faker.string.uuid(),
+      },
+      delay: 50,
+    }).as("ValidCredentials");
+    cy.getByTestId("email").type(faker.internet.email());
+    cy.getByTestId("password")
+      .type(faker.internet.password({ length: 5 }))
+      .type("{enter}");
+    cy.getByTestId("spinner").should("exist");
+    cy.getByTestId("main-error").should("not.exist");
+    cy.getByTestId("spinner").should("not.exist");
+    cy.url().should("equal", `${baseUrl}/`);
+    cy.window().then((window) => {
+      assert.isOk(window.localStorage.getItem("@4Devs:accessToken"));
+    });
+  });
+
   it("Should prevent multiple submits", () => {
     cy.getByTestId("email").type(faker.internet.email());
     cy.getByTestId("password").type(faker.internet.password({ length: 5 }));
