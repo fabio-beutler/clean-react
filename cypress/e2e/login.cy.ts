@@ -147,4 +147,20 @@ describe("Login", () => {
       expect(requestsCount).to.eq(1);
     });
   });
+
+  it("Should not call submit if form is invalid", () => {
+    let requestsCount = 0;
+    cy.intercept("POST", "**/login", (req) => {
+      requestsCount += 1;
+      req.reply({
+        statusCode: 200,
+        body: {
+          accessToken: faker.string.uuid(),
+        },
+        delay: 50,
+      });
+    }).as("request");
+    cy.getByTestId("email").type(faker.internet.email()).type("{enter}");
+    expect(requestsCount).to.eq(0);
+  });
 });
