@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 
 import * as FormHelper from "../support/formHelper";
-import * as Http from "./loginMocks";
+import * as Http from "../support/loginMocks";
 
 const baseUrl = Cypress.config().baseUrl;
 
