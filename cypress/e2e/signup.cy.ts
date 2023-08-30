@@ -144,4 +144,23 @@ describe("Signup", () => {
       assert.isOk(window.localStorage.getItem("@4Devs:accessToken"));
     });
   });
+
+  it("Should not call submit if form is invalid", () => {
+    let requestsCount = 0;
+    cy.intercept("POST", "**/signup", (req) => {
+      requestsCount += 1;
+      req.reply({
+        statusCode: 200,
+        body: {
+          accessToken: faker.string.uuid(),
+        },
+        delay: 50,
+      });
+    }).as("request");
+    cy.getByTestId("email")
+      .focus()
+      .type(faker.internet.email())
+      .type("{enter}");
+    expect(requestsCount).to.eq(0);
+  });
 });
