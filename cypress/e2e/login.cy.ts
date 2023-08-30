@@ -79,12 +79,9 @@ describe("Login", () => {
   });
 
   it("Should present save accessToken if valid credentials are provided", () => {
-    cy.getByTestId("email").type(faker.internet.email());
-    cy.getByTestId("password").type(faker.internet.password({ length: 5 }));
     Http.mockOk();
-    cy.getByTestId("submit").click();
-    cy.getByTestId("spinner").should("exist");
-    cy.getByTestId("main-error").should("not.exist");
+    simulateValidSubmit();
+    FormHelper.testIsLoading();
     cy.getByTestId("spinner").should("not.exist");
     cy.url().should("equal", `${baseUrl}/`);
     cy.window().then((window) => {

@@ -10,14 +10,14 @@ export const mockUnexpectedError = () => {
   return Helper.mockUnexpectedError(/login/);
 };
 
-export const mockOk = () => {
-  return Helper.mockOk(/login/, {
-    accessToken: faker.string.uuid(),
-  });
-};
-
 export const mockInvalidData = () => {
   return Helper.mockOk(/login/, {
     invalid: faker.string.uuid(),
+  });
+};
+
+export const mockOk = () => {
+  return Helper.mockOk(/login/, {
+    accessToken: faker.string.uuid(),
   });
 };

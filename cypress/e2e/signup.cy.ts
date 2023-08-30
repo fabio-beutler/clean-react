@@ -100,4 +100,15 @@ describe("Signup", () => {
     );
     cy.url().should("equal", `${baseUrl}/signup`);
   });
+
+  it("Should present save accessToken if valid credentials are provided", () => {
+    Http.mockOk();
+    simulateValidSubmit();
+    FormHelper.testIsLoading();
+    cy.getByTestId("spinner").should("not.exist");
+    cy.url().should("equal", `${baseUrl}/`);
+    cy.window().then((window) => {
+      assert.isOk(window.localStorage.getItem("@4Devs:accessToken"));
+    });
+  });
 });

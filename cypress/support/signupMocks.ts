@@ -15,3 +15,9 @@ export const mockInvalidData = () => {
     invalid: faker.string.uuid(),
   });
 };
+
+export const mockOk = () => {
+  return Helper.mockOk(/signup/, {
+    accessToken: faker.string.uuid(),
+  });
+};
