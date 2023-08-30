@@ -3,7 +3,7 @@
 }
 
 .form {
-  @apply flex flex-col gap-1 w-96 p-10 rounded-lg bg-white self-center drop-shadow;
+  @apply flex flex-col gap-4 w-96 p-10 rounded-lg bg-white self-center drop-shadow;
 }
 
 .form h2 {

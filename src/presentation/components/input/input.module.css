@@ -1,13 +1,35 @@
+.inputWrap + .inputWrap {
+  @apply mt-4;
+}
+
 .inputWrap {
-  @apply relative;
+  @apply relative border-b-2 border-b-black border-dashed;
+}
+
+.inputWrap::after {
+  @apply absolute -bottom-0.5 left-0 w-0 h-0.5 bg-rose-900 transition-all duration-300;
+  content: '';
+}
+
+.inputWrap:focus-within::after {
+  @apply w-full;
 }
 
 .inputWrap input {
-  @apply border-rose-800 leading-10 rounded pl-2 pr-9 w-full;
+  @apply border-rose-800 leading-8 rounded pl-2 pr-9 w-full z-10;
 }
 
 .inputWrap input:focus {
-  @apply outline-rose-800;
+  @apply outline-none;
+}
+
+.inputWrap label {
+  @apply absolute left-2 top-1/2 -translate-y-1/2 transition-all duration-200 cursor-text text-gray-600;
+}
+
+.inputWrap:focus-within label,
+.inputWrap input:not(:placeholder-shown) + label {
+  @apply text-xs text-rose-900 -top-3 translate-y-0;
 }
 
 .inputWrap .status {

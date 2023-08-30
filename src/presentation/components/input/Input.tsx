@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, ComponentProps, FC } from "react";
+import { ChangeEvent, ComponentProps, FC, useId } from "react";
 
 import {
   useLoginFormContext,
@@ -22,24 +22,27 @@ const Input: FC<InputProps> = ({
   const { errors, onInputChange } = formContext();
   // @ts-ignore
   const error = errors[tooltip];
-  const getStatus = () => {
-    return error ? "🔴" : "🟢";
-  };
-  const getTitle = () => {
-    return error || "Tudo certo!";
-  };
+  const inputId = useId();
+
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (onInputChange) onInputChange(event);
   };
   return (
     <div className={styles.inputWrap}>
-      <input data-testid={props.name} {...props} onChange={handleInputChange} />
+      <input
+        data-testid={props.name}
+        onChange={handleInputChange}
+        id={props.name + inputId}
+        {...props}
+        placeholder=""
+      />
+      <label htmlFor={props.name + inputId}>{props.placeholder}</label>
       <span
         data-testid={`${props.name}-status`}
-        title={getTitle()}
+        title={error || "Tudo certo!"}
         className={styles.status}
       >
-        {getStatus()}
+        {error ? "🔴" : "🟢"}
       </span>
     </div>
   );
