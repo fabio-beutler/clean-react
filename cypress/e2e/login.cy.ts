@@ -69,12 +69,9 @@ describe("Login", () => {
   });
 
   it("Should present UnexpectedError if invalid data is returned", () => {
-    cy.getByTestId("email").type(faker.internet.email());
-    cy.getByTestId("password").type(faker.internet.password({ length: 5 }));
     Http.mockInvalidData();
-    cy.getByTestId("submit").click();
-    cy.getByTestId("spinner").should("exist");
-    cy.getByTestId("main-error").should("not.exist");
+    simulateValidSubmit();
+    FormHelper.testIsLoading();
     FormHelper.testMainError(
       "Algo de errado aconteceu. Tente novamente em breve.",
     );

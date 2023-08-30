@@ -1,3 +1,5 @@
+import { faker } from "@faker-js/faker";
+
 import * as Helper from "./httpMocks";
 
 export const mockEmailInUseError = () => {
@@ -6,4 +8,10 @@ export const mockEmailInUseError = () => {
 
 export const mockUnexpectedError = () => {
   return Helper.mockUnexpectedError(/signup/);
+};
+
+export const mockInvalidData = () => {
+  return Helper.mockOk(/signup/, {
+    invalid: faker.string.uuid(),
+  });
 };
