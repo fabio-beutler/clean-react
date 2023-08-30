@@ -48,4 +48,18 @@ describe("Signup", () => {
     cy.getByTestId("submit").should("be.disabled");
     cy.getByTestId("error-wrap").should("be.empty");
   });
+
+  it("Should present valid state if form is valid", () => {
+    cy.getByTestId("name").focus().type(faker.internet.userName());
+    FormHelper.testInputStatus("name", "Tudo certo!", "🟢");
+    cy.getByTestId("email").focus().type(faker.internet.email());
+    FormHelper.testInputStatus("email", "Tudo certo!", "🟢");
+    const password = faker.internet.password({ length: 5 });
+    cy.getByTestId("password").focus().type(password);
+    FormHelper.testInputStatus("password", "Tudo certo!", "🟢");
+    cy.getByTestId("passwordConfirmation").focus().type(password);
+    FormHelper.testInputStatus("passwordConfirmation", "Tudo certo!", "🟢");
+    cy.getByTestId("submit").should("be.enabled");
+    cy.getByTestId("error-wrap").should("be.empty");
+  });
 });
