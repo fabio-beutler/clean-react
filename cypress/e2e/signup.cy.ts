@@ -1,9 +1,18 @@
 import { faker } from "@faker-js/faker";
 
 import * as FormHelper from "../support/formHelper";
+import * as Http from "../support/signupMocks";
 
 const baseUrl = Cypress.config().baseUrl;
 
+const simulateValidSubmit = () => {
+  cy.getByTestId("name").focus().type(faker.internet.userName());
+  cy.getByTestId("email").focus().type(faker.internet.email());
+  const password = faker.internet.password({ length: 5 });
+  cy.getByTestId("password").focus().type(password);
+  cy.getByTestId("passwordConfirmation").focus().type(password);
+  cy.getByTestId("submit").click();
+};
 describe("Signup", () => {
   beforeEach(() => {
     cy.visit("signup");
@@ -61,5 +70,14 @@ describe("Signup", () => {
     FormHelper.testInputStatus("passwordConfirmation", "Tudo certo!", "🟢");
     cy.getByTestId("submit").should("be.enabled");
     cy.getByTestId("error-wrap").should("be.empty");
+  });
+
+  it("Should present EmailInUseError on 403", () => {
+    Http.mockEmailInUseError();
+    simulateValidSubmit();
+    cy.getByTestId("spinner").should("exist");
+    cy.getByTestId("main-error").should("not.exist");
+    FormHelper.testMainError("Esse e-mail já está em uso");
+    cy.url().should("equal", `${baseUrl}/signup`);
   });
 });
