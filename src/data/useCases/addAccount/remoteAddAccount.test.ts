@@ -4,8 +4,7 @@ import { HttpStatusCode } from "@/data/protocols/http";
 import { HttpPostClientSpy } from "@/data/test";
 import { EmailInUseError, UnexpectedError } from "@/domain/errors";
 import { AccountModel } from "@/domain/models";
-import { mockAccountModel } from "@/domain/test";
-import { mockAddAccount } from "@/domain/test/mockAddAcccount";
+import { mockAccountModel, mockAddAccount } from "@/domain/test";
 import { AddAccountParams } from "@/domain/useCases";
 
 import { RemoteAddAccount } from "./remoteAddAccount";
