@@ -5,6 +5,14 @@ import * as Http from "../support/loginMocks";
 
 const baseUrl = Cypress.config().baseUrl;
 
+const simulateValidSubmit = () => {
+  cy.getByTestId("email").focus().type(faker.internet.email());
+  cy.getByTestId("password")
+    .focus()
+    .type(faker.internet.password({ length: 5 }));
+  cy.getByTestId("submit").click();
+};
+
 describe("Login", () => {
   beforeEach(() => {
     cy.visit("login");
@@ -40,12 +48,9 @@ describe("Login", () => {
   });
 
   it("Should present error if invalid credentials are provided", () => {
-    cy.getByTestId("email").type(faker.internet.email());
-    cy.getByTestId("password").type(faker.internet.password({ length: 5 }));
     Http.mockInvalidCredentialsError();
-    cy.getByTestId("submit").click();
-    cy.getByTestId("spinner").should("exist");
-    cy.getByTestId("main-error").should("not.exist");
+    simulateValidSubmit();
+    FormHelper.testIsLoading();
     FormHelper.testMainError("Credenciais inválidas");
     cy.url().should("equal", `${baseUrl}/login`);
   });

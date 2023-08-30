@@ -80,4 +80,14 @@ describe("Signup", () => {
     FormHelper.testMainError("Esse e-mail já está em uso");
     cy.url().should("equal", `${baseUrl}/signup`);
   });
+
+  it("Should present error if network fails", () => {
+    Http.mockUnexpectedError();
+    simulateValidSubmit();
+    FormHelper.testIsLoading();
+    FormHelper.testMainError(
+      "Algo de errado aconteceu. Tente novamente em breve.",
+    );
+    cy.url().should("equal", `${baseUrl}/signup`);
+  });
 });

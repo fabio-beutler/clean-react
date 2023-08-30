@@ -13,3 +13,8 @@ export const testMainError = (errorMessage: string) => {
   cy.getByTestId("spinner").should("not.exist");
   cy.getByTestId("main-error").should("contain.text", errorMessage);
 };
+
+export const testIsLoading = () => {
+  cy.getByTestId("spinner").should("exist");
+  cy.getByTestId("main-error").should("not.exist");
+};
