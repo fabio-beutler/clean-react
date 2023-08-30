@@ -5,11 +5,14 @@ import * as Http from "../support/loginMocks";
 
 const baseUrl = Cypress.config().baseUrl;
 
-const simulateValidSubmit = () => {
+const populateFields = () => {
   cy.getByTestId("email").focus().type(faker.internet.email());
   cy.getByTestId("password")
     .focus()
     .type(faker.internet.password({ length: 5 }));
+};
+const simulateValidSubmit = () => {
+  populateFields();
   cy.getByTestId("submit").click();
 };
 
@@ -90,13 +93,7 @@ describe("Login", () => {
   });
 
   it("Should submit form when press enter", () => {
-    cy.intercept("POST", "**/login", {
-      statusCode: 200,
-      body: {
-        accessToken: faker.string.uuid(),
-      },
-      delay: 50,
-    }).as("ValidCredentials");
+    Http.mockOk();
     cy.getByTestId("email").type(faker.internet.email());
     cy.getByTestId("password")
       .type(faker.internet.password({ length: 5 }))
@@ -120,7 +117,8 @@ describe("Login", () => {
         delay: 50,
       });
     }).as("request");
-    simulateValidSubmit();
+    populateFields();
+    cy.getByTestId("submit").click();
     cy.getByTestId("submit").click();
     cy.wait("@request").then(() => {
       expect(requestsCount).to.eq(1);

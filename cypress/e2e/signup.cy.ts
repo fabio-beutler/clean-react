@@ -5,12 +5,15 @@ import * as Http from "../support/signupMocks";
 
 const baseUrl = Cypress.config().baseUrl;
 
-const simulateValidSubmit = () => {
+const populateFields = () => {
   cy.getByTestId("name").focus().type(faker.internet.userName());
   cy.getByTestId("email").focus().type(faker.internet.email());
   const password = faker.internet.password({ length: 5 });
   cy.getByTestId("password").focus().type(password);
   cy.getByTestId("passwordConfirmation").focus().type(password);
+};
+const simulateValidSubmit = () => {
+  populateFields();
   cy.getByTestId("submit").click();
 };
 describe("Signup", () => {
@@ -122,10 +125,23 @@ describe("Signup", () => {
         delay: 50,
       });
     }).as("request");
-    simulateValidSubmit();
+    populateFields();
+    cy.getByTestId("submit").click();
     cy.getByTestId("submit").click();
     cy.wait("@request").then(() => {
       expect(requestsCount).to.eq(1);
+    });
+  });
+
+  it("Should submit form when press enter", () => {
+    Http.mockOk();
+    populateFields();
+    cy.getByTestId("passwordConfirmation").type("{enter}");
+    FormHelper.testIsLoading();
+    cy.getByTestId("spinner").should("not.exist");
+    cy.url().should("equal", `${baseUrl}/`);
+    cy.window().then((window) => {
+      assert.isOk(window.localStorage.getItem("@4Devs:accessToken"));
     });
   });
 });
