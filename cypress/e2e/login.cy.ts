@@ -111,10 +111,6 @@ describe("Login", () => {
   });
 
   it("Should prevent multiple submits", () => {
-    cy.getByTestId("email").focus().type(faker.internet.email());
-    cy.getByTestId("password")
-      .focus()
-      .type(faker.internet.password({ length: 5 }));
     let requestsCount = 0;
     cy.intercept("POST", "**/login", (req) => {
       requestsCount += 1;
@@ -124,7 +120,7 @@ describe("Login", () => {
         delay: 50,
       });
     }).as("request");
-    cy.getByTestId("submit").click();
+    simulateValidSubmit();
     cy.getByTestId("submit").click();
     cy.wait("@request").then(() => {
       expect(requestsCount).to.eq(1);
