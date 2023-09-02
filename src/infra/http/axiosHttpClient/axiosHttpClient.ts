@@ -1,6 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 
 import {
+  HttpGetParams,
   HttpPostClient,
   HttpPostParams,
   HttpResponse,
@@ -9,12 +10,12 @@ import {
 
 export class AxiosHttpClient implements HttpPostClient {
   async post(params: HttpPostParams): Promise<HttpResponse> {
-    let httpResponse: AxiosResponse;
+    let axiosResponse: AxiosResponse;
     try {
-      httpResponse = await axios.post(params.url, params.body);
+      axiosResponse = await axios.post(params.url, params.body);
       return {
-        statusCode: httpResponse.status,
-        body: httpResponse.data,
+        statusCode: axiosResponse.status,
+        body: axiosResponse.data,
       };
     } catch (error: any) {
       if (!error.response)
@@ -22,11 +23,15 @@ export class AxiosHttpClient implements HttpPostClient {
           statusCode: HttpStatusCode.serverError,
           body: null,
         };
-      httpResponse = error.response;
+      axiosResponse = error.response;
     }
     return {
-      statusCode: httpResponse.status,
-      body: httpResponse.data,
+      statusCode: axiosResponse.status,
+      body: axiosResponse.data,
     };
+  }
+
+  async get(params: HttpGetParams): Promise<void> {
+    await axios.get(params.url);
   }
 }
