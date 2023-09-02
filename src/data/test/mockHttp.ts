@@ -32,10 +32,16 @@ export class HttpPostClientSpy<BodyParams, BodyResponse>
   }
 }
 
-export class HttpGetClientSpy implements HttpGetClient {
-  url: string = "";
+export class HttpGetClientSpy<BodyResponse>
+  implements HttpGetClient<BodyResponse>
+{
+  url?: string;
+  response: HttpResponse<BodyResponse> = {
+    statusCode: HttpStatusCode.ok,
+  };
 
-  async get(params: HttpGetParams): Promise<void> {
+  async get(params: HttpGetParams): Promise<HttpResponse<BodyResponse>> {
     this.url = params.url;
+    return Promise.resolve(this.response);
   }
 }
