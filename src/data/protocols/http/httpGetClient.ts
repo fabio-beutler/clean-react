@@ -1,7 +1,9 @@
+import { HttpResponse } from "@/data/protocols/http";
+
 export type HttpGetParams = {
   url: string;
 };
 
 export interface HttpGetClient<BodyResponse = any> {
-  get(params: HttpGetParams): Promise<void>;
+  get(params: HttpGetParams): Promise<HttpResponse<BodyResponse>>;
 }
