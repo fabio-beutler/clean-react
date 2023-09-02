@@ -69,5 +69,14 @@ describe("AxiosHttpClient", () => {
       await sut.get(request);
       expect(mockedAxios.get).toHaveBeenCalledWith(request.url);
     });
+
+    test("Should return correct response on axios.get", async () => {
+      const { sut, mockedAxiosResult } = makeSut();
+      const httpResponse = await sut.get(mockGetRequest());
+      expect(httpResponse).toEqual({
+        statusCode: mockedAxiosResult.status,
+        body: mockedAxiosResult.data,
+      });
+    });
   });
 });
