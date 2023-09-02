@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { Mocked } from "vitest";
 
-import { mockPostRequest } from "@/data/test";
+import { mockGetRequest, mockPostRequest } from "@/data/test";
 import { AxiosHttpClient } from "@/infra/http/axiosHttpClient";
 import { mockAxios } from "@/infra/test";
 
@@ -20,43 +20,54 @@ const makeSut = (): SutTypes => {
 };
 
 describe("AxiosHttpClient", () => {
-  test("Should call axios with correct values", async () => {
-    const request = mockPostRequest();
-    const { sut, mockedAxios } = makeSut();
-    await sut.post(request);
-    expect(mockedAxios.post).toHaveBeenCalledWith(request.url, request.body);
+  describe("post", () => {
+    test("Should call axios.post with correct values", async () => {
+      const request = mockPostRequest();
+      const { sut, mockedAxios } = makeSut();
+      await sut.post(request);
+      expect(mockedAxios.post).toHaveBeenCalledWith(request.url, request.body);
+    });
+
+    test("Should return correct response on axios.post", async () => {
+      const { sut, mockedAxiosResult } = makeSut();
+      const httpResponse = await sut.post(mockPostRequest());
+      expect(httpResponse).toEqual({
+        statusCode: mockedAxiosResult.status,
+        body: mockedAxiosResult.data,
+      });
+    });
+
+    test("Should return correct error on axios.post", async () => {
+      const { sut, mockedAxios, mockedAxiosResult } = makeSut();
+      mockedAxios.post.mockRejectedValueOnce({
+        response: mockedAxiosResult,
+      });
+      const httpResponse = await sut.post(mockPostRequest());
+      expect(httpResponse).toEqual({
+        statusCode: mockedAxiosResult.status,
+        body: mockedAxiosResult.data,
+      });
+    });
+
+    test("Should return statusCode 500 on network failure", async () => {
+      const { sut, mockedAxios } = makeSut();
+      mockedAxios.post.mockRejectedValueOnce({
+        response: null,
+      });
+      const httpResponse = await sut.post(mockPostRequest());
+      expect(httpResponse).toEqual({
+        statusCode: 500,
+        body: null,
+      });
+    });
   });
 
-  test("Should return the correct statusCode and body", async () => {
-    const { sut, mockedAxiosResult } = makeSut();
-    const httpResponse = await sut.post(mockPostRequest());
-    expect(httpResponse).toEqual({
-      statusCode: mockedAxiosResult.status,
-      body: mockedAxiosResult.data,
-    });
-  });
-
-  test("Should return the correct statusCode and body on failure", async () => {
-    const { sut, mockedAxios, mockedAxiosResult } = makeSut();
-    mockedAxios.post.mockRejectedValueOnce({
-      response: mockedAxiosResult,
-    });
-    const httpResponse = await sut.post(mockPostRequest());
-    expect(httpResponse).toEqual({
-      statusCode: mockedAxiosResult.status,
-      body: mockedAxiosResult.data,
-    });
-  });
-
-  test("Should return statusCode 500 on network failure", async () => {
-    const { sut, mockedAxios } = makeSut();
-    mockedAxios.post.mockRejectedValueOnce({
-      response: null,
-    });
-    const httpResponse = await sut.post(mockPostRequest());
-    expect(httpResponse).toEqual({
-      statusCode: 500,
-      body: null,
+  describe("get", () => {
+    test("Should call axios.get with correct values", async () => {
+      const request = mockGetRequest();
+      const { sut, mockedAxios } = makeSut();
+      await sut.get(request);
+      expect(mockedAxios.get).toHaveBeenCalledWith(request.url);
     });
   });
 });

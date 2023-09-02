@@ -14,5 +14,6 @@ export const mockAxios = (): MockedAxios => {
     status: faker.number.int(),
   };
   mockedAxios.post.mockResolvedValue(mockedAxiosResult);
+  mockedAxios.get.mockResolvedValue(mockedAxiosResult);
   return { mockedAxios, mockedAxiosResult };
 };
