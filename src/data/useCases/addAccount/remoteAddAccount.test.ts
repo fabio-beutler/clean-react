@@ -27,20 +27,12 @@ describe("RemoteAddAccount", () => {
   test("Should call HttpPostClient with correct URL", async () => {
     const url = faker.internet.url();
     const { sut, httpPostClientSpy } = makeSut(url);
-    httpPostClientSpy.response = {
-      statusCode: HttpStatusCode.ok,
-      body: mockAccountModel(),
-    };
     await sut.add(mockAddAccount());
     expect(httpPostClientSpy.url).toBe(url);
   });
 
   test("Should call HttpPostClient with correct body", async () => {
     const { sut, httpPostClientSpy } = makeSut();
-    httpPostClientSpy.response = {
-      statusCode: HttpStatusCode.ok,
-      body: mockAccountModel(),
-    };
     const addAccountParams = mockAddAccount();
     await sut.add(addAccountParams);
     expect(httpPostClientSpy.body).toEqual(addAccountParams);

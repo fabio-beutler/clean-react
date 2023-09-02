@@ -21,6 +21,7 @@ export class HttpPostClientSpy<BodyParams, BodyResponse>
   body?: BodyParams;
   response: HttpResponse<BodyResponse> = {
     statusCode: HttpStatusCode.ok,
+    body: faker.word.words() as BodyResponse,
   };
 
   async post(
@@ -38,6 +39,7 @@ export class HttpGetClientSpy<BodyResponse>
   url?: string;
   response: HttpResponse<BodyResponse> = {
     statusCode: HttpStatusCode.ok,
+    body: faker.word.words() as BodyResponse,
   };
 
   async get(params: HttpGetParams): Promise<HttpResponse<BodyResponse>> {

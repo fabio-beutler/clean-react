@@ -27,20 +27,12 @@ describe("RemoteAuthentication", () => {
   test("Should call HttpClient with correct URL", async () => {
     const url = faker.internet.url();
     const { sut, httpPostClientSpy } = makeSut(url);
-    httpPostClientSpy.response = {
-      statusCode: HttpStatusCode.ok,
-      body: mockAccountModel(),
-    };
     await sut.auth(mockAuthentication());
     expect(httpPostClientSpy.url).toBe(url);
   });
 
   test("Should call HttpClient with correct body", async () => {
     const { sut, httpPostClientSpy } = makeSut();
-    httpPostClientSpy.response = {
-      statusCode: HttpStatusCode.ok,
-      body: mockAccountModel(),
-    };
     const authenticationParams = mockAuthentication();
     await sut.auth(authenticationParams);
     expect(httpPostClientSpy.body).toEqual(authenticationParams);
@@ -99,6 +91,7 @@ describe("RemoteAuthentication", () => {
     const { sut, httpPostClientSpy } = makeSut();
     httpPostClientSpy.response = {
       statusCode: HttpStatusCode.ok,
+      body: undefined,
     };
     const promise = sut.auth(mockAuthentication());
     expect(promise).rejects.toThrow(new UnexpectedError());
