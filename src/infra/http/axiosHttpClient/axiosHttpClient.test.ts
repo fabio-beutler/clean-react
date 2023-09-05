@@ -90,5 +90,17 @@ describe("AxiosHttpClient", () => {
         body: mockedAxiosResult.data,
       });
     });
+
+    test("Should return statusCode 500 on network failure", async () => {
+      const { sut, mockedAxios } = makeSut();
+      mockedAxios.get.mockRejectedValueOnce({
+        response: null,
+      });
+      const httpResponse = await sut.get(mockPostRequest());
+      expect(httpResponse).toEqual({
+        statusCode: 500,
+        body: null,
+      });
+    });
   });
 });
