@@ -25,14 +25,14 @@ type Props = {
 };
 const Login: FC<Props> = ({ validation, authentication, saveAccessToken }) => {
   return (
-    <div className={styles.login}>
+    <div className={styles.loginWrap}>
       <Header />
       <LoginFormContextProvider
         validation={validation}
         authentication={authentication}
         saveAccessToken={saveAccessToken}
       >
-        <Form formContext={useLoginFormContext} className={styles.form}>
+        <Form formContext={useLoginFormContext}>
           <h2>Login</h2>
           <Input
             formContext={useLoginFormContext}

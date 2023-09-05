@@ -1,0 +1,15 @@
+.form {
+  @apply flex flex-col gap-4 w-96 p-10 rounded-lg bg-white self-center drop-shadow;
+}
+
+.form h2 {
+  @apply text-rose-950 text-center uppercase text-xl font-bold;
+}
+
+.form a {
+  @apply text-center text-rose-900 lowercase mt-4 cursor-pointer;
+}
+
+.form a:hover {
+  @apply underline underline-offset-2;
+}
