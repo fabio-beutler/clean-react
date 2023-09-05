@@ -11,7 +11,7 @@ export const mockAxios = (): MockedAxios => {
   const mockedAxios = axios as Mocked<typeof axios>;
   const mockedAxiosResult = {
     data: faker.string.sample(),
-    status: faker.number.int(),
+    status: faker.internet.httpStatusCode(),
   };
   mockedAxios.post.mockResolvedValue(mockedAxiosResult);
   mockedAxios.get.mockResolvedValue(mockedAxiosResult);
