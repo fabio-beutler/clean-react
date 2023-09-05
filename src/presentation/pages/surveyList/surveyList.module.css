@@ -1,0 +1,84 @@
+.surveyListWrap {
+  @apply flex min-h-screen flex-col justify-between bg-stone-200;
+}
+
+.headerWrap {
+  @apply flex justify-center border-t-40 border-t-rose-950 bg-rose-900;
+}
+
+.headerContent {
+  @apply flex max-w-3xl flex-grow items-center justify-between p-6;
+}
+
+.headerContent img {
+  @apply w-16;
+}
+
+.userInfoWrap {
+  @apply flex flex-col items-end justify-center text-white;
+}
+
+.userInfoWrap span {
+  @apply mb-1 text-lg;
+}
+
+.userInfoWrap a:hover {
+  @apply underline;
+}
+
+.contentWrap {
+  @apply flex w-full max-w-3xl flex-grow flex-col self-center p-6;
+}
+
+.contentWrap h2 {
+  @apply mb-6 text-xl font-bold uppercase text-rose-950;
+}
+
+.contentWrap ul {
+  @apply flex flex-wrap justify-between;
+}
+
+.contentWrap li {
+  @apply mb-6 flex h-60 basis-[48%] flex-col justify-between rounded-lg bg-white drop-shadow;
+}
+
+.contentWrap li footer {
+  @apply cursor-pointer rounded-b-lg bg-rose-900 text-center lowercase leading-10 text-white transition;
+}
+
+.contentWrap li footer:hover {
+  @apply bg-rose-950;
+}
+
+.surveyContent {
+  background-image: linear-gradient(
+      to right,
+      rgba(225, 29, 72, 0.1),
+      rgba(225, 29, 72, 0.1)
+    ),
+    linear-gradient(to right, white, white);
+  background-position:
+    0 0,
+    50px 0;
+  background-size:
+    50px 100%,
+    100% 100%;
+  @apply flex flex-grow items-center justify-between rounded-t-lg bg-no-repeat p-6;
+}
+
+.surveyContent time {
+  @apply flex shrink-0 flex-col items-center justify-center rounded-lg bg-rose-600 p-1.5 text-white;
+}
+
+.surveyContent time .day {
+  @apply text-4xl font-bold;
+}
+.surveyContent time .month {
+  @apply text-sm lowercase;
+}
+.surveyContent time .year {
+}
+
+.surveyContent p {
+  @apply ml-6 text-lg;
+}
