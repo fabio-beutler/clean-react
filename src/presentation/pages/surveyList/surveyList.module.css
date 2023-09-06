@@ -11,11 +11,11 @@
 }
 
 .contentWrap ul {
-  @apply flex flex-wrap justify-between;
+  @apply flex flex-col flex-wrap justify-between sm:flex-row;
 }
 
 .contentWrap li {
-  @apply mb-6 flex h-60 basis-[48%] flex-col justify-between rounded-lg bg-white drop-shadow;
+  @apply mb-6 flex h-60 basis-full flex-col justify-between rounded-lg bg-white drop-shadow sm:basis-[48%];
 }
 
 .contentWrap li footer {
@@ -39,7 +39,7 @@
   background-size:
     50px 100%,
     100% 100%;
-  @apply relative flex flex-grow items-center justify-between rounded-t-lg bg-no-repeat p-6;
+  @apply relative flex flex-grow items-center rounded-t-lg bg-no-repeat p-6;
 }
 
 .surveyContent .icon {
@@ -60,5 +60,5 @@
 }
 
 .surveyContent p {
-  @apply ml-6 text-lg;
+  @apply ml-6 flex-grow text-ellipsis text-lg;
 }

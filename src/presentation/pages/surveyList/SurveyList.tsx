@@ -20,7 +20,10 @@ const SurveyList: FC = () => {
                   <span className={styles.month}>03</span>
                   <span className={styles.year}>2023</span>
                 </time>
-                <p>Qual é seu framework web favorito?</p>
+                <p>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                  Eaque magnam nisi perferendis ci, ullam!
+                </p>
               </div>
               <footer>Ver Resultado</footer>
             </li>
