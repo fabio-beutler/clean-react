@@ -63,10 +63,22 @@
   background-size:
     50px 100%,
     100% 100%;
-  @apply flex flex-grow items-center justify-between rounded-t-lg bg-no-repeat p-6;
+  @apply relative flex flex-grow items-center justify-between rounded-t-lg bg-no-repeat p-6;
 }
 
-.surveyContent time {
+.surveyContent .iconWrap {
+  @apply absolute -right-4 -top-4 rounded-full p-2.5 drop-shadow;
+}
+
+.surveyContent .iconWrap.red {
+  @apply bg-red-500;
+}
+
+.surveyContent .iconWrap.green {
+  @apply bg-green-500;
+}
+
+.surveyContent .surveyContent time {
   @apply flex shrink-0 flex-col items-center justify-center rounded-lg bg-rose-600 p-1.5 text-white;
 }
 

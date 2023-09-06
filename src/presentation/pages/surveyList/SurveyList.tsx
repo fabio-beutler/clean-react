@@ -1,8 +1,10 @@
+import Image from "next/image";
 import { FC } from "react";
 
 import { Footer, Logo } from "@/presentation/components";
 
 import styles from "./surveyList.module.css";
+
 const SurveyList: FC = () => {
   return (
     <div className={styles.surveyListWrap}>
@@ -21,6 +23,16 @@ const SurveyList: FC = () => {
           {Array.from({ length: 7 }).map((_, index) => (
             <li key={index}>
               <div className={styles.surveyContent}>
+                <div className={`${styles.iconWrap} ${styles.red}`}>
+                  <Image
+                    className={styles.icon}
+                    src="/icon-thumb-down.webp"
+                    width={20}
+                    height={18}
+                    alt="respondido"
+                  />
+                </div>
+
                 <time>
                   <span className={styles.day}>22</span>
                   <span className={styles.month}>03</span>
