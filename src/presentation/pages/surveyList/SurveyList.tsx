@@ -11,7 +11,7 @@ const SurveyList: FC = () => {
       <main className={styles.contentWrap}>
         <h2>Enquetes</h2>
         <ul>
-          {Array.from({ length: 7 }).map((_, index) => (
+          {Array.from({ length: 1 }).map((_, index) => (
             <li key={index}>
               <div className={styles.surveyContent}>
                 <Icon iconName={IconName.thumbUp} className={styles.icon} />
@@ -27,6 +27,9 @@ const SurveyList: FC = () => {
               </div>
               <footer>Ver Resultado</footer>
             </li>
+          ))}
+          {Array.from({ length: 3 }).map((_, index) => (
+            <li key={index}></li>
           ))}
         </ul>
       </main>
