@@ -1,22 +1,14 @@
 import Image from "next/image";
 import { FC } from "react";
 
-import { Footer, Logo } from "@/presentation/components";
+import { Footer, Header } from "@/presentation/components";
 
 import styles from "./surveyList.module.css";
 
 const SurveyList: FC = () => {
   return (
     <div className={styles.surveyListWrap}>
-      <header className={styles.headerWrap}>
-        <div className={styles.headerContent}>
-          <Logo />
-          <div className={styles.userInfoWrap}>
-            <span>Fabio</span>
-            <a href="#">Sair</a>
-          </div>
-        </div>
-      </header>
+      <Header />
       <main className={styles.contentWrap}>
         <h2>Enquetes</h2>
         <ul>

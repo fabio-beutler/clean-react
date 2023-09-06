@@ -1,0 +1,23 @@
+.headerWrap {
+  @apply flex justify-center border-t-40 border-t-rose-950 bg-rose-900;
+}
+
+.headerContent {
+  @apply flex max-w-3xl flex-grow items-center justify-between p-6;
+}
+
+.headerContent img {
+  @apply w-16;
+}
+
+.userInfoWrap {
+  @apply flex flex-col items-end justify-center text-white;
+}
+
+.userInfoWrap span {
+  @apply mb-1 text-lg;
+}
+
+.userInfoWrap a:hover {
+  @apply underline;
+}
