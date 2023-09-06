@@ -19,5 +19,6 @@ export const mockInvalidData = () => {
 export const mockOk = () => {
   return Helper.mockOk(/signup/, {
     accessToken: faker.string.uuid(),
+    name: faker.word.sample(),
   });
 };

@@ -10,7 +10,7 @@ import {
   useState,
 } from "react";
 
-import { Authentication, SaveAccessToken } from "@/domain/useCases";
+import { Authentication, UpdateCurrentAccount } from "@/domain/useCases";
 import { Validation } from "@/presentation/protocols/validation";
 
 type ContextProps = {
@@ -35,7 +35,7 @@ type FormContextProviderProps = {
   children: ReactNode;
   validation: Validation;
   authentication: Authentication;
-  saveAccessToken: SaveAccessToken;
+  updateCurrentAccount: UpdateCurrentAccount;
 };
 
 const initialState: ContextProps = {
@@ -60,7 +60,7 @@ const LoginFormContextProvider: FC<FormContextProviderProps> = ({
   children,
   validation,
   authentication,
-  saveAccessToken,
+  updateCurrentAccount,
 }) => {
   const router = useRouter();
   const [state, setState] = useState<ContextProps["state"]>(
@@ -87,7 +87,7 @@ const LoginFormContextProvider: FC<FormContextProviderProps> = ({
         email: inputs.email,
         password: inputs.password,
       });
-      await saveAccessToken.save(account.accessToken);
+      await updateCurrentAccount.save(account);
       await router.replace("/");
     } catch (error: any) {
       setState((prevState) => ({ ...prevState, isLoading: false }));

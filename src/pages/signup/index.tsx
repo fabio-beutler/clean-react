@@ -4,7 +4,7 @@ import { Roboto } from "next/font/google";
 import Head from "next/head";
 
 import {
-  makeLocalSaveAccessToken,
+  makeLocalUpdateCurrentAccount,
   makeRemoteAddAccount,
   makeSignupValidation,
 } from "@/main/factories";
@@ -19,9 +19,9 @@ const SignupPage: NextPage = () => {
         <meta name="description" content="SignUp" />
       </Head>
       <Signup
-        validation={makeSignupValidation()}
         addAccount={makeRemoteAddAccount()}
-        saveAccessToken={makeLocalSaveAccessToken()}
+        updateCurrentAccount={makeLocalUpdateCurrentAccount()}
+        validation={makeSignupValidation()}
       />
     </div>
   );

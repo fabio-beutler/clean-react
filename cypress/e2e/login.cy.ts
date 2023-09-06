@@ -81,14 +81,14 @@ describe("Login", () => {
     cy.url().should("equal", `${baseUrl}/login`);
   });
 
-  it("Should present save accessToken if valid credentials are provided", () => {
+  it("Should present save account if valid credentials are provided", () => {
     Http.mockOk();
     simulateValidSubmit();
     FormHelper.testIsLoading();
     cy.getByTestId("spinner").should("not.exist");
     cy.url().should("equal", `${baseUrl}/`);
     cy.window().then((window) => {
-      assert.isOk(window.localStorage.getItem("@4Devs:accessToken"));
+      assert.isOk(window.localStorage.getItem("@4Devs:account"));
     });
   });
 
@@ -103,7 +103,7 @@ describe("Login", () => {
     cy.getByTestId("spinner").should("not.exist");
     cy.url().should("equal", `${baseUrl}/`);
     cy.window().then((window) => {
-      assert.isOk(window.localStorage.getItem("@4Devs:accessToken"));
+      assert.isOk(window.localStorage.getItem("@4Devs:account"));
     });
   });
 

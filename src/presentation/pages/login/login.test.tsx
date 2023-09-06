@@ -13,7 +13,7 @@ import { InvalidCredentialsError } from "@/domain/errors";
 import {
   AuthenticationSpy,
   Helper,
-  SaveAccessTokenMock,
+  UpdateCurrentAccountMock,
   ValidationStub,
 } from "@/presentation/test";
 
@@ -22,7 +22,7 @@ import Login from "./Login";
 type SutTypes = {
   sut: RenderResult;
   authenticationSpy: AuthenticationSpy;
-  saveAccessTokenMock: SaveAccessTokenMock;
+  updateCurrentAccountMock: UpdateCurrentAccountMock;
 };
 
 type SutParams = {
@@ -32,17 +32,17 @@ type SutParams = {
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
   const authenticationSpy = new AuthenticationSpy();
-  const saveAccessTokenMock = new SaveAccessTokenMock();
+  const updateCurrentAccountMock = new UpdateCurrentAccountMock();
   validationStub.errorMessage = params?.validationError || "";
   const sut = render(
     <Login
       validation={validationStub}
       authentication={authenticationSpy}
-      saveAccessToken={saveAccessTokenMock}
+      updateCurrentAccount={updateCurrentAccountMock}
     />,
     { wrapper: MemoryRouterProvider },
   );
-  return { sut, authenticationSpy, saveAccessTokenMock };
+  return { sut, authenticationSpy, updateCurrentAccountMock };
 };
 
 const simulateValidSubmit = async (
@@ -142,19 +142,17 @@ describe("Login Component", () => {
     Helper.testChildCount(sut, "error-wrap", 1);
   });
 
-  test("Should call SaveAccessToken on success", async () => {
-    const { sut, authenticationSpy, saveAccessTokenMock } = makeSut();
+  test("Should call UpdateCurrentAccount on success", async () => {
+    const { sut, authenticationSpy, updateCurrentAccountMock } = makeSut();
     await simulateValidSubmit(sut);
-    expect(saveAccessTokenMock.accessToken).toBe(
-      authenticationSpy.account.accessToken,
-    );
+    expect(updateCurrentAccountMock.account).toBe(authenticationSpy.account);
     expect(mockRouter.asPath).toEqual("/");
   });
 
-  test("Should present error if SaveAccessToken fails", async () => {
-    const { sut, saveAccessTokenMock } = makeSut();
+  test("Should present error if UpdateCurrentAccount fails", async () => {
+    const { sut, updateCurrentAccountMock } = makeSut();
     const error = new InvalidCredentialsError();
-    vi.spyOn(saveAccessTokenMock, "save").mockRejectedValueOnce(error);
+    vi.spyOn(updateCurrentAccountMock, "save").mockRejectedValueOnce(error);
     await simulateValidSubmit(sut);
     Helper.testElementText(sut, "main-error", error.message);
     Helper.testChildCount(sut, "error-wrap", 1);

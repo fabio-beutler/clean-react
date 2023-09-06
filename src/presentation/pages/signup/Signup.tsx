@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FC } from "react";
 
-import { AddAccount, SaveAccessToken } from "@/domain/useCases";
+import { AddAccount, UpdateCurrentAccount } from "@/domain/useCases";
 import {
   Footer,
   Form,
@@ -21,17 +21,21 @@ import styles from "./signup.module.css";
 type Props = {
   validation: Validation;
   addAccount: AddAccount;
-  saveAccessToken: SaveAccessToken;
+  updateCurrentAccount: UpdateCurrentAccount;
 };
 
-const Signup: FC<Props> = ({ validation, addAccount, saveAccessToken }) => {
+const Signup: FC<Props> = ({
+  validation,
+  addAccount,
+  updateCurrentAccount,
+}) => {
   return (
     <div className={styles.signupWrap}>
       <Header />
       <SignupFormContextProvider
         validation={validation}
         addAccount={addAccount}
-        saveAccessToken={saveAccessToken}
+        updateCurrentAccount={updateCurrentAccount}
       >
         <Form formContext={useSignupFormContext}>
           <h2>Criar conta</h2>

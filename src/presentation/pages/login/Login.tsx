@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { FC } from "react";
 
-import { Authentication, SaveAccessToken } from "@/domain/useCases";
+import { Authentication, UpdateCurrentAccount } from "@/domain/useCases";
 import {
   Footer,
   Form,
@@ -21,16 +21,20 @@ import styles from "./login.module.css";
 type Props = {
   validation: Validation;
   authentication: Authentication;
-  saveAccessToken: SaveAccessToken;
+  updateCurrentAccount: UpdateCurrentAccount;
 };
-const Login: FC<Props> = ({ validation, authentication, saveAccessToken }) => {
+const Login: FC<Props> = ({
+  validation,
+  authentication,
+  updateCurrentAccount,
+}) => {
   return (
     <div className={styles.loginWrap}>
       <Header />
       <LoginFormContextProvider
         validation={validation}
         authentication={authentication}
-        saveAccessToken={saveAccessToken}
+        updateCurrentAccount={updateCurrentAccount}
       >
         <Form formContext={useLoginFormContext}>
           <h2>Login</h2>

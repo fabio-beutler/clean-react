@@ -1,34 +1,33 @@
-import { faker } from "@faker-js/faker";
-
 import { SetStorageMock } from "@/data/test";
 import { UnexpectedError } from "@/domain/errors";
+import { mockAccountModel } from "@/domain/test";
 
-import { LocalSaveAccessToken } from "./localSaveAccessToken";
+import { LocalUpdateCurrentAccount } from "./localUpdateCurrentAccount";
 
 type SutTypes = {
-  sut: LocalSaveAccessToken;
+  sut: LocalUpdateCurrentAccount;
   setStorageMock: SetStorageMock;
 };
 
 const makeSut = (): SutTypes => {
   const setStorageMock = new SetStorageMock();
-  const sut = new LocalSaveAccessToken(setStorageMock);
+  const sut = new LocalUpdateCurrentAccount(setStorageMock);
   return { sut, setStorageMock };
 };
 
-describe("LocalSaveAccessToken", () => {
+describe("LocalUpdateCurrentAccount", () => {
   test("Should call SetStorage with correct value", async () => {
     const { sut, setStorageMock } = makeSut();
-    const accessToken = faker.string.uuid();
+    const accessToken = mockAccountModel();
     await sut.save(accessToken);
-    expect(setStorageMock.key).toBe("@4Devs:accessToken");
-    expect(setStorageMock.value).toBe(accessToken);
+    expect(setStorageMock.key).toBe("@4Devs:account");
+    expect(setStorageMock.value).toBe(JSON.stringify(accessToken));
   });
 
   test("Should throw if SetStorage throws", async () => {
     const { sut, setStorageMock } = makeSut();
     vi.spyOn(setStorageMock, "set").mockRejectedValueOnce(new Error());
-    const promise = sut.save(faker.string.uuid());
+    const promise = sut.save(mockAccountModel());
     expect(promise).rejects.toThrow(new Error());
   });
 
