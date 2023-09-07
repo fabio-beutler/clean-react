@@ -1,7 +1,7 @@
 import { SetStorage } from "@/data/protocols/cache";
 
 export class CookiesAdapter implements SetStorage {
-  async set(key: string, value: string): Promise<void> {
+  set(key: string, value: string): void {
     document.cookie = `${key}=${value}`;
   }
 }

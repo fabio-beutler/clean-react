@@ -11,7 +11,6 @@ export class LocalUpdateCurrentAccount implements UpdateCurrentAccount {
     if (!account?.accessToken) {
       throw new UnexpectedError();
     }
-    await this.setStorage.set(LOCAL_STORAGE_KEY, JSON.stringify(account));
-    return Promise.resolve();
+    this.setStorage.set(LOCAL_STORAGE_KEY, JSON.stringify(account));
   }
 }
