@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/router";
 import {
-  ChangeEvent,
   createContext,
   FC,
   ReactNode,
@@ -27,8 +26,8 @@ type ContextProps = {
     email: string;
     password: string;
   };
-  onInputChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  onSubmit?: () => void;
+  onInputChange: (name: string, value: string) => void;
+  onSubmit: () => void;
 };
 
 type FormContextProviderProps = {
@@ -52,6 +51,8 @@ const initialState: ContextProps = {
     email: "",
     password: "",
   },
+  onInputChange: () => {},
+  onSubmit: () => {},
 };
 
 const LoginFormContext = createContext<ContextProps>(initialState);
@@ -73,8 +74,7 @@ const LoginFormContextProvider: FC<FormContextProviderProps> = ({
     initialState["inputs"],
   );
 
-  const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+  const onInputChange = (name: string, value: string) => {
     setInputs((prevState) => ({ ...prevState, [name]: value }));
   };
 

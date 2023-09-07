@@ -25,7 +25,8 @@ const Input: FC<InputProps> = ({
   const inputId = useId();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    if (onInputChange) onInputChange(event);
+    const { name, value } = event.target;
+    onInputChange(name, value);
   };
   return (
     <div className={styles.inputWrap}>
