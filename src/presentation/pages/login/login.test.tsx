@@ -10,10 +10,11 @@ import mockRouter from "next-router-mock";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import { InvalidCredentialsError } from "@/domain/errors";
+import { AccountModel } from "@/domain/models";
 import {
   AuthenticationSpy,
   Helper,
-  UpdateCurrentAccountMock,
+  MockApiContextProvider,
   ValidationStub,
 } from "@/presentation/test";
 
@@ -22,7 +23,7 @@ import Login from "./Login";
 type SutTypes = {
   sut: RenderResult;
   authenticationSpy: AuthenticationSpy;
-  updateCurrentAccountMock: UpdateCurrentAccountMock;
+  setCurrentAccountMock: (account: AccountModel) => void;
 };
 
 type SutParams = {
@@ -32,17 +33,15 @@ type SutParams = {
 const makeSut = (params?: SutParams): SutTypes => {
   const validationStub = new ValidationStub();
   const authenticationSpy = new AuthenticationSpy();
-  const updateCurrentAccountMock = new UpdateCurrentAccountMock();
+  const setCurrentAccountMock = vi.fn();
   validationStub.errorMessage = params?.validationError || "";
   const sut = render(
-    <Login
-      validation={validationStub}
-      authentication={authenticationSpy}
-      updateCurrentAccount={updateCurrentAccountMock}
-    />,
+    <MockApiContextProvider setCurrentAccount={setCurrentAccountMock}>
+      <Login validation={validationStub} authentication={authenticationSpy} />
+    </MockApiContextProvider>,
     { wrapper: MemoryRouterProvider },
   );
-  return { sut, authenticationSpy, updateCurrentAccountMock };
+  return { sut, authenticationSpy, setCurrentAccountMock };
 };
 
 const simulateValidSubmit = async (
@@ -142,20 +141,13 @@ describe("Login Component", () => {
     Helper.testChildCount(sut, "error-wrap", 1);
   });
 
-  test("Should call UpdateCurrentAccount on success", async () => {
-    const { sut, authenticationSpy, updateCurrentAccountMock } = makeSut();
+  test("Should call setCurrentAccount on success", async () => {
+    const { sut, authenticationSpy, setCurrentAccountMock } = makeSut();
     await simulateValidSubmit(sut);
-    expect(updateCurrentAccountMock.account).toBe(authenticationSpy.account);
+    expect(setCurrentAccountMock).toHaveBeenCalledWith(
+      authenticationSpy.account,
+    );
     expect(mockRouter.asPath).toEqual("/");
-  });
-
-  test("Should present error if UpdateCurrentAccount fails", async () => {
-    const { sut, updateCurrentAccountMock } = makeSut();
-    const error = new InvalidCredentialsError();
-    vi.spyOn(updateCurrentAccountMock, "save").mockRejectedValueOnce(error);
-    await simulateValidSubmit(sut);
-    Helper.testElementText(sut, "main-error", error.message);
-    Helper.testChildCount(sut, "error-wrap", 1);
   });
 
   test("Should go to signup page", async () => {

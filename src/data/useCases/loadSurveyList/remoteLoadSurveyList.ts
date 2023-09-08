@@ -1,5 +1,5 @@
 import { HttpGetClient, HttpStatusCode } from "@/data/protocols/http";
-import { EmailInUseError, UnexpectedError } from "@/domain/errors";
+import { UnexpectedError } from "@/domain/errors";
 import { SurveyModel } from "@/domain/models";
 import { LoadSurveyList } from "@/domain/useCases";
 

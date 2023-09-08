@@ -43,9 +43,7 @@ describe("Signup", () => {
   });
 
   it("Should present error state if form is invalid", () => {
-    cy.getByTestId("name")
-      .focus()
-      .type(faker.word.sample({ length: 2 }));
+    cy.getByTestId("name").focus().type(faker.string.sample(2));
     FormHelper.testInputStatus("name", "Campo inválido", "🔴");
     cy.getByTestId("email").focus().type(faker.word.sample());
     FormHelper.testInputStatus("email", "Campo inválido", "🔴");

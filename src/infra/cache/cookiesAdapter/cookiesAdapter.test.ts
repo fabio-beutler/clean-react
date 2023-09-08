@@ -11,7 +11,7 @@ describe("CookiesAdapter", () => {
     const sut = makeSut();
     const key = faker.database.column();
     const value = faker.word.sample();
-    sut.set(key, value);
-    expect(document.cookie).toBe(`${key}=${value}`);
+    sut.set(key, { value });
+    expect(document.cookie).toBe(`${key}=${JSON.stringify({ value })}`);
   });
 });

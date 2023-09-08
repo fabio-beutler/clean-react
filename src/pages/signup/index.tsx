@@ -3,11 +3,7 @@ import { NextPage } from "next";
 import { Roboto } from "next/font/google";
 import Head from "next/head";
 
-import {
-  makeLocalUpdateCurrentAccount,
-  makeRemoteAddAccount,
-  makeSignupValidation,
-} from "@/main/factories";
+import { makeRemoteAddAccount, makeSignupValidation } from "@/main/factories";
 import { Signup } from "@/presentation/pages";
 
 const roboto = Roboto({ weight: ["400", "700"], subsets: ["latin"] });
@@ -20,7 +16,6 @@ const SignupPage: NextPage = () => {
       </Head>
       <Signup
         addAccount={makeRemoteAddAccount()}
-        updateCurrentAccount={makeLocalUpdateCurrentAccount()}
         validation={makeSignupValidation()}
       />
     </div>

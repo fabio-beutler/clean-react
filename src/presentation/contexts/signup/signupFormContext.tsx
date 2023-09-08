@@ -9,7 +9,8 @@ import {
   useState,
 } from "react";
 
-import { AddAccount, UpdateCurrentAccount } from "@/domain/useCases";
+import { AddAccount } from "@/domain/useCases";
+import { useApiContext } from "@/presentation/contexts";
 import { Validation } from "@/presentation/protocols";
 
 type ContextProps = {
@@ -38,7 +39,6 @@ type FormContextProviderProps = {
   children: ReactElement;
   validation: Validation;
   addAccount: AddAccount;
-  updateCurrentAccount: UpdateCurrentAccount;
 };
 
 const initialState: ContextProps = {
@@ -69,9 +69,9 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
   children,
   validation,
   addAccount,
-  updateCurrentAccount,
 }) => {
   const router = useRouter();
+  const apiContext = useApiContext();
   const [state, setState] = useState<ContextProps["state"]>(
     initialState["state"],
   );
@@ -96,7 +96,7 @@ const SignupFormContextProvider: FC<FormContextProviderProps> = ({
         password: inputs.password,
         passwordConfirmation: inputs.passwordConfirmation,
       });
-      await updateCurrentAccount.save(account);
+      apiContext.setCurrentAccount(account);
       await router.replace("/");
     } catch (error: any) {
       setState((prevState) => ({ ...prevState, isLoading: false }));
