@@ -4,7 +4,7 @@ import { makeLocalStorageAdapter } from "@/main/factories";
 
 const LOCAL_STORAGE_KEY = "@4Devs:account";
 
-export const setCurrentAccountAdapter = (account: AccountModel) => {
+export const setCurrentAccountAdapter = (account: AccountModel): void => {
   if (!account?.accessToken) {
     throw new UnexpectedError();
   }
