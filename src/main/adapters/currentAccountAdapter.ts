@@ -1,12 +1,11 @@
 import { UnexpectedError } from "@/domain/errors";
 import { AccountModel } from "@/domain/models";
+import { ACCOUNT_STORAGE_KEY } from "@/main/config";
 import { makeLocalStorageAdapter } from "@/main/factories";
-
-const LOCAL_STORAGE_KEY = "@4Devs:account";
 
 export const setCurrentAccountAdapter = (account: AccountModel): void => {
   if (!account?.accessToken) {
     throw new UnexpectedError();
   }
-  makeLocalStorageAdapter().set(LOCAL_STORAGE_KEY, account);
+  makeLocalStorageAdapter().set(ACCOUNT_STORAGE_KEY, account);
 };
