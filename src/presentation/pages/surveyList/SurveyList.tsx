@@ -1,3 +1,4 @@
+"use client";
 import { FC } from "react";
 
 import { Footer, Header, Icon, IconName } from "@/presentation/components";
