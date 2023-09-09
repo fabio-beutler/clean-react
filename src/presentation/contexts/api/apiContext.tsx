@@ -2,11 +2,14 @@
 import { createContext, FC, ReactNode, useContext } from "react";
 
 import { AccountModel } from "@/domain/models";
-import { setCurrentAccountAdapter } from "@/main/adapters";
+import {
+  getCurrentAccountAdapter,
+  setCurrentAccountAdapter,
+} from "@/main/adapters";
 
 type ContextProps = {
   setCurrentAccount: (account: AccountModel) => void;
-  getCurrentAccount?: () => AccountModel;
+  getCurrentAccount: () => AccountModel;
 };
 
 type ContextProviderProps = {
@@ -28,7 +31,10 @@ export const ApiContext = createContext<ContextProps>(initialState);
 const ApiContextProvider: FC<ContextProviderProps> = ({ children }) => {
   return (
     <ApiContext.Provider
-      value={{ setCurrentAccount: setCurrentAccountAdapter }}
+      value={{
+        setCurrentAccount: setCurrentAccountAdapter,
+        getCurrentAccount: getCurrentAccountAdapter,
+      }}
     >
       {children}
     </ApiContext.Provider>

@@ -1,14 +1,20 @@
-import { useRouter } from "next/router";
-import { FC, ReactNode } from "react";
+import { NextPage } from "next";
+import { NextRouter, withRouter } from "next/router";
+import { ReactNode } from "react";
+
+import { useApiContext } from "@/presentation/contexts";
 
 type Props = {
-  children?: ReactNode;
+  children: ReactNode;
+  router: NextRouter;
 };
 
-const PrivateRoute: FC<Props> = () => {
-  const router = useRouter();
-  router.push("/login");
-  return <></>;
+const PrivateRoute: NextPage<Props> = ({ children, router }: Props) => {
+  const apiContext = useApiContext();
+  if (!apiContext.getCurrentAccount()) {
+    router.push("/login").finally();
+  }
+  return children;
 };
 
-export default PrivateRoute;
+export default withRouter(PrivateRoute);
