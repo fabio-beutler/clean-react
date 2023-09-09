@@ -4,10 +4,14 @@ import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import PrivateRoute from "./PrivateRoute";
 
+const makeSut = () => {
+  render(<PrivateRoute />, { wrapper: MemoryRouterProvider });
+};
+
 describe("PrivateRoute", () => {
   test("Should redirect to /login if token is empty", () => {
     mockRouter.push("/"); // initial route
-    render(<PrivateRoute />, { wrapper: MemoryRouterProvider });
+    makeSut();
     expect(mockRouter.asPath).toBe("/login");
   });
 });
