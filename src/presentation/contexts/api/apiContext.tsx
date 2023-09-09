@@ -6,6 +6,7 @@ import { setCurrentAccountAdapter } from "@/main/adapters";
 
 type ContextProps = {
   setCurrentAccount: (account: AccountModel) => void;
+  getCurrentAccount?: () => AccountModel;
 };
 
 type ContextProviderProps = {
@@ -14,6 +15,12 @@ type ContextProviderProps = {
 
 const initialState: ContextProps = {
   setCurrentAccount: () => {},
+  getCurrentAccount: () => {
+    return {
+      accessToken: "",
+      name: "",
+    };
+  },
 };
 
 export const ApiContext = createContext<ContextProps>(initialState);
