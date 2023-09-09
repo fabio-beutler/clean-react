@@ -6,15 +6,17 @@ import { ApiContext } from "@/presentation/contexts/api/apiContext";
 
 type ContextProviderProps = {
   children: ReactNode;
-  setCurrentAccount: (account: AccountModel) => void;
+  setCurrentAccount?: (account: AccountModel) => void;
+  getCurrentAccount?: () => AccountModel;
 };
 
 const MockApiContextProvider: FC<ContextProviderProps> = ({
   children,
-  setCurrentAccount,
+  setCurrentAccount = vi.fn(),
+  getCurrentAccount = vi.fn(),
 }) => {
   return (
-    <ApiContext.Provider value={{ setCurrentAccount }}>
+    <ApiContext.Provider value={{ setCurrentAccount, getCurrentAccount }}>
       {children}
     </ApiContext.Provider>
   );
