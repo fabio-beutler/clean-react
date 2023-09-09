@@ -30,4 +30,15 @@ describe("LocalStorageAdapter", () => {
     sut.get(key);
     expect(localStorage.getItem).toHaveBeenCalledWith(key);
   });
+
+  test("Should receive from localStorage.getItem correct value", () => {
+    const sut = makeSut();
+    const key = faker.database.column();
+    const value = { sample: faker.word.sample() };
+    // localStorage is mocked by 'vitest-localstorage-mock'
+    // @ts-ignore
+    localStorage.getItem.mockImplementationOnce(() => JSON.stringify(value));
+    const obj = sut.get(key);
+    expect(obj).toEqual(value);
+  });
 });
