@@ -7,4 +7,5 @@ export { default as Icon, IconName } from "./icon/Icon";
 export { default as Input } from "./input/Input";
 export { default as LoginHeader } from "./loginHeader/LoginHeader";
 export { default as Logo } from "./logo/Logo";
+export { default as PrivateRoute } from "./privateRoute/PrivateRoute";
 export { default as Spinner } from "./spinner/Spinner";
