@@ -7,6 +7,8 @@ export class LocalStorageAdapter implements SetStorage, GetStorage {
   }
 
   get(key: string): any {
-    return JSON.parse(localStorage.getItem(key)!);
+    const data = localStorage.getItem(key);
+    if (!data) throw new UnexpectedError();
+    return JSON.parse(data);
   }
 }
