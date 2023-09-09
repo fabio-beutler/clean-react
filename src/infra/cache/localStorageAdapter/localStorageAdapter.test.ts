@@ -11,22 +11,19 @@ const makeSut = (): LocalStorageAdapter => {
   return new LocalStorageAdapter();
 };
 
-beforeEach(() => {
-  windowSpy = vi.spyOn(globalThis, "window", "get");
-  windowSpy.mockImplementation(() => ({
-    location: {
-      href: "/",
-    },
-  }));
-});
-
-afterEach(() => {
-  windowSpy.mockRestore();
-});
-
 describe("LocalStorageAdapter", () => {
   beforeEach(() => {
     localStorage.clear();
+    windowSpy = vi.spyOn(globalThis, "window", "get");
+    windowSpy.mockImplementation(() => ({
+      location: {
+        href: "/",
+      },
+    }));
+  });
+
+  afterEach(() => {
+    windowSpy.mockRestore();
   });
 
   test("Should call localStorage.setItem with correct values", () => {
