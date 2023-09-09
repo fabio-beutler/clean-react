@@ -9,3 +9,7 @@ export const setCurrentAccountAdapter = (account: AccountModel): void => {
   }
   makeLocalStorageAdapter().set(ACCOUNT_STORAGE_KEY, account);
 };
+
+export const getCurrentAccountAdapter = (): AccountModel => {
+  return makeLocalStorageAdapter().get(ACCOUNT_STORAGE_KEY);
+};
