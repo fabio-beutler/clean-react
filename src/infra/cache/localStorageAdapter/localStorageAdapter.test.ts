@@ -1,14 +1,28 @@
 import "vitest-localstorage-mock";
 
 import { faker } from "@faker-js/faker";
-
-import { UnexpectedError } from "@/domain/errors";
+import { SpyInstance } from "vitest";
 
 import { LocalStorageAdapter } from "./localStorageAdapter";
+
+let windowSpy: SpyInstance;
 
 const makeSut = (): LocalStorageAdapter => {
   return new LocalStorageAdapter();
 };
+
+beforeEach(() => {
+  windowSpy = vi.spyOn(globalThis, "window", "get");
+  windowSpy.mockImplementation(() => ({
+    location: {
+      href: "/",
+    },
+  }));
+});
+
+afterEach(() => {
+  windowSpy.mockRestore();
+});
 
 describe("LocalStorageAdapter", () => {
   beforeEach(() => {
@@ -49,13 +63,9 @@ describe("LocalStorageAdapter", () => {
     expect(obj).toEqual(value);
   });
 
-  test("Should throw UnexpectedError if localStorage.getItem do not found given key", () => {
+  test("Should access localStorage.getItem if window exists", () => {
+    windowSpy.mockImplementation(() => undefined);
     const sut = makeSut();
-    // localStorage is mocked by 'vitest-localstorage-mock'
-    // @ts-ignore
-    localStorage.getItem.mockImplementationOnce(() => undefined);
-    expect(() => sut.get(faker.database.column())).toThrow(
-      new UnexpectedError(),
-    );
+    expect(sut.get(faker.database.column())).toBeUndefined();
   });
 });
