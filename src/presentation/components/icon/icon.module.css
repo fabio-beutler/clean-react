@@ -1,5 +1,5 @@
 .iconWrap {
-  @apply flex items-center rounded-full p-2.5 drop-shadow;
+  @apply flex items-center rounded-full px-2.5 py-[0.6875rem] drop-shadow;
 }
 
 .iconWrap.red {
@@ -8,8 +8,4 @@
 
 .iconWrap.green {
   @apply bg-green-500;
-}
-
-.icon {
-  @apply aspect-square;
 }
