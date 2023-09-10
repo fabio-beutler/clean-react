@@ -14,10 +14,17 @@ type Props = {
 
 const SurveyList: FC<Props> = ({ loadSurveyList }) => {
   const [surveys, setSurveys] = useState<SurveyModel[]>([]);
+  const [loadingSurveysError, setLoadingSurveysError] = useState<string>("");
+
   useEffect(() => {
-    loadSurveyList.loadAll().then((surveys) => {
-      setSurveys(surveys);
-    });
+    loadSurveyList
+      .loadAll()
+      .then((surveys) => {
+        setSurveys(surveys);
+      })
+      .catch((error) => {
+        setLoadingSurveysError(error.message);
+      });
   }, []);
 
   return (
@@ -25,15 +32,22 @@ const SurveyList: FC<Props> = ({ loadSurveyList }) => {
       <Header />
       <main className={styles.contentWrap}>
         <h2>Enquetes</h2>
-        <ul data-testid="survey-list">
-          {surveys.length
-            ? surveys.map((survey) => (
-                <SurveyItem key={survey.id} survey={survey} />
-              ))
-            : Array.from({ length: 4 }).map((_, index) => (
-                <SurveyItem key={index} isEmpty />
-              ))}
-        </ul>
+        {loadingSurveysError ? (
+          <div>
+            <span data-testid="error">{loadingSurveysError}</span>
+            <button>Recarregar</button>
+          </div>
+        ) : (
+          <ul data-testid="survey-list">
+            {surveys.length
+              ? surveys.map((survey) => (
+                  <SurveyItem key={survey.id} survey={survey} />
+                ))
+              : Array.from({ length: 4 }).map((_, index) => (
+                  <SurveyItem key={index} isEmpty />
+                ))}
+          </ul>
+        )}
       </main>
       <Footer />
     </div>
