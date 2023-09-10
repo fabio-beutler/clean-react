@@ -1,11 +1,21 @@
-import { FC } from "react";
+"use client";
+import { FC, useEffect } from "react";
 
+import { LoadSurveyList } from "@/domain/useCases";
 import { Footer, Header } from "@/presentation/components";
 
 import { SurveyItem } from "./components";
 import styles from "./surveyList.module.css";
 
-const SurveyList: FC = () => {
+type Props = {
+  loadSurveyList: LoadSurveyList;
+};
+
+const SurveyList: FC<Props> = ({ loadSurveyList }) => {
+  useEffect(() => {
+    loadSurveyList.loadAll().finally();
+  }, []);
+
   return (
     <div className={styles.surveyListWrap}>
       <Header />
