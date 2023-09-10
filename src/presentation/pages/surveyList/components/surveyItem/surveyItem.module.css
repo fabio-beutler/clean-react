@@ -1,0 +1,117 @@
+.surveyItemWrap {
+  @apply mb-6 flex h-60 basis-full flex-col justify-between rounded-lg bg-white drop-shadow sm:basis-[48%];
+}
+
+.surveyItemWrap:empty {
+  min-height: 230px;
+  position: relative;
+  overflow: hidden;
+  background-image: linear-gradient(
+      to right,
+      rgba(151, 148, 148, 0.5),
+      rgba(151, 148, 148, 0.5)
+    ),
+    linear-gradient(
+      to right,
+      rgba(151, 148, 148, 0.5),
+      rgba(151, 148, 148, 0.5)
+    ),
+    linear-gradient(
+      to right,
+      rgba(151, 148, 148, 0.5),
+      rgba(151, 148, 148, 0.5)
+    ),
+    linear-gradient(
+      to right,
+      rgba(151, 148, 148, 0.5),
+      rgba(151, 148, 148, 0.5)
+    ),
+    linear-gradient(
+      to right,
+      rgba(151, 148, 148, 0.5),
+      rgba(151, 148, 148, 0.5)
+    );
+
+  background-position:
+    24px 55px,
+    left 0 bottom 0,
+    108px 65px,
+    108px 95px,
+    108px 125px;
+  background-size:
+    53px 96px,
+    100% 40px,
+    140px 20px,
+    120px 20px,
+    160px 20px;
+  background-repeat: no-repeat;
+}
+
+.surveyItemWrap:empty::after {
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+  background-image: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  animation: shimmer 1.3s infinite;
+}
+
+.surveyItemWrap footer {
+  @apply cursor-pointer rounded-b-lg bg-rose-900 text-center lowercase leading-10 text-white transition;
+}
+
+.surveyItemWrap footer:hover {
+  @apply bg-rose-950;
+}
+
+.surveyContent {
+  background-image: linear-gradient(
+      to right,
+      rgba(225, 29, 72, 0.1),
+      rgba(225, 29, 72, 0.1)
+    ),
+    linear-gradient(to right, white, white);
+  background-position:
+    0 0,
+    50px 0;
+  background-size:
+    50px 100%,
+    100% 100%;
+  background-repeat: no-repeat;
+  @apply relative flex flex-grow items-center rounded-t-lg p-6;
+}
+
+.surveyContent .icon {
+  @apply absolute -right-4 -top-4;
+}
+
+.surveyContent time {
+  @apply flex shrink-0 flex-col items-center justify-center rounded-lg bg-rose-600 p-1.5 text-white;
+}
+
+.surveyContent time .day {
+  @apply text-4xl font-bold;
+}
+.surveyContent time .month {
+  @apply text-sm lowercase;
+}
+.surveyContent time .year {
+}
+
+.surveyContent p {
+  @apply ml-6 flex-grow text-ellipsis text-lg;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
