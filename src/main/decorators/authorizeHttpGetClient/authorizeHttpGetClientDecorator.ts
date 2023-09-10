@@ -17,6 +17,7 @@ export class AuthorizeHttpGetClientDecorator implements HttpGetClient {
       Object.assign(params, {
         headers: {
           "x-access-token": account.accessToken,
+          ...params.headers,
         },
       });
     }
