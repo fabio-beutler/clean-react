@@ -3,7 +3,7 @@ import { FC } from "react";
 import { SurveyModel } from "@/domain/models";
 import { Icon, IconName } from "@/presentation/components";
 
-import styles from "./surveyItem.module.css";
+import styles from "./item.module.css";
 
 type Props =
   | {
@@ -14,7 +14,7 @@ type Props =
       isEmpty: true;
     };
 
-const SurveyItem: FC<Props> = (props) => {
+const Item: FC<Props> = (props) => {
   if (props.isEmpty) return <li className={styles.surveyItemWrap} />;
 
   const { survey } = props;
@@ -44,4 +44,4 @@ const SurveyItem: FC<Props> = (props) => {
   );
 };
 
-export default SurveyItem;
+export default Item;

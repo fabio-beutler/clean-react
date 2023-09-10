@@ -5,7 +5,7 @@ import { SurveyModel } from "@/domain/models";
 import { mockSurveyModel } from "@/domain/test";
 import { IconName } from "@/presentation/components";
 
-import SurveyItem from "./SurveyItem";
+import Item from "./Item";
 
 vi.mock("next/image", () => ({
   default: (props: ComponentProps<"img">) => {
@@ -14,10 +14,10 @@ vi.mock("next/image", () => ({
 }));
 
 const makeSut = (survey: SurveyModel = mockSurveyModel()) => {
-  render(<SurveyItem survey={survey} />);
+  render(<Item survey={survey} />);
 };
 
-describe("SurveyItem Component", () => {
+describe("Item Component", () => {
   test("Should render with correct values", () => {
     const survey = Object.assign(mockSurveyModel(), {
       didAnswer: true,

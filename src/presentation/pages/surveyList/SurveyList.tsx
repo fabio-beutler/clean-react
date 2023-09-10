@@ -5,7 +5,7 @@ import { SurveyModel } from "@/domain/models";
 import { LoadSurveyList } from "@/domain/useCases";
 import { Footer, Header } from "@/presentation/components";
 
-import { SurveyItem } from "./components";
+import { Item } from "./components";
 import styles from "./surveyList.module.css";
 
 type Props = {
@@ -41,10 +41,10 @@ const SurveyList: FC<Props> = ({ loadSurveyList }) => {
           <ul data-testid="survey-list">
             {surveys.length
               ? surveys.map((survey) => (
-                  <SurveyItem key={survey.id} survey={survey} />
+                  <Item key={survey.id} survey={survey} />
                 ))
               : Array.from({ length: 4 }).map((_, index) => (
-                  <SurveyItem key={index} isEmpty />
+                  <Item key={index} isEmpty />
                 ))}
           </ul>
         )}
