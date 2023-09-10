@@ -6,3 +6,4 @@ export { default as makeLoginValidation } from "./pages/login/loginValidationFac
 export { default as makeSignupValidation } from "./pages/signup/signupValidationFactory";
 export { default as makeRemoteAddAccount } from "./useCases/addAccount/remoteAddAccountFactory";
 export { default as makeRemoteAuthentication } from "./useCases/authentication/remoteAuthenticationFactory";
+export { default as makeRemoteLoadSurveyList } from "./useCases/loadSurveyList/remoteLoadSurveyListFactory";

@@ -1,7 +1,6 @@
 "use client";
 import { FC, useEffect, useState } from "react";
 
-import { UnexpectedError } from "@/domain/errors";
 import { SurveyModel } from "@/domain/models";
 import { LoadSurveyList } from "@/domain/useCases";
 import { Footer, Header } from "@/presentation/components";

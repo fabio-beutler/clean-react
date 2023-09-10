@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import { Roboto } from "next/font/google";
 import Head from "next/head";
 
+import { makeRemoteLoadSurveyList } from "@/main/factories";
 import { PrivateRoute } from "@/presentation/components";
 import { SurveyList } from "@/presentation/pages";
 
@@ -15,7 +16,7 @@ const HomePage: NextPage = () => {
           <title>4Dev - Survey List</title>
           <meta name="description" content="Survey List" />
         </Head>
-        <SurveyList />
+        <SurveyList loadSurveyList={makeRemoteLoadSurveyList()} />
       </div>
     </PrivateRoute>
   );
