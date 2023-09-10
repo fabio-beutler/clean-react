@@ -11,9 +11,16 @@ export class AuthorizeHttpGetClientDecorator implements HttpGetClient {
     private readonly getStorage: GetStorage,
     private readonly httpGetClient: HttpGetClient,
   ) {}
-  get(params: HttpGetParams): Promise<HttpResponse> {
-    this.getStorage.get(ACCOUNT_STORAGE_KEY);
-    this.httpGetClient.get(params);
+  async get(params: HttpGetParams): Promise<HttpResponse> {
+    const account = this.getStorage.get(ACCOUNT_STORAGE_KEY);
+    if (account?.accessToken) {
+      Object.assign(params, {
+        headers: {
+          "x-access-token": account.accessToken,
+        },
+      });
+    }
+    await this.httpGetClient.get(params);
     return null;
   }
 }
