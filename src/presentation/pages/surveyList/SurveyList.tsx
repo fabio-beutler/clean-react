@@ -1,4 +1,3 @@
-"use client";
 import { FC } from "react";
 
 import { Footer, Header } from "@/presentation/components";
@@ -12,11 +11,8 @@ const SurveyList: FC = () => {
       <Header />
       <main className={styles.contentWrap}>
         <h2>Enquetes</h2>
-        <ul>
-          {Array.from({ length: 1 }).map((_, index) => (
-            <SurveyItem key={index} />
-          ))}
-          {Array.from({ length: 3 }).map((_, index) => (
+        <ul data-testid="survey-list">
+          {Array.from({ length: 4 }).map((_, index) => (
             <SurveyItem isEmpty key={index} />
           ))}
         </ul>
