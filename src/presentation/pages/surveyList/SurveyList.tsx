@@ -1,6 +1,7 @@
 "use client";
 import { FC, useEffect, useState } from "react";
 
+import { UnexpectedError } from "@/domain/errors";
 import { SurveyModel } from "@/domain/models";
 import { LoadSurveyList } from "@/domain/useCases";
 import { Footer, Header } from "@/presentation/components";
@@ -16,15 +17,21 @@ const SurveyList: FC<Props> = ({ loadSurveyList }) => {
   const [surveys, setSurveys] = useState<SurveyModel[]>([]);
   const [loadingSurveysError, setLoadingSurveysError] = useState<string>("");
 
-  useEffect(() => {
+  function getSurveys() {
     loadSurveyList
       .loadAll()
       .then((surveys) => {
         setSurveys(surveys);
+        setLoadingSurveysError("");
       })
       .catch((error) => {
         setLoadingSurveysError(error.message);
+        setSurveys([]);
       });
+  }
+
+  useEffect(() => {
+    getSurveys();
   }, []);
 
   return (
@@ -33,7 +40,7 @@ const SurveyList: FC<Props> = ({ loadSurveyList }) => {
       <main className={styles.contentWrap}>
         <h2>Enquetes</h2>
         {loadingSurveysError ? (
-          <Error errorMessage={loadingSurveysError} />
+          <Error errorMessage={loadingSurveysError} onReload={getSurveys} />
         ) : (
           <List surveys={surveys} />
         )}
