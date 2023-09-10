@@ -51,6 +51,6 @@ export class HttpGetClientSpy<BodyResponse>
   async get(params: HttpGetParams): Promise<HttpResponse<BodyResponse>> {
     this.url = params.url;
     this.headers = params.headers;
-    return Promise.resolve(this.response);
+    return this.response;
   }
 }
