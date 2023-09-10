@@ -11,14 +11,16 @@ type Props = {
 };
 
 const SurveyItem: FC<Props> = ({ isEmpty = false, survey }) => {
+  const iconName = survey.didAnswer ? IconName.thumbUp : IconName.thumbDown;
+
   if (isEmpty) return <li className={styles.surveyItemWrap} />;
   return (
     <li className={styles.surveyItemWrap}>
       <div className={styles.surveyContent}>
-        <Icon iconName={IconName.thumbUp} className={styles.icon} />
+        <Icon iconName={iconName} className={styles.icon} />
         <time>
           <span data-testid="day" className={styles.day}>
-            {survey.date.getDate().toString().padEnd(2, "0")}
+            {survey.date.getDate().toString().padStart(2, "0")}
           </span>
           <span data-testid="month" className={styles.month}>
             {survey.date
