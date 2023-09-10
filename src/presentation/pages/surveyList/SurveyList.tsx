@@ -5,7 +5,7 @@ import { SurveyModel } from "@/domain/models";
 import { LoadSurveyList } from "@/domain/useCases";
 import { Footer, Header } from "@/presentation/components";
 
-import { Item } from "./components";
+import { Error, List } from "./components";
 import styles from "./surveyList.module.css";
 
 type Props = {
@@ -33,20 +33,9 @@ const SurveyList: FC<Props> = ({ loadSurveyList }) => {
       <main className={styles.contentWrap}>
         <h2>Enquetes</h2>
         {loadingSurveysError ? (
-          <div>
-            <span data-testid="error">{loadingSurveysError}</span>
-            <button>Recarregar</button>
-          </div>
+          <Error errorMessage={loadingSurveysError} />
         ) : (
-          <ul data-testid="survey-list">
-            {surveys.length
-              ? surveys.map((survey) => (
-                  <Item key={survey.id} survey={survey} />
-                ))
-              : Array.from({ length: 4 }).map((_, index) => (
-                  <Item key={index} isEmpty />
-                ))}
-          </ul>
+          <List surveys={surveys} />
         )}
       </main>
       <Footer />

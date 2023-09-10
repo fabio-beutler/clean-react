@@ -9,7 +9,3 @@
 .contentWrap h2 {
   @apply mb-6 text-xl font-bold uppercase text-rose-950;
 }
-
-.contentWrap ul {
-  @apply flex flex-col flex-wrap justify-between sm:flex-row;
-}
