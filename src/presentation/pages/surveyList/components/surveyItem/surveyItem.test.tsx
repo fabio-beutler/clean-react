@@ -30,4 +30,20 @@ describe("SurveyItem Component", () => {
     expect(screen.getByTestId("month")).toHaveTextContent(/^ago$/);
     expect(screen.getByTestId("year")).toHaveTextContent("2023");
   });
+
+  test("Should render with correct values for icon and day", () => {
+    const survey = Object.assign(mockSurveyModel(), {
+      didAnswer: false,
+      date: new Date("2010-10-03T00:00:00"),
+    });
+    makeSut(survey);
+    expect(screen.getByTestId("icon")).toHaveAttribute(
+      "src",
+      IconName.thumbDown,
+    );
+    expect(screen.getByTestId("question")).toHaveTextContent(survey.question);
+    expect(screen.getByTestId("day")).toHaveTextContent("03");
+    expect(screen.getByTestId("month")).toHaveTextContent(/^out$/);
+    expect(screen.getByTestId("year")).toHaveTextContent("2010");
+  });
 });
