@@ -1,7 +1,11 @@
 import { render, screen } from "@testing-library/react";
+import { ComponentProps } from "react";
 
+import { SurveyModel } from "@/domain/models";
 import { mockSurveyModel } from "@/domain/test";
 import { IconName } from "@/presentation/components";
+
+import SurveyItem from "./SurveyItem";
 
 vi.mock("next/image", () => ({
   default: (props: ComponentProps<"img">) => {
@@ -9,15 +13,17 @@ vi.mock("next/image", () => ({
   },
 }));
 
-import { ComponentProps } from "react";
+const makeSut = (survey: SurveyModel = mockSurveyModel()) => {
+  render(<SurveyItem survey={survey} />);
+};
 
-import SurveyItem from "./SurveyItem";
 describe("SurveyItem Component", () => {
   test("Should render with correct values", () => {
-    const survey = mockSurveyModel();
-    survey.didAnswer = true;
-    survey.date = new Date("2023-08-10T00:00:00");
-    render(<SurveyItem survey={survey} />);
+    const survey = Object.assign(mockSurveyModel(), {
+      didAnswer: true,
+      date: new Date("2023-08-10T00:00:00"),
+    });
+    makeSut(survey);
     expect(screen.getByTestId("icon")).toHaveAttribute("src", IconName.thumbUp);
     expect(screen.getByTestId("question")).toHaveTextContent(survey.question);
     expect(screen.getByTestId("day")).toHaveTextContent("10");
