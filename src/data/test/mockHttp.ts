@@ -42,6 +42,7 @@ export class HttpGetClientSpy<BodyResponse>
   implements HttpGetClient<BodyResponse>
 {
   url?: string;
+  headers?: Record<string, any>;
   response: HttpResponse<BodyResponse> = {
     statusCode: HttpStatusCode.ok,
     body: faker.word.words() as BodyResponse,
@@ -49,6 +50,7 @@ export class HttpGetClientSpy<BodyResponse>
 
   async get(params: HttpGetParams): Promise<HttpResponse<BodyResponse>> {
     this.url = params.url;
+    this.headers = params.headers;
     return Promise.resolve(this.response);
   }
 }
