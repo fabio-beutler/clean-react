@@ -8,7 +8,7 @@ import {
   FormButton,
   FormStatus,
   Input,
-  LoginHeader as Header,
+  LoginHeader,
 } from "@/presentation/components";
 import {
   LoginFormContextProvider,
@@ -25,7 +25,7 @@ type Props = {
 const Login: FC<Props> = ({ validation, authentication }) => {
   return (
     <div className={styles.loginWrap}>
-      <Header />
+      <LoginHeader />
       <LoginFormContextProvider
         validation={validation}
         authentication={authentication}

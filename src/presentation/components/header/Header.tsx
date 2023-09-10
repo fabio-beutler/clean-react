@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FC, memo } from "react";
 
 import { Logo } from "@/presentation/components";
@@ -11,7 +12,7 @@ const Header: FC = () => {
         <Logo />
         <div className={styles.userInfoWrap}>
           <span>Fabio</span>
-          <a href="#">Sair</a>
+          <Link href="#">Sair</Link>
         </div>
       </div>
     </header>
