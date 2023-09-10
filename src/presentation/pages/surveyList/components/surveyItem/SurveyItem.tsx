@@ -1,28 +1,35 @@
 import { FC } from "react";
 
+import { SurveyModel } from "@/domain/models";
 import { Icon, IconName } from "@/presentation/components";
 
 import styles from "./surveyItem.module.css";
 
 type Props = {
   isEmpty?: boolean;
+  survey: SurveyModel;
 };
 
-const SurveyItem: FC<Props> = ({ isEmpty = false }) => {
+const SurveyItem: FC<Props> = ({ isEmpty = false, survey }) => {
   if (isEmpty) return <li className={styles.surveyItemWrap} />;
   return (
     <li className={styles.surveyItemWrap}>
       <div className={styles.surveyContent}>
         <Icon iconName={IconName.thumbUp} className={styles.icon} />
         <time>
-          <span className={styles.day}>22</span>
-          <span className={styles.month}>03</span>
-          <span className={styles.year}>2023</span>
+          <span data-testid="day" className={styles.day}>
+            {survey.date.getDate().toString().padEnd(2, "0")}
+          </span>
+          <span data-testid="month" className={styles.month}>
+            {survey.date
+              .toLocaleString("pt-BR", { month: "short" })
+              .replace(".", "")}
+          </span>
+          <span data-testid="year" className={styles.year}>
+            {survey.date.getFullYear()}
+          </span>
         </time>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque magnam
-          nisi perferendis ci, ullam!
-        </p>
+        <p data-testid="question">{survey.question}</p>
       </div>
       <footer>Ver Resultado</footer>
     </li>

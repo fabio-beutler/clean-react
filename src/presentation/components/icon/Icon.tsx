@@ -18,7 +18,13 @@ const Icon: FC<Props> = ({ iconName, className, alt, ...props }) => {
   const iconAlt = iconName === IconName.thumbUp ? "thumb up" : "thumb down";
   return (
     <div className={`${styles.iconWrap} ${iconColor} ${className}`} {...props}>
-      <Image src={iconName} width={20} height={18} alt={alt ?? iconAlt} />
+      <Image
+        data-testid="icon"
+        src={iconName}
+        width={20}
+        height={18}
+        alt={alt ?? iconAlt}
+      />
     </div>
   );
 };
