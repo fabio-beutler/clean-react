@@ -1,6 +1,7 @@
 "use client";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 
+import { SurveyModel } from "@/domain/models";
 import { LoadSurveyList } from "@/domain/useCases";
 import { Footer, Header } from "@/presentation/components";
 
@@ -12,8 +13,11 @@ type Props = {
 };
 
 const SurveyList: FC<Props> = ({ loadSurveyList }) => {
+  const [surveys, setSurveys] = useState<SurveyModel[]>([]);
   useEffect(() => {
-    loadSurveyList.loadAll().finally();
+    loadSurveyList.loadAll().then((surveys) => {
+      setSurveys(surveys);
+    });
   }, []);
 
   return (
@@ -22,9 +26,13 @@ const SurveyList: FC<Props> = ({ loadSurveyList }) => {
       <main className={styles.contentWrap}>
         <h2>Enquetes</h2>
         <ul data-testid="survey-list">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <SurveyItem isEmpty key={index} />
-          ))}
+          {surveys.length
+            ? surveys.map((survey) => (
+                <SurveyItem key={survey.id} survey={survey} />
+              ))
+            : Array.from({ length: 4 }).map((_, index) => (
+                <SurveyItem key={index} isEmpty />
+              ))}
         </ul>
       </main>
       <Footer />

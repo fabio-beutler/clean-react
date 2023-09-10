@@ -5,15 +5,21 @@ import { Icon, IconName } from "@/presentation/components";
 
 import styles from "./surveyItem.module.css";
 
-type Props = {
-  isEmpty?: boolean;
-  survey: SurveyModel;
-};
+type Props =
+  | {
+      survey: SurveyModel;
+      isEmpty?: false;
+    }
+  | {
+      isEmpty: true;
+    };
 
-const SurveyItem: FC<Props> = ({ isEmpty = false, survey }) => {
+const SurveyItem: FC<Props> = (props) => {
+  if (props.isEmpty) return <li className={styles.surveyItemWrap} />;
+
+  const { survey } = props;
   const iconName = survey.didAnswer ? IconName.thumbUp : IconName.thumbDown;
 
-  if (isEmpty) return <li className={styles.surveyItemWrap} />;
   return (
     <li className={styles.surveyItemWrap}>
       <div className={styles.surveyContent}>
