@@ -8,6 +8,7 @@ import {
   HttpResponse,
   HttpStatusCode,
 } from "@/data/protocols/http";
+import { mockSurveyListModel } from "@/domain/test";
 
 export const mockPostRequest = (): HttpPostParams => ({
   url: faker.internet.url(),
@@ -45,7 +46,7 @@ export class HttpGetClientSpy<BodyResponse>
   headers?: Record<string, any>;
   response: HttpResponse<BodyResponse> = {
     statusCode: HttpStatusCode.ok,
-    body: faker.word.words() as BodyResponse,
+    body: mockSurveyListModel() as BodyResponse,
   };
 
   async get(params: HttpGetParams): Promise<HttpResponse<BodyResponse>> {
