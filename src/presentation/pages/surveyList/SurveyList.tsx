@@ -1,7 +1,6 @@
 "use client";
 import { FC, useEffect, useState } from "react";
 
-import { SurveyModel } from "@/domain/models";
 import { LoadSurveyList } from "@/domain/useCases";
 import { Footer, Header } from "@/presentation/components";
 
@@ -13,7 +12,7 @@ type Props = {
 };
 
 const SurveyList: FC<Props> = ({ loadSurveyList }) => {
-  const [surveys, setSurveys] = useState<SurveyModel[]>([]);
+  const [surveys, setSurveys] = useState<LoadSurveyList.Model[]>([]);
   const [loadingSurveysError, setLoadingSurveysError] = useState<string>("");
 
   function getSurveys() {

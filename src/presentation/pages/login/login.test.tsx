@@ -4,7 +4,7 @@ import mockRouter from "next-router-mock";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import { InvalidCredentialsError } from "@/domain/errors";
-import { AccountModel } from "@/domain/models";
+import { Authentication } from "@/domain/useCases";
 import {
   AuthenticationSpy,
   Helper,
@@ -16,7 +16,7 @@ import Login from "./Login";
 
 type SutTypes = {
   authenticationSpy: AuthenticationSpy;
-  setCurrentAccountMock: (account: AccountModel) => void;
+  setCurrentAccountMock: (account: Authentication.Model) => void;
 };
 
 type SutParams = {

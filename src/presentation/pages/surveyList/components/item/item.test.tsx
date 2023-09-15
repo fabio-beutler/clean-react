@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import { ComponentProps } from "react";
 
-import { SurveyModel } from "@/domain/models";
 import { mockSurveyModel } from "@/domain/test";
+import { LoadSurveyList } from "@/domain/useCases";
 import { IconName } from "@/presentation/components";
 
 import Item from "./Item";
@@ -13,7 +13,7 @@ vi.mock("next/image", () => ({
   },
 }));
 
-const makeSut = (survey: SurveyModel = mockSurveyModel()) => {
+const makeSut = (survey: LoadSurveyList.Model = mockSurveyModel()) => {
   render(<Item survey={survey} />);
 };
 

@@ -1,12 +1,12 @@
 import { FC } from "react";
 
-import { SurveyModel } from "@/domain/models";
+import { LoadSurveyList } from "@/domain/useCases";
 
 import { Item } from "../";
 import styles from "./list.module.css";
 
 type Props = {
-  surveys: SurveyModel[];
+  surveys: LoadSurveyList.Model[];
 };
 
 export const List: FC<Props> = ({ surveys }) => {

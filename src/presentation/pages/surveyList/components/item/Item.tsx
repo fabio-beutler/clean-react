@@ -1,13 +1,13 @@
 import { FC } from "react";
 
-import { SurveyModel } from "@/domain/models";
+import { LoadSurveyList } from "@/domain/useCases";
 import { Icon, IconName } from "@/presentation/components";
 
 import styles from "./item.module.css";
 
 type Props =
   | {
-      survey: SurveyModel;
+      survey: LoadSurveyList.Model;
       isEmpty?: false;
     }
   | {

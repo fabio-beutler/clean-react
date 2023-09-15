@@ -4,7 +4,7 @@ import mockRouter from "next-router-mock";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import { EmailInUseError } from "@/domain/errors";
-import { AccountModel } from "@/domain/models";
+import { AddAccount } from "@/domain/useCases";
 import {
   AddAccountSpy,
   Helper,
@@ -16,7 +16,7 @@ import Signup from "./Signup";
 
 type SutTypes = {
   addAccountSpy: AddAccountSpy;
-  setCurrentAccountMock: (account: AccountModel) => void;
+  setCurrentAccountMock: (account: AddAccount.Model) => void;
 };
 
 type SutParams = {
