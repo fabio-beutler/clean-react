@@ -10,11 +10,13 @@ export class RemoteLoadSurveyList implements LoadSurveyList {
 
   async loadAll(): Promise<LoadSurveyList.Model[]> {
     const httpResponse = await this.httpGetClient.get({ url: this.url });
-
+    const remoteSurveyList = httpResponse.body || [];
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
         if (!httpResponse.body) return [];
-        return httpResponse.body;
+        return remoteSurveyList.map((remoteSurvey) =>
+          Object.assign(remoteSurvey, { date: new Date(remoteSurvey.date) }),
+        );
       case HttpStatusCode.noContent:
         return [];
       default:
@@ -24,5 +26,7 @@ export class RemoteLoadSurveyList implements LoadSurveyList {
 }
 
 export namespace RemoteLoadSurveyList {
-  export type Model = LoadSurveyList.Model;
+  export type Model = Omit<LoadSurveyList.Model, "date"> & {
+    date: string;
+  };
 }
