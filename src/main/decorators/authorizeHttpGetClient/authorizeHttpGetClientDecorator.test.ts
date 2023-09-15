@@ -72,7 +72,6 @@ describe("AuthorizeHttpGetClient", () => {
     };
     await sut.get(httpRequest);
     expect(httpGetClientSpy.url).toBe(httpRequest.url);
-    console.log(httpGetClientSpy.headers);
     expect(httpGetClientSpy.headers).toEqual({
       field,
       "x-access-token": getStorageSpy.value.accessToken,
