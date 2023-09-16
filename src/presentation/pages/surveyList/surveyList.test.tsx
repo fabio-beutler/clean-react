@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import { UnexpectedError } from "@/domain/errors";
 import { LoadSurveyListSpy } from "@/presentation/test";
@@ -10,7 +11,9 @@ type SutTypes = {
 };
 
 const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
-  render(<SurveyList loadSurveyList={loadSurveyListSpy} />);
+  render(<SurveyList loadSurveyList={loadSurveyListSpy} />, {
+    wrapper: MemoryRouterProvider,
+  });
   return { loadSurveyListSpy };
 };
 
@@ -43,8 +46,8 @@ describe("SurveyList Component", () => {
     vi.spyOn(loadSurveyListSpy, "loadAll").mockRejectedValueOnce(error);
     makeSut(loadSurveyListSpy);
     await waitFor(() => screen.queryByTestId("error"));
-    expect(screen.queryByTestId("survey-list")).not.toBeInTheDocument();
     expect(screen.getByTestId("error")).toHaveTextContent(error.message);
+    expect(screen.queryByTestId("survey-list")).not.toBeInTheDocument();
   });
 
   test("Should call LoadSurveyList on reload", async () => {
