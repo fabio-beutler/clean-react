@@ -1,8 +1,6 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { FC, memo } from "react";
 
-import { ACCOUNT_STORAGE_KEY } from "@/main/config";
 import { Logo } from "@/presentation/components";
 import { useApiContext } from "@/presentation/contexts";
 
@@ -20,7 +18,9 @@ const Header: FC = () => {
       <div className={styles.headerContent}>
         <Logo />
         <div className={styles.userInfoWrap}>
-          <span>Fabio</span>
+          <span data-testid="username">
+            {apiContext.getCurrentAccount().name}
+          </span>
           <button onClick={handleLogout} data-testid="logout">
             Sair
           </button>
