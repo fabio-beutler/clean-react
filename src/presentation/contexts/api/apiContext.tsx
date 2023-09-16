@@ -8,7 +8,7 @@ import {
 } from "@/main/adapters";
 
 type ContextProps = {
-  setCurrentAccount: (account: AccountModel) => void;
+  setCurrentAccount: (account: AccountModel | undefined) => void;
   getCurrentAccount: () => AccountModel;
 };
 

@@ -1,5 +1,5 @@
 .headerWrap {
-  @apply border-t-20 flex justify-center border-t-rose-950 bg-rose-900 sm:border-t-40;
+  @apply flex justify-center border-t-20 border-t-rose-950 bg-rose-900 sm:border-t-40;
 }
 
 .headerContent {
@@ -18,6 +18,10 @@
   @apply mb-1 text-lg;
 }
 
-.userInfoWrap a:hover {
+.userInfoWrap button {
+  @apply cursor-pointer;
+}
+
+.userInfoWrap button:hover {
   @apply underline;
 }

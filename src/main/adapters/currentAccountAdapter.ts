@@ -3,7 +3,9 @@ import { AccountModel } from "@/domain/models";
 import { ACCOUNT_STORAGE_KEY } from "@/main/config";
 import { makeLocalStorageAdapter } from "@/main/factories";
 
-export const setCurrentAccountAdapter = (account: AccountModel): void => {
+export const setCurrentAccountAdapter = (
+  account: AccountModel | undefined,
+): void => {
   makeLocalStorageAdapter().set(ACCOUNT_STORAGE_KEY, account);
 };
 
