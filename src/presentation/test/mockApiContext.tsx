@@ -6,7 +6,7 @@ import { ApiContext } from "@/presentation/contexts/api/apiContext";
 
 type ContextProviderProps = {
   children: ReactNode;
-  setCurrentAccount?: (account: AccountModel) => void;
+  setCurrentAccount?: (account: AccountModel | undefined) => void;
   getCurrentAccount?: () => AccountModel;
 };
 

@@ -3,6 +3,7 @@ import mockRouter from "next-router-mock";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
 import { AccountModel } from "@/domain/models";
+import { mockAccountModel } from "@/domain/test";
 import { MockApiContextProvider } from "@/presentation/test";
 
 import Header from "./Header";
@@ -11,10 +12,14 @@ type SutTypes = {
   setCurrentAccountMock: (account: AccountModel | undefined) => void;
 };
 
-const makeSut = (): SutTypes => {
+const makeSut = (account = mockAccountModel()): SutTypes => {
   const setCurrentAccountMock = vi.fn();
+  const getCurrentAccountStub = () => account;
   render(
-    <MockApiContextProvider setCurrentAccount={setCurrentAccountMock}>
+    <MockApiContextProvider
+      setCurrentAccount={setCurrentAccountMock}
+      getCurrentAccount={getCurrentAccountStub}
+    >
       <Header />
     </MockApiContextProvider>,
     {
@@ -30,5 +35,11 @@ describe("Header Component", () => {
     fireEvent.click(screen.getByTestId("logout"));
     expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
     expect(mockRouter.asPath).toBe("/login");
+  });
+
+  test("Should render username correctly", () => {
+    const account = mockAccountModel();
+    makeSut(account);
+    expect(screen.getByTestId("username")).toHaveTextContent(account.name);
   });
 });
