@@ -12,6 +12,10 @@ const config: Config = {
         40: "2.5rem",
         20: "1.25rem",
       },
+      screens: {
+        tall: { raw: "(min-height: 700px)" },
+        xs: "475px",
+      },
     },
   },
   plugins: [],
