@@ -9,19 +9,3 @@
 .headerContent img {
   @apply w-16;
 }
-
-.userInfoWrap {
-  @apply flex flex-col items-end justify-center text-white;
-}
-
-.userInfoWrap span {
-  @apply mb-1 text-lg;
-}
-
-.userInfoWrap button {
-  @apply cursor-pointer;
-}
-
-.userInfoWrap button:hover {
-  @apply underline;
-}
