@@ -6,7 +6,7 @@ import { AccountModel } from "@/domain/models";
 import { mockAccountModel } from "@/domain/test";
 import { MockApiContextProvider } from "@/presentation/test";
 
-import Header from "./Header";
+import UserInfo from "./UserInfo";
 
 type SutTypes = {
   setCurrentAccountMock: (account: AccountModel | undefined) => void;
@@ -20,7 +20,7 @@ const makeSut = (account = mockAccountModel()): SutTypes => {
       setCurrentAccount={setCurrentAccountMock}
       getCurrentAccount={getCurrentAccountStub}
     >
-      <Header />
+      <UserInfo />
     </MockApiContextProvider>,
     {
       wrapper: MemoryRouterProvider,
@@ -29,7 +29,7 @@ const makeSut = (account = mockAccountModel()): SutTypes => {
   return { setCurrentAccountMock };
 };
 
-describe("Header Component", () => {
+describe("UserInfo Component", () => {
   test("Should call setCurrentAccount with null value on logout", () => {
     const { setCurrentAccountMock } = makeSut();
     fireEvent.click(screen.getByTestId("logout"));
