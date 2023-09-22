@@ -1,5 +1,5 @@
 import { HttpGetClient, HttpStatusCode } from "@/data/protocols/http";
-import { UnexpectedError } from "@/domain/errors";
+import { AccessDeniedError, UnexpectedError } from "@/domain/errors";
 import { LoadSurveyList } from "@/domain/useCases";
 
 export class RemoteLoadSurveyList implements LoadSurveyList {
@@ -10,7 +10,7 @@ export class RemoteLoadSurveyList implements LoadSurveyList {
 
   async loadAll(): Promise<LoadSurveyList.Model[]> {
     const httpResponse = await this.httpGetClient.get({ url: this.url });
-    const remoteSurveyList = httpResponse.body || [];
+    const remoteSurveyList = httpResponse.body ?? [];
     switch (httpResponse.statusCode) {
       case HttpStatusCode.ok:
         if (!httpResponse.body) return [];
@@ -19,6 +19,8 @@ export class RemoteLoadSurveyList implements LoadSurveyList {
         );
       case HttpStatusCode.noContent:
         return [];
+      case HttpStatusCode.forbidden:
+        throw new AccessDeniedError();
       default:
         throw new UnexpectedError();
     }
