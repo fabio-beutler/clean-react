@@ -12,7 +12,7 @@ const UserInfo = () => {
   }
   return (
     <div className={styles.userInfoWrap}>
-      <span data-testid="username">{apiContext.getCurrentAccount().name}</span>
+      <span data-testid="username">{apiContext.getCurrentAccount()?.name}</span>
       <button onClick={handleLogout} data-testid="logout">
         Sair
       </button>

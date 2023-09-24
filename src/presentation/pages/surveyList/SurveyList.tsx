@@ -1,8 +1,11 @@
 "use client";
+import { useRouter } from "next/router";
 import { FC, useEffect, useState } from "react";
 
+import { AccessDeniedError } from "@/domain/errors";
 import { LoadSurveyList } from "@/domain/useCases";
 import { Footer, Header } from "@/presentation/components";
+import { useApiContext } from "@/presentation/contexts";
 
 import { Error, List } from "./components";
 import styles from "./surveyList.module.css";
@@ -12,6 +15,8 @@ type Props = {
 };
 
 const SurveyList: FC<Props> = ({ loadSurveyList }) => {
+  const router = useRouter();
+  const apiContext = useApiContext();
   const [surveys, setSurveys] = useState<LoadSurveyList.Model[]>([]);
   const [loadingSurveysError, setLoadingSurveysError] = useState<string>("");
 
@@ -23,7 +28,12 @@ const SurveyList: FC<Props> = ({ loadSurveyList }) => {
         setLoadingSurveysError("");
       })
       .catch((error) => {
-        setLoadingSurveysError(error.message);
+        if (error instanceof AccessDeniedError) {
+          apiContext.setCurrentAccount(undefined);
+          router.replace("/login").finally();
+        } else {
+          setLoadingSurveysError(error.message);
+        }
         setSurveys([]);
       });
   }
