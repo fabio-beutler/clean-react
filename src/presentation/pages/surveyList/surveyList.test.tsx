@@ -1,20 +1,28 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import router from "next-router-mock";
 import { MemoryRouterProvider } from "next-router-mock/MemoryRouterProvider";
 
-import { UnexpectedError } from "@/domain/errors";
-import { LoadSurveyListSpy } from "@/presentation/test";
+import { AccessDeniedError, UnexpectedError } from "@/domain/errors";
+import { LoadSurveyListSpy, MockApiContextProvider } from "@/presentation/test";
 
 import SurveyList from "./SurveyList";
 
 type SutTypes = {
   loadSurveyListSpy: LoadSurveyListSpy;
+  setCurrentAccountMock: (account: any) => void;
 };
 
 const makeSut = (loadSurveyListSpy = new LoadSurveyListSpy()): SutTypes => {
-  render(<SurveyList loadSurveyList={loadSurveyListSpy} />, {
-    wrapper: MemoryRouterProvider,
-  });
-  return { loadSurveyListSpy };
+  const setCurrentAccountMock = vi.fn();
+  render(
+    <MockApiContextProvider setCurrentAccount={setCurrentAccountMock}>
+      <SurveyList loadSurveyList={loadSurveyListSpy} />
+    </MockApiContextProvider>,
+    {
+      wrapper: MemoryRouterProvider,
+    },
+  );
+  return { loadSurveyListSpy, setCurrentAccountMock };
 };
 
 describe("SurveyList Component", () => {
@@ -40,7 +48,7 @@ describe("SurveyList Component", () => {
     expect(screen.queryByTestId("error")).not.toBeInTheDocument();
   });
 
-  test("Should render error on failure", async () => {
+  test("Should render error on UnexpectedError", async () => {
     const loadSurveyListSpy = new LoadSurveyListSpy();
     const error = new UnexpectedError();
     vi.spyOn(loadSurveyListSpy, "loadAll").mockRejectedValueOnce(error);
@@ -48,6 +56,17 @@ describe("SurveyList Component", () => {
     await waitFor(() => screen.queryByTestId("error"));
     expect(screen.getByTestId("error")).toHaveTextContent(error.message);
     expect(screen.queryByTestId("survey-list")).not.toBeInTheDocument();
+  });
+
+  test("Should logout on AccessDenied", async () => {
+    const loadSurveyListSpy = new LoadSurveyListSpy();
+    vi.spyOn(loadSurveyListSpy, "loadAll").mockRejectedValueOnce(
+      new AccessDeniedError(),
+    );
+    const { setCurrentAccountMock } = makeSut(loadSurveyListSpy);
+    await waitFor(() => screen.queryByTestId("error"));
+    expect(setCurrentAccountMock).toHaveBeenCalledWith(undefined);
+    expect(router.asPath).toBe("/login");
   });
 
   test("Should call LoadSurveyList on reload", async () => {
