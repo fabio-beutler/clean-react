@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/router";
 import {
-  ChangeEvent,
   createContext,
   FC,
   ReactNode,
@@ -10,7 +9,8 @@ import {
   useState,
 } from "react";
 
-import { Authentication, SaveAccessToken } from "@/domain/useCases";
+import { Authentication } from "@/domain/useCases";
+import { useApiContext } from "@/presentation/contexts";
 import { Validation } from "@/presentation/protocols/validation";
 
 type ContextProps = {
@@ -27,15 +27,14 @@ type ContextProps = {
     email: string;
     password: string;
   };
-  onInputChange?: (event: ChangeEvent<HTMLInputElement>) => void;
-  onSubmit?: () => void;
+  onInputChange: (name: string, value: string) => void;
+  onSubmit: () => void;
 };
 
 type FormContextProviderProps = {
   children: ReactNode;
   validation: Validation;
   authentication: Authentication;
-  saveAccessToken: SaveAccessToken;
 };
 
 const initialState: ContextProps = {
@@ -52,6 +51,8 @@ const initialState: ContextProps = {
     email: "",
     password: "",
   },
+  onInputChange: () => {},
+  onSubmit: () => {},
 };
 
 const LoginFormContext = createContext<ContextProps>(initialState);
@@ -60,9 +61,9 @@ const LoginFormContextProvider: FC<FormContextProviderProps> = ({
   children,
   validation,
   authentication,
-  saveAccessToken,
 }) => {
   const router = useRouter();
+  const apiContext = useApiContext();
   const [state, setState] = useState<ContextProps["state"]>(
     initialState["state"],
   );
@@ -73,8 +74,7 @@ const LoginFormContextProvider: FC<FormContextProviderProps> = ({
     initialState["inputs"],
   );
 
-  const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
+  const onInputChange = (name: string, value: string) => {
     setInputs((prevState) => ({ ...prevState, [name]: value }));
   };
 
@@ -87,7 +87,7 @@ const LoginFormContextProvider: FC<FormContextProviderProps> = ({
         email: inputs.email,
         password: inputs.password,
       });
-      await saveAccessToken.save(account.accessToken);
+      apiContext.setCurrentAccount(account);
       await router.replace("/");
     } catch (error: any) {
       setState((prevState) => ({ ...prevState, isLoading: false }));

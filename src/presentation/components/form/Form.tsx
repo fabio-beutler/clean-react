@@ -6,6 +6,8 @@ import {
   useSignupFormContext,
 } from "@/presentation/contexts";
 
+import styles from "./form.module.css";
+
 type FormProps = ComponentProps<"form"> & {
   formContext: typeof useLoginFormContext | typeof useSignupFormContext;
 };
@@ -17,7 +19,12 @@ const Form: FC<FormProps> = ({ formContext, ...props }) => {
     if (onSubmit) onSubmit();
   };
   return (
-    <form data-testid="form" onSubmit={handleSubmit} {...props}>
+    <form
+      data-testid="form"
+      onSubmit={handleSubmit}
+      className={styles.form}
+      {...props}
+    >
       {props.children}
     </form>
   );

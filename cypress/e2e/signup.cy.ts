@@ -43,9 +43,7 @@ describe("Signup", () => {
   });
 
   it("Should present error state if form is invalid", () => {
-    cy.getByTestId("name")
-      .focus()
-      .type(faker.word.sample({ length: 2 }));
+    cy.getByTestId("name").focus().type(faker.string.sample(2));
     FormHelper.testInputStatus("name", "Campo inválido", "🔴");
     cy.getByTestId("email").focus().type(faker.word.sample());
     FormHelper.testInputStatus("email", "Campo inválido", "🔴");
@@ -104,14 +102,14 @@ describe("Signup", () => {
     cy.url().should("equal", `${baseUrl}/signup`);
   });
 
-  it("Should present save accessToken if valid credentials are provided", () => {
+  it("Should present save account if valid credentials are provided", () => {
     Http.mockOk();
     simulateValidSubmit();
     FormHelper.testIsLoading();
     cy.getByTestId("spinner").should("not.exist");
     cy.url().should("equal", `${baseUrl}/`);
     cy.window().then((window) => {
-      assert.isOk(window.localStorage.getItem("@4Devs:accessToken"));
+      assert.isOk(window.localStorage.getItem("@4Devs:account"));
     });
   });
 
@@ -141,7 +139,7 @@ describe("Signup", () => {
     cy.getByTestId("spinner").should("not.exist");
     cy.url().should("equal", `${baseUrl}/`);
     cy.window().then((window) => {
-      assert.isOk(window.localStorage.getItem("@4Devs:accessToken"));
+      assert.isOk(window.localStorage.getItem("@4Devs:account"));
     });
   });
 

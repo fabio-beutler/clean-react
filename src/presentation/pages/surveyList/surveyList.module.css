@@ -1,0 +1,11 @@
+.surveyListWrap {
+  @apply flex min-h-screen flex-col justify-between bg-stone-200;
+}
+
+.contentWrap {
+  @apply flex w-full max-w-3xl flex-grow flex-col self-center p-6;
+}
+
+.contentWrap h2 {
+  @apply mb-6 text-xl font-bold uppercase text-rose-950;
+}

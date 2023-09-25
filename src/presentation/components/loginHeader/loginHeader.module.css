@@ -1,11 +1,11 @@
-.header {
-  @apply bg-rose-900 flex flex-col items-center border-t-40 border-t-rose-950;
+.headerWrap {
+  @apply tall:sm:border-t-40 flex items-center justify-center gap-4 border-t-20 border-t-rose-950 bg-rose-900 px-2 py-5 tall:flex-col tall:py-10;
 }
 
-.header img {
-  @apply mt-10;
+.headerWrap img {
+  @apply w-20 tall:w-32;
 }
 
-.header h1 {
-  @apply text-white mt-4 mb-10;
+.headerWrap h1 {
+  @apply text-white;
 }

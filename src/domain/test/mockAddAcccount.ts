@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker";
 
-import { AddAccountParams } from "@/domain/useCases";
+import { AddAccount } from "@/domain/useCases";
 
-export const mockAddAccount = (): AddAccountParams => {
+export const mockAddAccount = (): AddAccount.Params => {
   const password = faker.internet.password();
   return {
     name: faker.internet.displayName(),

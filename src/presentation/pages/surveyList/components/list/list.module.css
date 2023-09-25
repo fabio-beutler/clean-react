@@ -1,0 +1,3 @@
+.listWrap {
+  @apply flex flex-col flex-wrap justify-between sm:flex-row;
+}

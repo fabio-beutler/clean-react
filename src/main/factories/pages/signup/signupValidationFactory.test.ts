@@ -1,4 +1,10 @@
-import { ValidationBuilder, ValidationComposite } from "@/validation";
+import { ValidationComposite } from "@/validation";
+import {
+  EmailValidation,
+  MinLengthValidation,
+  RequiredFieldValidation,
+} from "@/validation/validators";
+import { CompareFieldsValidation } from "@/validation/validators/compareFields/compareFieldsValidation";
 
 import makeLoginValidation from "./signupValidationFactory";
 
@@ -7,13 +13,14 @@ describe("SignupValidationFactory", () => {
     const sut = makeLoginValidation();
     expect(sut).toEqual(
       ValidationComposite.build([
-        ...ValidationBuilder.field("name").required().min(3).build(),
-        ...ValidationBuilder.field("email").email().required().build(),
-        ...ValidationBuilder.field("password").required().min(5).build(),
-        ...ValidationBuilder.field("passwordConfirmation")
-          .required()
-          .sameAs("password")
-          .build(),
+        new RequiredFieldValidation("name"),
+        new MinLengthValidation("name", 3),
+        new RequiredFieldValidation("email"),
+        new EmailValidation("email"),
+        new RequiredFieldValidation("password"),
+        new MinLengthValidation("password", 5),
+        new RequiredFieldValidation("passwordConfirmation"),
+        new CompareFieldsValidation("passwordConfirmation", "password"),
       ]),
     );
   });

@@ -1,4 +1,9 @@
-import { ValidationBuilder, ValidationComposite } from "@/validation";
+import { ValidationComposite } from "@/validation";
+import {
+  EmailValidation,
+  MinLengthValidation,
+  RequiredFieldValidation,
+} from "@/validation/validators";
 
 import makeLoginValidation from "./loginValidationFactory";
 
@@ -7,8 +12,10 @@ describe("LoginValidationFactory", () => {
     const sut = makeLoginValidation();
     expect(sut).toEqual(
       ValidationComposite.build([
-        ...ValidationBuilder.field("email").email().required().build(),
-        ...ValidationBuilder.field("password").required().min(5).build(),
+        new RequiredFieldValidation("email"),
+        new EmailValidation("email"),
+        new RequiredFieldValidation("password"),
+        new MinLengthValidation("password", 5),
       ]),
     );
   });

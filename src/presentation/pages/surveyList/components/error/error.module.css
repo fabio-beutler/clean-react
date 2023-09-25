@@ -1,0 +1,19 @@
+.errorWrap {
+  @apply flex flex-col items-center rounded-lg bg-white p-10 drop-shadow;
+}
+
+.errorWrap span {
+  @apply mb-6 text-center text-xl;
+}
+
+.errorWrap button {
+  @apply rounded-lg border-rose-800 bg-rose-900 px-4 leading-10 text-white;
+}
+
+.errorWrap button:hover {
+  @apply opacity-90;
+}
+
+.errorWrap button:active {
+  @apply opacity-100;
+}

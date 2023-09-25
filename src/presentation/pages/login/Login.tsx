@@ -1,14 +1,14 @@
 import Link from "next/link";
 import { FC } from "react";
 
-import { Authentication, SaveAccessToken } from "@/domain/useCases";
+import { Authentication } from "@/domain/useCases";
 import {
   Footer,
   Form,
   FormButton,
   FormStatus,
   Input,
-  LoginHeader as Header,
+  LoginHeader,
 } from "@/presentation/components";
 import {
   LoginFormContextProvider,
@@ -21,18 +21,16 @@ import styles from "./login.module.css";
 type Props = {
   validation: Validation;
   authentication: Authentication;
-  saveAccessToken: SaveAccessToken;
 };
-const Login: FC<Props> = ({ validation, authentication, saveAccessToken }) => {
+const Login: FC<Props> = ({ validation, authentication }) => {
   return (
-    <div className={styles.login}>
-      <Header />
+    <div className={styles.loginWrap}>
+      <LoginHeader />
       <LoginFormContextProvider
         validation={validation}
         authentication={authentication}
-        saveAccessToken={saveAccessToken}
       >
-        <Form formContext={useLoginFormContext} className={styles.form}>
+        <Form formContext={useLoginFormContext}>
           <h2>Login</h2>
           <Input
             formContext={useLoginFormContext}

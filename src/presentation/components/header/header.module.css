@@ -1,0 +1,11 @@
+.headerWrap {
+  @apply flex justify-center border-t-20 border-t-rose-950 bg-rose-900 sm:border-t-40;
+}
+
+.headerContent {
+  @apply flex max-w-3xl flex-grow items-center justify-between p-6;
+}
+
+.headerContent img {
+  @apply w-16;
+}

@@ -8,7 +8,7 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     globals: true,
-    setupFiles: ["vitest-localstorage-mock"],
+    setupFiles: ["vitest-localstorage-mock", "vitest-setup"],
     mockReset: false,
     include: ["src/**/*.{test,spec}.{ts,tsx}"],
     coverage: {
