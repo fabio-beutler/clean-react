@@ -1,18 +1,14 @@
-import { useRouter } from "next/router";
-
 import { AccessDeniedError } from "@/domain/errors";
-import { useApiContext } from "@/presentation/contexts";
+import { useLogout } from "@/presentation/hooks/useLogout";
 
 type CallbackType = (error: Error) => void;
 type ResultType = CallbackType;
 
 export const useErrorHandler = (callback: CallbackType): ResultType => {
-  const apiContext = useApiContext();
-  const router = useRouter();
+  const logout = useLogout();
   return (error: Error) => {
     if (error instanceof AccessDeniedError) {
-      apiContext.setCurrentAccount(undefined);
-      router.replace("/login").finally();
+      logout();
     } else {
       callback(error);
     }

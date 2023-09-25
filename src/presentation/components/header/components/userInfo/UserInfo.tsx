@@ -1,15 +1,11 @@
-import { useRouter } from "next/router";
-
 import { useApiContext } from "@/presentation/contexts";
+import { useLogout } from "@/presentation/hooks";
 
 import styles from "./userInfo.module.css";
 const UserInfo = () => {
-  const router = useRouter();
   const apiContext = useApiContext();
-  function handleLogout() {
-    apiContext.setCurrentAccount(undefined);
-    router.replace("/login").finally();
-  }
+  const handleLogout = useLogout();
+
   return (
     <div className={styles.userInfoWrap}>
       <span data-testid="username">{apiContext.getCurrentAccount()?.name}</span>
